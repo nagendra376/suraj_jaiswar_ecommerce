@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductCard from "../components/product-card";
 import {
   useCategoriesQuery,
@@ -22,11 +22,22 @@ const Search = () => {
     error,
   } = useCategoriesQuery("");
 
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchQuery.get("search") || "");
   const [sort, setSort] = useState("");
   const [maxPrice, setMaxPrice] = useState(100000);
   const [category, setCategory] = useState(searchQuery.get("category") || "");
   const [page, setPage] = useState(1);
+
+  // Sync with URL query parameters when navigating from header
+  useEffect(() => {
+    const qSearch = searchQuery.get("search");
+    const qCategory = searchQuery.get("category");
+    if (qSearch !== null) setSearch(qSearch);
+    else if (!searchQuery.has("search")) setSearch("");
+
+    if (qCategory !== null) setCategory(qCategory);
+    else if (!searchQuery.has("category")) setCategory("");
+  }, [searchQuery]);
 
   const {
     isLoading: productLoading,
