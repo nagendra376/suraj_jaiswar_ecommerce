@@ -41,6 +41,24 @@ const browseCategories = [
   { name: "View All", path: "/search" },
 ];
 
+const repairServicesMenu = [
+  { name: "Laptop Repair", path: "/search?search=laptop", icon: "💻" },
+  { name: "Computer Repair", path: "/search?search=computer", icon: "🖥️" },
+  { name: "MacBook & iMac Repair", path: "/search?search=macbook", icon: "🍎" },
+  { name: "Computer Shop", path: "/search", icon: "🛠️" },
+  { name: "Printer Repair", path: "/search?search=printer", icon: "🖨️" },
+  { name: "Screen Replacement", path: "/search?search=screen", icon: "📱" },
+  { name: "Data Recovery", path: "/search?search=data", icon: "💾" },
+];
+
+const itServicesMenu = [
+  { name: "Networking & Wi-Fi", path: "/search?search=networking", icon: "🌐" },
+  { name: "Antivirus & Security", path: "/search?search=antivirus", icon: "🛡️" },
+  { name: "Corporate AMC Support", path: "/search?search=amc", icon: "🏢" },
+  { name: "Data Backup & Cloud", path: "/search?search=backup", icon: "☁️" },
+  { name: "Hardware & OS Setup", path: "/search?search=hardware", icon: "⚙️" },
+];
+
 const Header = ({ user }: PropsType) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -291,20 +309,54 @@ const Header = ({ user }: PropsType) => {
 
           {/* Horizontal Navigation Links */}
           <nav className="nav-links-menu">
-            {/* Experience Zone with Popover */}
-            <div className="nav-link-item">
-              <Link to="/search?category=gaming" className="nav-link-anchor">
-                Experience Zone
+            {/* Repair Services with Popover (matching media_1789661765589.png) */}
+            <div className="nav-link-item service-tab-item active-pill">
+              <Link to="/search?search=repair" className="nav-link-anchor service-pill-btn">
+                <span>Repair Services</span>
+                <FaChevronDown className="service-tab-chevron" />
               </Link>
-              <div className="mega-menu-popover">
-                <Link to="/search?category=graphics-card" className="mega-item">
-                  AMD Graphics
+              <div className="services-dropdown-popover">
+                <div className="services-list">
+                  {repairServicesMenu.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className="service-dropdown-item"
+                    >
+                      <span className="service-item-icon">{item.icon}</span>
+                      <span className="service-item-name">{item.name}</span>
+                    </Link>
+                  ))}
+                </div>
+                <div className="services-dropdown-divider" />
+                <Link to="/search" className="view-all-services-btn">
+                  View All Services
                 </Link>
-                <Link to="/search?category=graphics-card" className="mega-item">
-                  Nvidia Graphics
-                </Link>
-                <Link to="/search?category=custom-pc-build" className="mega-item">
-                  Gaming Desktops
+              </div>
+            </div>
+
+            {/* IT Services with Popover (matching media_1789661765589.png) */}
+            <div className="nav-link-item service-tab-item">
+              <Link to="/search?search=it-services" className="nav-link-anchor service-pill-btn">
+                <span>IT Services</span>
+                <FaChevronDown className="service-tab-chevron" />
+              </Link>
+              <div className="services-dropdown-popover">
+                <div className="services-list">
+                  {itServicesMenu.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className="service-dropdown-item"
+                    >
+                      <span className="service-item-icon">{item.icon}</span>
+                      <span className="service-item-name">{item.name}</span>
+                    </Link>
+                  ))}
+                </div>
+                <div className="services-dropdown-divider" />
+                <Link to="/search" className="view-all-services-btn">
+                  View All IT Services
                 </Link>
               </div>
             </div>
@@ -395,15 +447,20 @@ const Header = ({ user }: PropsType) => {
               </Link>
             ))}
 
+            <div className="drawer-section-title">Repair &amp; IT Services</div>
+            {repairServicesMenu.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className="drawer-link"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>{item.icon} {item.name}</span>
+                <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
+              </Link>
+            ))}
+
             <div className="drawer-section-title">Featured Zones</div>
-            <Link
-              to="/search?category=gaming"
-              className="drawer-link"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span>Experience Zone</span>
-              <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
-            </Link>
             <Link
               to="/search?category=peripherals"
               className="drawer-link"
