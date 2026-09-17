@@ -12,6 +12,8 @@ import { motion } from "framer-motion";
 import { Slider } from "6pp";
 import { TbTruckDelivery } from "react-icons/tb";
 import { LuShieldCheck } from "react-icons/lu";
+import MorrowHero from "../components/landing/MorrowHero";
+import BentoFeatures from "../components/landing/BentoFeatures";
 
 const clients = [
   {
@@ -151,9 +153,10 @@ const Home = () => {
 
   return (
     <>
-      <div className="home">
-        <section></section>
+      <MorrowHero />
+      <BentoFeatures />
 
+      <div className="home" id="latest-products">
         <div>
           <aside>
             <h1>Categories</h1>
