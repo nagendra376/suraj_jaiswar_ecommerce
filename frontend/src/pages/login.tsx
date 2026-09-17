@@ -17,6 +17,10 @@ const Login = () => {
   const [login] = useLoginMutation();
 
   const loginHandler = async () => {
+    if (!gender || !date) {
+      return toast.error("Please select both Gender and Date of Birth first");
+    }
+
     try {
       const provider = new GoogleAuthProvider();
       const { user } = await signInWithPopup(auth, provider);
@@ -47,12 +51,16 @@ const Login = () => {
         dispatch(userExist(data?.user!));
       } else {
         const error = res.error as FetchBaseQueryError;
-        const message = (error.data as MessageResponse).message;
+        const message =
+          (error?.data as MessageResponse)?.message ||
+          (error as any)?.error ||
+          "Sign in failed";
         toast.error(message);
         dispatch(userNotExist());
       }
-    } catch (error) {
-      toast.error("Sign In Fail");
+    } catch (error: any) {
+      console.error("Sign in error:", error);
+      toast.error(error?.message || "Sign In Failed");
     }
   };
 
