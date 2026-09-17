@@ -1,199 +1,238 @@
 ﻿import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaArrowRight, FaBagShopping, FaBolt, FaCreditCard, FaShieldHalved, FaHeadphones } from "react-icons/fa6";
+import {
+  FaLaptopCode,
+  FaCloud,
+  FaShieldHalved,
+  FaNetworkWired,
+  FaServer,
+  FaHeadset,
+  FaDatabase,
+  FaArrowRight,
+  FaCheck,
+  FaArrowDown
+} from "react-icons/fa6";
 
 const MorrowHero = () => {
   return (
     <section className="morrow-hero-wrapper">
-      {/* Header Section */}
+      {/* Top Header Section */}
       <motion.div
         className="morrow-header"
-        initial={{ opacity: 0, y: 25 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
+        transition={{ duration: 0.6 }}
       >
         <div className="pill-badge">
           <span className="badge-dot"></span>
-          <span>Next-Gen eCommerce Experience • 2026</span>
+          <span>Solution Systems • Enterprise IT & Infrastructure</span>
         </div>
 
         <h1 className="hero-title">
-          Know exactly what you love. <br />
-          <span className="highlight">Delivered with clarity.</span>
+          Know exactly how your <br />
+          <span className="highlight">infrastructure runs.</span>
         </h1>
 
         <p className="hero-subtitle">
-          Experience effortless shopping with curated tech & fashion drops, instant 1-click
-          checkout, and real-time live tracking directly to your doorstep.
+          From enterprise-grade laptops and high-performance workstations to cyber security,
+          cloud servers, and 24/7 managed IT support — unified into one seamless ecosystem.
         </p>
 
         <div className="hero-cta-group">
           <Link to="/search" className="btn-primary-pill">
-            <span>Explore Collection</span>
+            <span>Explore IT Hardware</span>
             <FaArrowRight />
           </Link>
-          <a href="#latest-products" className="btn-secondary-pill">
-            <span>Latest Drops</span>
+          <a href="#services" className="btn-secondary-pill">
+            <span>Request Solution</span>
           </a>
         </div>
       </motion.div>
 
-      {/* Interactive Device Showcase with Connected Nodes */}
-      <div className="morrow-stage-container">
-        {/* Soft Ambient Emerald Aura (signature Morrow effect) */}
-        <div className="ambient-glow"></div>
+      {/* Interactive Orbit Stage with Laptop in Center */}
+      <div className="orbit-stage-wrapper">
+        {/* Emerald Ambient Aura Glow */}
+        <div className="ambient-aura"></div>
 
-        {/* SVG Connector Branch Lines (Desktop/Tablet) */}
-        <svg className="connector-svg" viewBox="0 0 960 540" preserveAspectRatio="none">
-          {/* Top Left to Phone */}
-          <path d="M 220 80 C 350 80, 420 180, 480 200" />
-          {/* Top Right to Phone */}
-          <path d="M 740 80 C 610 80, 540 180, 480 200" />
-          {/* Mid Left to Phone */}
-          <path d="M 180 270 C 320 270, 400 270, 480 270" />
-          {/* Mid Right to Phone */}
-          <path d="M 780 270 C 640 270, 560 270, 480 270" />
-          {/* Bottom Left to Phone */}
-          <path d="M 240 480 C 350 480, 420 380, 480 340" />
-          {/* Bottom Right to Phone */}
-          <path d="M 720 480 C 610 480, 540 380, 480 340" />
-        </svg>
+        {/* Circular Orbital Track Line */}
+        <div className="orbital-ring">
+          {/* Animated Particle traveling on the orbital ring */}
+          <div className="orbit-particle"></div>
+        </div>
 
-        {/* Floating Node 1: Top-Left */}
+        {/* Outer Circular Dashed Ring for Visual Depth */}
+        <div className="orbital-ring-outer"></div>
+
+        {/* === ORBITING SERVICE NODES (Positioned along the circular line) === */}
+
+        {/* Node 1: Top Center - Cloud Infrastructure (Expanded Notification Card) */}
         <motion.div
-          className="floating-node node-top-left"
+          className="orbit-card node-top"
           animate={{ y: [0, -6, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
-          <div className="node-icon" style={{ color: "#059669" }}>
-            <FaBagShopping />
+          <div className="node-logo cloud-logo">
+            <FaCloud />
           </div>
-          <div className="node-text">
-            <h5>Authentic Brands</h5>
-            <p>100% verified merchants</p>
+          <div className="node-info">
+            <div className="info-top">
+              <strong>Cloud & Server Hosting</strong>
+              <span className="node-time">Live</span>
+            </div>
+            <p>AWS & Azure hybrid server clusters running with 99.99% uptime.</p>
           </div>
-        </motion.div>
-
-        {/* Floating Node 2: Top-Right */}
-        <motion.div
-          className="floating-node node-top-right"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        >
-          <div className="node-icon" style={{ color: "#2563eb" }}>
-            <FaCreditCard />
-          </div>
-          <div className="node-text">
-            <h5>Stripe Checkout</h5>
-            <p>256-bit encrypted payments</p>
+          <div className="pulse-arrow-down">
+            <FaArrowDown />
           </div>
         </motion.div>
 
-        {/* Floating Node 3: Mid-Left */}
+        {/* Node 2: Top-Right - Cyber Security (Pill Badge) */}
         <motion.div
-          className="floating-node node-mid-left"
-          animate={{ y: [0, -5, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        >
-          <div className="node-icon" style={{ color: "#d97706" }}>
-            <FaBolt />
-          </div>
-          <div className="node-text">
-            <h5>Instant Fulfillment</h5>
-            <p>Under 48h express delivery</p>
-          </div>
-        </motion.div>
-
-        {/* Floating Node 4: Mid-Right */}
-        <motion.div
-          className="floating-node node-mid-right"
+          className="orbit-pill node-top-right"
           animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
         >
-          <div className="node-icon" style={{ color: "#7c3aed" }}>
-            <FaHeadphones />
-          </div>
-          <div className="node-text">
-            <h5>24/7 Priority Desk</h5>
-            <p>Human support anytime</p>
-          </div>
-        </motion.div>
-
-        {/* Floating Node 5: Bottom-Left */}
-        <motion.div
-          className="floating-node node-bottom-left"
-          animate={{ y: [0, -4, 0] }}
-          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        >
-          <div className="node-icon" style={{ color: "#10b981" }}>
+          <div className="pill-icon" style={{ color: "#059669" }}>
             <FaShieldHalved />
           </div>
-          <div className="node-text">
-            <h5>Buyer Protection</h5>
-            <p>30-day hassle-free returns</p>
-          </div>
+          <span>Cyber Security & Firewall</span>
         </motion.div>
 
-        {/* Central Device Mockup (Phone Frame) */}
+        {/* Node 3: Mid-Right - High-Speed Networking (Pill Badge) */}
         <motion.div
-          className="device-mockup"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          className="orbit-pill node-mid-right"
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
         >
-          <div className="device-notch"></div>
-
-          <div className="device-header">
-            <h4>Daily Drop Cart</h4>
-            <div className="live-tag">
-              <span></span> Ready
-            </div>
+          <div className="pill-icon" style={{ color: "#2563eb" }}>
+            <FaNetworkWired />
           </div>
-
-          <div className="device-card-inner">
-            <div className="order-meta">Express Delivery • Order #2841</div>
-            <div className="order-total">
-              <span>₹80,000</span>
-              <span className="total-status">Free Shipping</span>
-            </div>
-          </div>
-
-          <div className="device-items-list">
-            <div className="mini-product-row">
-              <img
-                src="https://res.cloudinary.com/v69muvqf/image/upload/v1789638240/v9ukpoymsj0tstn2ggkj.jpg"
-                alt="MacBook Pro"
-                className="mini-thumb"
-              />
-              <div className="mini-details">
-                <p>Apple MacBook Pro</p>
-                <span>₹80,000 • In Stock</span>
-              </div>
-            </div>
-
-            <div className="mini-product-row">
-              <img
-                src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=100&auto=format&fit=crop&q=60"
-                alt="Smart Watch"
-                className="mini-thumb"
-              />
-              <div className="mini-details">
-                <p>Titanium Smartwatch</p>
-                <span>Verified • 2-Day Ship</span>
-              </div>
-            </div>
-          </div>
-
-          <Link to="/search" className="device-btn">
-            1-Click Instant Checkout
-          </Link>
+          <span>Enterprise LAN & SD-WAN</span>
         </motion.div>
+
+        {/* Node 4: Bottom-Right - Data Backup (Expanded Card) */}
+        <motion.div
+          className="orbit-card node-bottom-right"
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        >
+          <div className="node-logo backup-logo">
+            <FaDatabase />
+          </div>
+          <div className="node-info">
+            <div className="info-top">
+              <strong>Disaster Recovery & Backup</strong>
+              <span className="node-time">Syncing</span>
+            </div>
+            <p>Automated multi-site snapshots with zero data loss guarantee.</p>
+          </div>
+        </motion.div>
+
+        {/* Node 5: Bottom-Left - 24/7 Managed IT AMC (Pill Badge) */}
+        <motion.div
+          className="orbit-pill node-bottom-left"
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+        >
+          <div className="pill-icon" style={{ color: "#7c3aed" }}>
+            <FaHeadset />
+          </div>
+          <span>24/7 Managed Support & AMC</span>
+        </motion.div>
+
+        {/* Node 6: Mid-Left - Server Hardware (Pill Badge) */}
+        <motion.div
+          className="orbit-pill node-mid-left"
+          animate={{ y: [0, 5, 0] }}
+          transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+        >
+          <div className="pill-icon" style={{ color: "#ea580c" }}>
+            <FaServer />
+          </div>
+          <span>Rack Servers & Storage</span>
+        </motion.div>
+
+        {/* Node 7: Top-Left - IT Hardware / Laptops (Expanded Card) */}
+        <motion.div
+          className="orbit-card node-top-left"
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+        >
+          <div className="node-logo laptop-logo">
+            <FaLaptopCode />
+          </div>
+          <div className="node-info">
+            <div className="info-top">
+              <strong>Commercial Laptops & PCs</strong>
+              <span className="node-time">Ready</span>
+            </div>
+            <p>MacBook Pro, ThinkPad, and Dell Latitude fleet deployments.</p>
+          </div>
+        </motion.div>
+
+        {/* === CENTRAL LAPTOP MOCKUP (Precision-crafted CSS Laptop) === */}
+        <div className="center-laptop-container">
+          <div className="laptop-screen-bezel">
+            <div className="laptop-camera"></div>
+            <div className="laptop-screen-glass">
+              {/* Screen Header Bar */}
+              <div className="screen-header">
+                <div className="header-left">
+                  <span className="dot red"></span>
+                  <span className="dot yellow"></span>
+                  <span className="dot green"></span>
+                  <span className="screen-title">Solution Systems • Central Control</span>
+                </div>
+                <div className="header-status">
+                  <span className="status-ping"></span>
+                  <span>Health: Optimal</span>
+                </div>
+              </div>
+
+              {/* Screen Dashboard Body */}
+              <div className="screen-body">
+                <div className="dashboard-stats-grid">
+                  <div className="stat-card">
+                    <span className="stat-label">Active Endpoints</span>
+                    <span className="stat-value">1,420</span>
+                    <span className="stat-badge green">100% Protected</span>
+                  </div>
+                  <div className="stat-card">
+                    <span className="stat-label">Network Throughput</span>
+                    <span className="stat-value">9.8 Gb/s</span>
+                    <span className="stat-badge blue">Low Latency</span>
+                  </div>
+                </div>
+
+                {/* Central Focus Notification inside Screen */}
+                <div className="screen-focus-alert">
+                  <div className="alert-badge">SYSTEM REPORT • READY</div>
+                  <h3>Infrastructure Close is Ready!</h3>
+                  <p>All 52 servers, cloud backups, and corporate workstations reconciled with zero failures.</p>
+                  <div className="alert-actions">
+                    <button className="btn-alert-primary">
+                      <FaCheck /> Generate Report
+                    </button>
+                    <button className="btn-alert-secondary">View Metrics</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Laptop Base & Trackpad */}
+          <div className="laptop-base">
+            <div className="laptop-hinge"></div>
+            <div className="laptop-notch"></div>
+          </div>
+          <div className="laptop-reflection"></div>
+        </div>
       </div>
 
-      {/* Narrative Brand Statement (matching Morrow footer quote) */}
+      {/* Editorial Narrative Statement below orbit */}
       <p className="morrow-statement">
-        <strong>Suraj eCommerce</strong> brings hand-picked verified merchants, transparent pricing,
-        and lightning-fast fulfillment together into one reconciled, seamless shopping journey.
+        <strong>Solution Systems</strong> delivers end-to-end IT architecture — combining high-grade
+        laptops, enterprise servers, cloud infrastructure, and 24/7 dedicated support into one unified platform.
       </p>
     </section>
   );
