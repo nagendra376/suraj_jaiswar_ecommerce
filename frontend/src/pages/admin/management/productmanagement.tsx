@@ -33,6 +33,9 @@ const Productmanagement = () => {
 
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
   const [priceUpdate, setPriceUpdate] = useState<number>(price);
+  const [originalPriceUpdate, setOriginalPriceUpdate] = useState<number>(
+    data?.product?.originalPrice || 0
+  );
   const [stockUpdate, setStockUpdate] = useState<number>(stock);
   const [nameUpdate, setNameUpdate] = useState<string>(name);
   const [categoryUpdate, setCategoryUpdate] = useState<string>(category);
@@ -54,6 +57,8 @@ const Productmanagement = () => {
       if (nameUpdate) formData.set("name", nameUpdate);
       if (descriptionUpdate) formData.set("description", descriptionUpdate);
       if (priceUpdate) formData.set("price", priceUpdate.toString());
+      if (originalPriceUpdate !== undefined)
+        formData.set("originalPrice", originalPriceUpdate.toString());
       if (stockUpdate !== undefined)
         formData.set("stock", stockUpdate.toString());
 
@@ -92,6 +97,7 @@ const Productmanagement = () => {
     if (data) {
       setNameUpdate(data.product.name);
       setPriceUpdate(data.product.price);
+      setOriginalPriceUpdate(data.product.originalPrice || 0);
       setStockUpdate(data.product.stock);
       setCategoryUpdate(data.product.category);
       setDescriptionUpdate(data.product.description);
@@ -118,6 +124,11 @@ const Productmanagement = () => {
                 <span className="red"> Not Available</span>
               )}
               <h3>₹{price}</h3>
+              {data?.product?.originalPrice ? (
+                <p style={{ textDecoration: "line-through", color: "#888", fontSize: "0.85rem", marginTop: "-0.5rem" }}>
+                  MRP: ₹{data.product.originalPrice}
+                </p>
+              ) : null}
             </section>
             <article>
               <button className="product-delete-btn" onClick={deleteHandler}>
@@ -151,6 +162,17 @@ const Productmanagement = () => {
                     placeholder="Price"
                     value={priceUpdate}
                     onChange={(e) => setPriceUpdate(Number(e.target.value))}
+                  />
+                </div>
+                <div>
+                  <label>Original / Strikethrough Price (Optional)</label>
+                  <input
+                    type="number"
+                    placeholder="eg. 118000"
+                    value={originalPriceUpdate || ""}
+                    onChange={(e) =>
+                      setOriginalPriceUpdate(Number(e.target.value))
+                    }
                   />
                 </div>
                 <div>

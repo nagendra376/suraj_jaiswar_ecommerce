@@ -13,6 +13,7 @@ export interface NewProductRequestBody {
   name: string;
   category: string;
   price: number;
+  originalPrice?: number;
   stock: number;
   description: string;
 }
@@ -37,7 +38,7 @@ export interface BaseQuery {
     $options: string;
   };
   price?: { $lte: number };
-  category?: string;
+  category?: string | { $regex: string; $options: string };
 }
 
 export type InvalidateCacheProps = {

@@ -94,7 +94,7 @@ export const getSingleProduct = TryCatch(async (req, res, next) => {
 
 export const newProduct = TryCatch(
   async (req: Request<{}, {}, NewProductRequestBody>, res, next) => {
-    const { name, price, stock, category, description } = req.body;
+    const { name, price, originalPrice, stock, category, description } = req.body;
     const photos = req.files as Express.Multer.File[] | undefined;
 
     if (!photos) return next(new ErrorHandler("Please add Photo", 400));
@@ -115,6 +115,7 @@ export const newProduct = TryCatch(
     await Product.create({
       name,
       price,
+      originalPrice: originalPrice ? Number(originalPrice) : 0,
       description,
       stock,
       category: category.toLowerCase(),
@@ -132,7 +133,7 @@ export const newProduct = TryCatch(
 
 export const updateProduct = TryCatch(async (req, res, next) => {
   const { id } = req.params;
-  const { name, price, stock, category, description } = req.body;
+  const { name, price, originalPrice, stock, category, description } = req.body;
   const photos = req.files as Express.Multer.File[] | undefined;
 
   const product = await Product.findById(id);
@@ -151,8 +152,9 @@ export const updateProduct = TryCatch(async (req, res, next) => {
 
   if (name) product.name = name;
   if (price) product.price = price;
+  if (originalPrice !== undefined) product.originalPrice = Number(originalPrice);
   if (stock) product.stock = stock;
-  if (category) product.category = category;
+  if (category) product.category = category.toLowerCase();
   if (description) product.description = description;
 
   await product.save();
@@ -227,7 +229,12 @@ export const getAllProducts = TryCatch(
           $lte: Number(price),
         };
 
-      if (category) baseQuery.category = category;
+      if (category) {
+        baseQuery.category = {
+          $regex: `^${category}$`,
+          $options: "i",
+        };
+      }
 
       const productsPromise = Product.find(baseQuery)
         .sort(sort && { price: sort === "asc" ? 1 : -1 })

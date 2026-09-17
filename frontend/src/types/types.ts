@@ -11,6 +11,7 @@ export type User = {
 export type Product = {
   name: string;
   price: number;
+  originalPrice?: number;
   stock: number;
   category: string;
   ratings: number;

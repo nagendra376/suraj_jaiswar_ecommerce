@@ -15,6 +15,7 @@ const NewProduct = () => {
   const [name, setName] = useState<string>("");
   const [category, setCategory] = useState<string>("");
   const [price, setPrice] = useState<number>(1000);
+  const [originalPrice, setOriginalPrice] = useState<number>(0);
   const [stock, setStock] = useState<number>(1);
   const [description, setDescription] = useState<string>("");
 
@@ -36,6 +37,7 @@ const NewProduct = () => {
       formData.set("name", name);
       formData.set("description", description);
       formData.set("price", price.toString());
+      if (originalPrice) formData.set("originalPrice", originalPrice.toString());
       formData.set("stock", stock.toString());
 
       formData.set("category", category);
@@ -90,6 +92,15 @@ const NewProduct = () => {
                 placeholder="Price"
                 value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
+              />
+            </div>
+            <div>
+              <label>Original / Strikethrough Price (Optional)</label>
+              <input
+                type="number"
+                placeholder="eg. 118000"
+                value={originalPrice || ""}
+                onChange={(e) => setOriginalPrice(Number(e.target.value))}
               />
             </div>
             <div>

@@ -58,7 +58,16 @@ const Products = () => {
     if (data)
       setRows(
         data.products.map((i) => ({
-          photo: <img src={i.photos?.[0]?.url} />,
+          photo: (
+            <img
+              src={i.photos?.[0]?.url || "/products/bundle_4.png"}
+              alt={i.name}
+              onError={(e) => {
+                e.currentTarget.src =
+                  "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=200&auto=format&fit=crop&q=60";
+              }}
+            />
+          ),
           name: i.name,
           price: i.price,
           stock: i.stock,
