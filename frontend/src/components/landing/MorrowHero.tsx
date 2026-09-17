@@ -66,19 +66,6 @@ const services = [
   },
 ];
 
-const marqueeRibbonItems = [
-  "⚡ Same-Day Repair",
-  "🛡️ 90-Day Warranty",
-  "🔍 ₹350 Inspection Fee (refunded if you proceed)",
-  "✅ Genuine Parts",
-  "⭐ 4.9/5 Rated",
-  "🛵 Doorstep Pickup",
-  "💰 Transparent Pricing",
-  "🏆 1,00,000+ Laptops Repaired",
-  "📍 50+ Areas Served in Mumbai",
-  "🔧 All Major Brands",
-];
-
 const MorrowHero = () => {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const tweenRef = useRef<gsap.core.Tween | null>(null);
@@ -234,8 +221,7 @@ const MorrowHero = () => {
   };
 
   return (
-    <>
-      <section className="morrow-hero-wrapper">
+    <section className="morrow-hero-wrapper">
         {/* Header */}
         <div className="morrow-header">
           <h1 className="hero-title">
@@ -434,27 +420,6 @@ const MorrowHero = () => {
           a 90-day comprehensive warranty, and doorstep pickup across 50+ areas in Mumbai.
         </p>
       </section>
-
-      {/* Blue-to-Indigo Gradient Repair Marquee Ribbon (from inspector reference) */}
-      <div className="repair-marquee-ribbon">
-        <div className="repair-marquee-track">
-          {/* Loop 1 */}
-          {marqueeRibbonItems.map((item, idx) => (
-            <span key={`item-loop1-${idx}`} className="marquee-entry">
-              <span className="marquee-text">{item}</span>
-              <span className="marquee-sep">•</span>
-            </span>
-          ))}
-          {/* Loop 2 (for continuous seamless scroll) */}
-          {marqueeRibbonItems.map((item, idx) => (
-            <span key={`item-loop2-${idx}`} className="marquee-entry">
-              <span className="marquee-text">{item}</span>
-              <span className="marquee-sep">•</span>
-            </span>
-          ))}
-        </div>
-      </div>
-    </>
   );
 };
 
