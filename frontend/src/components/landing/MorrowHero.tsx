@@ -8,8 +8,6 @@ import {
   FaCircleCheck,
   FaMotorcycle,
   FaStar,
-  FaTrophy,
-  FaWrench,
   FaArrowRight,
   FaCheck,
 } from "react-icons/fa6";
@@ -62,26 +60,9 @@ const services = [
   {
     id: "rating",
     type: "pill",
-    title: "⭐ 4.9/5 Customer Rated",
+    title: "⭐ 4.9/5 Rated • 1L+ Repaired",
     icon: <FaStar />,
     color: "#f59e0b",
-  },
-  {
-    id: "repaired",
-    type: "card",
-    title: "1,00,000+ Repaired",
-    badge: "🏆 Proven Legacy",
-    desc: "Serving 50+ areas across Mumbai.",
-    icon: <FaTrophy />,
-    color: "#059669",
-    bgColor: "#ecfdf5",
-  },
-  {
-    id: "brands",
-    type: "pill",
-    title: "🔧 All Major Brands",
-    icon: <FaWrench />,
-    color: "#ea580c",
   },
 ];
 
@@ -107,9 +88,9 @@ const MorrowHero = () => {
 
     mm.add("(min-width: 769px)", () => {
       const progressObj = { value: 0 };
-      const Rx = 440; // Horizontal radius of the 180° arc
-      const Ry = 270; // Vertical radius of the 180° arc
-      const totalSpan = Math.PI + 0.6; // Extended span for left entrance and right exit
+      const Rx = 460; // Horizontal radius of the 180° arc
+      const Ry = 300; // Vertical radius of the 180° arc (expanded for generous gap above laptop)
+      const totalSpan = Math.PI + 0.8; // Extended span for smooth left entrance and right exit
       const count = services.length;
       const step = totalSpan / count;
 
@@ -118,8 +99,8 @@ const MorrowHero = () => {
         itemRefs.current.forEach((el, index) => {
           if (!el) return;
 
-          // Angle in radians: starts at -0.3 (left entrance) and advances to π + 0.3 (right exit)
-          let angle = (progressObj.value * totalSpan + index * step) % totalSpan - 0.3;
+          // Angle in radians: starts at -0.4 (left entrance) and advances to π + 0.4 (right exit)
+          let angle = (progressObj.value * totalSpan + index * step) % totalSpan - 0.4;
 
           // Compute X, Y coordinates: X from -Rx (left) to +Rx (right); Y arched upward
           const x = -Rx * Math.cos(angle);
@@ -129,14 +110,14 @@ const MorrowHero = () => {
           let opacity = 1;
           let scale = 1;
 
-          if (angle < 0.15) {
-            const factor = Math.max(0, (angle + 0.3) / 0.45);
+          if (angle < 0.2) {
+            const factor = Math.max(0, (angle + 0.4) / 0.6);
             opacity = factor;
-            scale = 0.75 + factor * 0.25;
-          } else if (angle > Math.PI - 0.15) {
-            const factor = Math.max(0, (Math.PI + 0.3 - angle) / 0.45);
+            scale = 0.8 + factor * 0.2;
+          } else if (angle > Math.PI - 0.2) {
+            const factor = Math.max(0, (Math.PI + 0.4 - angle) / 0.6);
             opacity = factor;
-            scale = 0.75 + factor * 0.25;
+            scale = 0.8 + factor * 0.2;
           }
 
           // Positioning uses xPercent/yPercent: cards remain 100% upright and never flip or tilt!
@@ -230,7 +211,7 @@ const MorrowHero = () => {
           {/* Single 180° Upper Orbital Arc SVG + Downward Pointer Chevrons */}
           <svg
             className="orbital-arc-svg"
-            viewBox="0 0 1000 450"
+            viewBox="0 0 1060 520"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -244,21 +225,21 @@ const MorrowHero = () => {
               </linearGradient>
             </defs>
 
-            {/* 180-degree Arch Line (No bottom circle) */}
+            {/* 180-degree Arch Line (Expanded vertical height for generous gap above laptop) */}
             <path
-              d="M 60 360 A 440 270 0 0 1 940 360"
+              d="M 70 400 A 460 300 0 0 1 990 400"
               stroke="url(#arcStrokeGrad)"
               strokeWidth="1.5"
               strokeDasharray="5 5"
             />
 
-            {/* Downward Pointer Chevrons at Apex (matching reference image) */}
+            {/* Downward Pointer Chevrons at Apex (pointing directly down to laptop screen) */}
             <g className="apex-arrow-chain">
-              <polygon points="500,96 495,104 505,104" fill="#10b981" opacity="0.35" />
-              <polygon points="500,110 495,118 505,118" fill="#10b981" opacity="0.5" />
-              <polygon points="500,124 495,132 505,132" fill="#10b981" opacity="0.65" />
-              <polygon points="500,138 495,146 505,146" fill="#10b981" opacity="0.8" />
-              <polygon points="500,152 495,160 505,160" fill="#10b981" opacity="1.0" />
+              <polygon points="530,135 524,125 536,125" fill="#10b981" opacity="0.3" />
+              <polygon points="530,165 524,155 536,155" fill="#10b981" opacity="0.48" />
+              <polygon points="530,195 524,185 536,185" fill="#10b981" opacity="0.65" />
+              <polygon points="530,225 524,215 536,215" fill="#10b981" opacity="0.82" />
+              <polygon points="530,255 524,245 536,245" fill="#10b981" opacity="1.0" />
             </g>
           </svg>
 
