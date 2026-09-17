@@ -17,8 +17,8 @@ const services = [
     id: "same-day",
     type: "card",
     title: "Same-Day Repair",
-    badge: "⚡ Express",
-    desc: "Diagnostic & hardware fix within 24h.",
+    badge: "Express",
+    desc: "Diagnostic & fix within 24h.",
     icon: <FaBolt />,
     color: "#eab308",
     bgColor: "#fefce8",
@@ -26,7 +26,7 @@ const services = [
   {
     id: "warranty",
     type: "pill",
-    title: "🛡️ 90-Day Warranty",
+    title: "90-Day Warranty",
     icon: <FaShieldHalved />,
     color: "#2563eb",
   },
@@ -34,8 +34,8 @@ const services = [
     id: "inspection",
     type: "card",
     title: "₹350 Inspection Fee",
-    badge: "🔍 Refundable",
-    desc: "100% refunded if you proceed with repair.",
+    badge: "Refundable",
+    desc: "100% refunded if you proceed.",
     icon: <FaMagnifyingGlass />,
     color: "#0284c7",
     bgColor: "#f0f9ff",
@@ -43,7 +43,7 @@ const services = [
   {
     id: "pickup",
     type: "pill",
-    title: "🛵 Doorstep Pickup",
+    title: "Doorstep Pickup",
     icon: <FaMotorcycle />,
     color: "#8b5cf6",
   },
@@ -51,8 +51,8 @@ const services = [
     id: "parts",
     type: "card",
     title: "Genuine OEM Parts",
-    badge: "✅ 100% Original",
-    desc: "Screens, batteries & chip-level boards.",
+    badge: "Original",
+    desc: "Screens, batteries & boards.",
     icon: <FaCircleCheck />,
     color: "#10b981",
     bgColor: "#ecfdf5",
@@ -60,7 +60,7 @@ const services = [
   {
     id: "rating",
     type: "pill",
-    title: "⭐ 4.9/5 Rated • 1L+ Repaired",
+    title: "4.9/5 Customer Rated",
     icon: <FaStar />,
     color: "#f59e0b",
   },
@@ -155,20 +155,20 @@ const MorrowHero = () => {
       updateItems();
     });
 
-    // Mobile (<= 768px): 4 items, compact radius, circular motion preserved
+    // Mobile (<= 768px): exactly 3 items, compact radius, circular motion preserved
     mm.add("(max-width: 768px)", () => {
       const progressObj = { value: 0 };
       const Rx = 155; // Mobile horizontal radius
       const Ry = 105; // Mobile vertical radius
       const totalSpan = Math.PI + 0.8;
-      const mobileCount = 4; // Exactly 4 items for mobile breathing room
+      const mobileCount = 3; // Exactly 3 items on mobile as requested
       const step = totalSpan / mobileCount;
 
       const updateMobileItems = () => {
         itemRefs.current.forEach((el, index) => {
           if (!el) return;
 
-          // Hide items beyond index 3 on mobile
+          // Hide items beyond index 2 on mobile (show exactly 3)
           if (index >= mobileCount) {
             gsap.set(el, { display: "none" });
             return;
