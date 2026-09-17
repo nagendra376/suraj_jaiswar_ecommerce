@@ -9,12 +9,13 @@ export interface CategoryItem {
 export const CATEGORIES_NAV: CategoryItem[] = [
   { name: "Processor", slug: "processor", iconName: "cpu" },
   { name: "Motherboard", slug: "motherboard", iconName: "motherboard" },
-  { name: "Graphic Card", slug: "graphics-card", iconName: "gpu" },
   { name: "Memory (RAM)", slug: "ram", iconName: "ram" },
+  { name: "Graphics Card", slug: "graphics-card", iconName: "gpu" },
   { name: "SSD", slug: "ssd", iconName: "ssd" },
-  { name: "Cabinet", slug: "cabinet", iconName: "cabinet" },
+  { name: "Storage", slug: "storage", iconName: "hdd" },
+  { name: "Cooling System", slug: "cooler", iconName: "cooler" },
   { name: "Power Supply", slug: "power-supply", iconName: "power" },
-  { name: "CPU Cooler", slug: "cooler", iconName: "cooler" },
+  { name: "Cabinet (Case)", slug: "cabinet", iconName: "cabinet" },
   { name: "Monitor", slug: "monitor", iconName: "monitor" },
 ];
 

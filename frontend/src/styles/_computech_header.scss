@@ -1,8 +1,11 @@
 // Computech Store Header Styles
 // Reference: https://computechstore.in/
 
-$brand-red: #f32122;
-$brand-red-hover: #d91a1b;
+$brand-green: #057c56;
+$brand-green-hover: #046646;
+$brand-green-light: #ecfdf5;
+$brand-red: #057c56; // Theme green alias
+$brand-red-hover: #046646;
 $header-dark: #0f172a;
 $header-dark-hover: #1e293b;
 $gray-light: #f8fafc;
@@ -18,11 +21,11 @@ $text-muted: #64748b;
   background: #ffffff;
   box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.08);
 
-  // 1. Top Red Accent Line
+  // 1. Top Green Accent Line
   .top-accent-line {
     width: 100%;
     height: 4px;
-    background-color: $brand-red;
+    background-color: $brand-green;
   }
 
   // 2. Top Ticker Marquee Announcement Bar
@@ -55,12 +58,12 @@ $text-muted: #64748b;
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background-color: $brand-red;
-          box-shadow: 0 0 6px rgba(243, 33, 34, 0.8);
+          background-color: $brand-green;
+          box-shadow: 0 0 6px rgba(5, 124, 86, 0.8);
         }
 
         .highlight-alert {
-          color: #fca5a5;
+          color: #a7f3d0;
         }
       }
     }
@@ -174,11 +177,11 @@ $text-muted: #64748b;
 
             &:focus {
               background: #ffffff;
-              border-color: $brand-red;
-              box-shadow: 0 0 0 4px rgba(243, 33, 34, 0.12);
+              border-color: $brand-green;
+              box-shadow: 0 0 0 4px rgba(5, 124, 86, 0.15);
 
               ~ .search-icon-left {
-                color: $brand-red;
+                color: $brand-green;
               }
             }
           }
@@ -202,8 +205,8 @@ $text-muted: #64748b;
             box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15);
 
             &:hover {
-              background: $brand-red;
-              box-shadow: 0 4px 12px rgba(243, 33, 34, 0.3);
+              background: $brand-green;
+              box-shadow: 0 4px 12px rgba(5, 124, 86, 0.35);
             }
           }
         }
@@ -394,7 +397,7 @@ $text-muted: #64748b;
           }
 
           .cart-badge-count {
-            background: $brand-red;
+            background: $brand-green;
             color: #ffffff;
             font-size: 0.72rem;
             font-weight: 800;
@@ -406,17 +409,17 @@ $text-muted: #64748b;
             align-items: center;
             justify-content: center;
             line-height: 1;
-            box-shadow: 0 2px 5px rgba(243, 33, 34, 0.4);
+            box-shadow: 0 2px 5px rgba(5, 124, 86, 0.4);
           }
 
           &:hover {
-            background: $brand-red;
+            background: $brand-green;
             transform: translateY(-1px);
-            box-shadow: 0 5px 15px rgba(243, 33, 34, 0.3);
+            box-shadow: 0 5px 15px rgba(5, 124, 86, 0.35);
 
             .cart-badge-count {
               background: #ffffff;
-              color: $brand-red;
+              color: $brand-green;
             }
           }
         }

@@ -42,6 +42,7 @@ const renderCategoryIcon = (iconName: string) => {
     case "ram":
       return <BsMemory />;
     case "ssd":
+    case "hdd":
       return <BsHdd />;
     case "cabinet":
       return <BsPcDisplay />;

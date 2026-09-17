@@ -1,102 +1,152 @@
-// ==========================================
+﻿// ==========================================
 // Computech-Style Shop By Category & Product Showcases
+// Reference: https://computechstore.in/
 // ==========================================
+
+$brand-green: #057c56;
+$brand-green-hover: #046646;
+$brand-green-light: #ecfdf5;
+$brand-green-glow: rgba(5, 124, 86, 0.16);
+$brand-green-border: rgba(5, 124, 86, 0.35);
 
 .computech-shop-container {
   width: 100%;
-  background-color: #edf0f3;
+  background-color: #f8fafc;
   padding: 3rem 4% 5rem 4%;
   box-sizing: border-box;
+  border-top: 1px dashed rgba(209, 213, 219, 0.8);
+
+  @media (max-width: 640px) {
+    padding: 2rem 1rem 4rem 1rem;
+  }
 }
 
 // ------------------------------------------
 // 1. SHOP BY CATEGORY BAR
 // ------------------------------------------
 .shop-by-category-bar {
-  max-width: 1400px;
+  max-width: 100rem;
   margin: 0 auto 3.5rem auto;
   text-align: center;
 
-  .shop-by-category-title {
-    font-size: clamp(1.3rem, 2.2vw, 1.65rem);
-    font-weight: 800;
-    color: #111827;
-    letter-spacing: 0.5px;
-    margin-bottom: 2rem;
-    text-transform: uppercase;
+  @media (max-width: 640px) {
+    margin-bottom: 2.5rem;
   }
 
+  // Exact Computech Title: text-2xl sm:text-3xl font-black uppercase tracking-tight
+  .shop-by-category-title {
+    font-size: clamp(1.5rem, 2.5vw, 1.875rem);
+    font-weight: 900;
+    color: #111827;
+    letter-spacing: -0.025em;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    text-align: center;
+
+    @media (min-width: 1024px) {
+      margin-bottom: 3rem;
+    }
+  }
+
+  // Exact Computech Grid: flex flex-wrap justify-center gap-6 sm:gap-10 lg:gap-14
   .categories-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    gap: 1.25rem 1.75rem;
+    gap: 1.5rem 1.5rem;
 
-    @media (max-width: 768px) {
-      gap: 1rem 1.25rem;
+    @media (min-width: 640px) {
+      gap: 2rem 2.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      gap: 2.5rem 3.5rem;
     }
   }
 
+  // Exact Computech Card Link: flex flex-col items-center group w-[80px] sm:w-[100px]
   .category-item-card {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    width: 96px;
+    width: 80px;
     cursor: pointer;
     transition: transform 0.25s ease;
+
+    @media (min-width: 640px) {
+      width: 100px;
+    }
 
     &:hover {
       transform: translateY(-4px);
 
       .category-icon-box {
-        border-color: #e53935;
-        background-color: #ffffff;
-        color: #e53935;
-        box-shadow: 0 6px 18px rgba(229, 57, 53, 0.16);
+        border-color: $brand-green;
+        box-shadow: 0 8px 24px $brand-green-glow;
+
+        svg, img {
+          transform: scale(1.12);
+          color: $brand-green;
+        }
       }
 
       .category-label {
-        color: #e53935;
+        color: $brand-green;
       }
     }
   }
 
+  // Exact Computech Icon Box: w-20 h-20 sm:w-[100px] sm:h-[100px] rounded-[1.5rem] border-2 border-gray-200/80 bg-white p-4 shadow-sm
   .category-icon-box {
-    width: 68px;
-    height: 68px;
-    border-radius: 16px;
+    width: 80px;
+    height: 80px;
+    border-radius: 1.25rem; // 20px on mobile
     background-color: #ffffff;
-    border: 1.5px solid #e2e5e9;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    border: 2px solid rgba(229, 231, 235, 0.85);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
-    color: #374151;
-    transition: all 0.25s ease;
+    font-size: 32px;
+    color: #1f2937;
+    padding: 12px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    @media (max-width: 768px) {
-      width: 58px;
-      height: 58px;
-      font-size: 24px;
-      border-radius: 14px;
+    svg, img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    @media (min-width: 640px) {
+      width: 100px;
+      height: 100px;
+      border-radius: 1.5rem; // 24px squircle
+      font-size: 38px;
+      padding: 16px;
     }
   }
 
+  // Exact Computech Label: mt-3 text-[11px] sm:text-xs font-black text-gray-700 uppercase tracking-widest leading-tight
   .category-label {
-    font-size: 11.5px;
-    font-weight: 700;
+    font-size: 11px;
+    font-weight: 900;
     color: #374151;
     text-align: center;
-    margin-top: 9px;
+    margin-top: 12px;
     line-height: 1.25;
-    letter-spacing: 0.2px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     transition: color 0.2s ease;
 
-    @media (max-width: 768px) {
-      font-size: 10.5px;
+    @media (min-width: 640px) {
+      font-size: 12px;
     }
   }
 }
@@ -105,8 +155,10 @@
 // 2. CATEGORY PRODUCT SHOWCASE SECTIONS
 // ------------------------------------------
 .computech-category-section {
-  max-width: 1400px;
-  margin: 0 auto 2.5rem auto;
+  max-width: 100rem;
+  margin: 0 auto 3rem auto;
+  border-top: 1px dashed rgba(209, 213, 219, 0.7);
+  padding-top: 2rem;
 
   // Header Bar
   .computech-section-header {
@@ -114,8 +166,8 @@
     align-items: center;
     justify-content: space-between;
     padding-bottom: 0.9rem;
-    margin-bottom: 1.25rem;
-    border-bottom: 1px dashed #d1d5db;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px dashed rgba(209, 213, 219, 0.7);
 
     .header-left {
       display: flex;
@@ -124,17 +176,18 @@
     }
 
     .header-icon-badge {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      border: 1.5px solid #f59e0b;
-      background-color: #fef3c7;
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      background-color: rgba(245, 158, 11, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
 
       .gold-star-icon {
-        color: #d97706;
+        color: #f59e0b;
         font-size: 18px;
       }
     }
@@ -144,11 +197,12 @@
       flex-direction: column;
     }
 
+    // Exact Computech Section Header: text-2xl sm:text-3xl font-black uppercase tracking-tight
     .header-main-title {
-      font-size: clamp(1.2rem, 1.8vw, 1.45rem);
-      font-weight: 800;
+      font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+      font-weight: 900;
       color: #111827;
-      letter-spacing: 0.4px;
+      letter-spacing: -0.025em;
       margin: 0;
       line-height: 1.2;
       text-transform: uppercase;
@@ -157,9 +211,9 @@
     .header-sub-title {
       font-size: 0.72rem;
       font-weight: 700;
-      color: #6b7280;
-      letter-spacing: 1px;
-      margin: 2px 0 0 0;
+      color: #9ca3af;
+      letter-spacing: 0.1em;
+      margin: 4px 0 0 0;
       text-transform: uppercase;
     }
 
@@ -169,9 +223,13 @@
       gap: 6px;
       margin-left: 0.75rem;
 
+      @media (max-width: 640px) {
+        display: none;
+      }
+
       .chevron-btn {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
         background-color: #ffffff;
         border: 1px solid #d1d5db;
@@ -179,14 +237,14 @@
         align-items: center;
         justify-content: center;
         font-size: 12px;
-        color: #374151;
+        color: #4b5563;
         cursor: pointer;
         transition: all 0.2s ease;
 
         &:hover {
-          background-color: #111827;
+          background-color: $brand-green;
           color: #ffffff;
-          border-color: #111827;
+          border-color: $brand-green;
         }
 
         &:active {
@@ -200,19 +258,20 @@
       align-items: center;
 
       .view-all-link {
-        color: #e53935;
+        color: $brand-green;
         font-size: 0.85rem;
-        font-weight: 800;
-        letter-spacing: 0.5px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
         text-decoration: none;
         display: inline-flex;
         align-items: center;
-        gap: 3px;
+        gap: 4px;
         transition: all 0.2s ease;
 
         &:hover {
-          color: #b91c1c;
-          gap: 6px;
+          color: $brand-green-hover;
+          gap: 7px;
         }
       }
     }
@@ -222,7 +281,7 @@
   .computech-carousel-row {
     display: flex;
     align-items: stretch;
-    gap: 1.1rem;
+    gap: 1.25rem;
     overflow-x: auto;
     scroll-behavior: smooth;
     padding: 6px 2px 14px 2px;
@@ -234,14 +293,14 @@
   }
 
   // ------------------------------------------
-  // PRODUCT CARD
+  // PRODUCT CARD (Matching Computech Card)
   // ------------------------------------------
   .computech-product-card {
-    flex: 0 0 252px;
-    width: 252px;
-    background-color: #f7f8fa;
-    border: 1px solid #e2e5e9;
-    border-radius: 14px;
+    flex: 0 0 255px;
+    width: 255px;
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem; // rounded-2xl
     padding: 14px;
     box-sizing: border-box;
     position: relative;
@@ -252,21 +311,22 @@
 
     &:hover {
       transform: translateY(-4px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
       border-color: #cbd5e1;
 
       .card-image-wrap img {
-        transform: scale(1.05);
+        transform: scale(1.06);
       }
 
       .card-quick-cart-btn {
-        border-color: #e53935;
-        background-color: #e53935;
+        border-color: $brand-green;
+        background-color: $brand-green;
         color: #ffffff;
+        box-shadow: 0 4px 12px rgba(5, 124, 86, 0.25);
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 640px) {
       flex: 0 0 220px;
       width: 220px;
       padding: 12px;
@@ -277,32 +337,38 @@
       position: absolute;
       top: 12px;
       left: 12px;
-      background-color: #e53935;
+      background-color: $brand-green;
       color: #ffffff;
-      font-size: 9.5px;
-      font-weight: 800;
-      padding: 2px 7px;
+      font-size: 8.5px;
+      font-weight: 900;
+      padding: 3px 8px;
       border-radius: 4px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       z-index: 2;
+      box-shadow: 0 2px 6px rgba(5, 124, 86, 0.3);
     }
 
     // Product Photo Wrap
     .card-image-wrap {
       width: 100%;
-      height: 140px;
+      height: 145px;
+      background-color: #f8f9fa;
+      border: 1px solid rgba(229, 231, 235, 0.7);
+      border-radius: 0.75rem;
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 12px;
       overflow: hidden;
+      padding: 8px;
+      box-sizing: border-box;
 
       img {
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
-        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.12));
-        transition: transform 0.3s ease;
+        transition: transform 0.4s ease;
       }
     }
 
@@ -310,25 +376,30 @@
     .card-title {
       font-size: 13px;
       font-weight: 700;
-      color: #1f2937;
+      color: #111827;
       line-height: 1.35;
       height: 35px;
-      margin: 0 0 8px 0;
+      margin: 0 0 10px 0;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $brand-green;
+      }
     }
 
     // Price Label
     .card-price-label {
-      font-size: 9.5px;
-      font-weight: 700;
+      font-size: 9px;
+      font-weight: 800;
       color: #9ca3af;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
       display: block;
     }
 
@@ -347,24 +418,26 @@
       }
 
       .sale-price {
-        font-size: 15.5px;
-        font-weight: 800;
+        font-size: 16px;
+        font-weight: 900;
         color: #111827;
       }
 
       .original-price {
-        font-size: 11.5px;
-        font-weight: 500;
+        font-size: 11px;
+        font-weight: 600;
         color: #9ca3af;
         text-decoration: line-through;
       }
 
       .stock-indicator {
-        font-size: 10.5px;
-        font-weight: 700;
+        font-size: 9.5px;
+        font-weight: 900;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
 
         .stock-in {
-          color: #16a34a;
+          color: $brand-green;
         }
 
         .stock-low {
@@ -384,7 +457,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      padding: 7px 0;
+      padding: 8px 0;
       background-color: #ffffff;
       border: 1px solid #d1d5db;
       border-radius: 8px;
@@ -408,7 +481,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     margin-bottom: 1.5rem;
 
     .mini-track-btn {
@@ -429,7 +502,7 @@
       width: 320px;
       max-width: 60%;
       height: 4px;
-      background-color: #d1d5db;
+      background-color: #e5e7eb;
       border-radius: 4px;
       position: relative;
       overflow: hidden;
@@ -438,7 +511,7 @@
     .mini-track-thumb {
       width: 60px;
       height: 4px;
-      background-color: #4b5563;
+      background-color: $brand-green;
       border-radius: 4px;
       position: absolute;
       top: 0;
