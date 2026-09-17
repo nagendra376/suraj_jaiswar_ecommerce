@@ -40,9 +40,26 @@ const app = express();
 
 app.use(express.json());
 app.use(morgan("dev"));
+const allowedOrigins = [
+  clientURL,
+  "http://localhost:5173",
+  "http://localhost:4173",
+  "https://suraj-jaiswar-ecommerce.vercel.app",
+];
+
 app.use(
   cors({
-    origin: [clientURL],
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (
+        allowedOrigins.includes(origin) ||
+        origin.endsWith(".vercel.app") ||
+        origin.includes("localhost")
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })

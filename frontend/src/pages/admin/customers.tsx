@@ -66,7 +66,7 @@ const Customers = () => {
 
   if (isError) {
     const err = error as CustomError;
-    toast.error(err.data.message);
+    toast.error(err?.data?.message || "Failed to load customers");
   }
 
   useEffect(() => {

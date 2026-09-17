@@ -54,11 +54,11 @@ const Search = () => {
 
   if (isError) {
     const err = error as CustomError;
-    toast.error(err.data.message);
+    toast.error(err?.data?.message || "Failed to load categories");
   }
   if (productIsError) {
     const err = productError as CustomError;
-    toast.error(err.data.message);
+    toast.error(err?.data?.message || "Failed to load products");
   }
   return (
     <div className="product-search-page">
