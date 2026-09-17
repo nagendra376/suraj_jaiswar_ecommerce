@@ -9,7 +9,8 @@ import {
   FaMotorcycle,
   FaStar,
   FaArrowRight,
-  FaCheck,
+  FaPhone,
+  FaWhatsapp,
 } from "react-icons/fa6";
 
 const services = [
@@ -230,8 +231,9 @@ const MorrowHero = () => {
           </h1>
 
           <p className="hero-subtitle">
-            Same-day repairs, 90-day warranty, 100% genuine OEM parts, and doorstep pickup
-            across 50+ areas in Mumbai — revolving around your hardware in one seamless orbit.
+            Expert IT services and laptop repair in Borivali, Dahisar,
+            Mira-Bhayandar, and across Mumbai MMR. Reliable, affordable solutions,
+            same-day service, 90-day warranty, and free doorstep pickup.
           </p>
 
           <div className="hero-cta-group">
@@ -376,31 +378,32 @@ const MorrowHero = () => {
                   </div>
                 </div>
 
-                {/* Screen Content */}
-                <div className="screen-body">
-                  <div className="dashboard-stats-grid">
-                    <div className="stat-card">
-                      <span className="stat-label">Laptops Repaired</span>
-                      <span className="stat-value">1,00,000+</span>
-                      <span className="stat-badge green">99.8% Success</span>
-                    </div>
-                    <div className="stat-card">
-                      <span className="stat-label">Turnaround Time</span>
-                      <span className="stat-value">Same-Day</span>
-                      <span className="stat-badge blue">50+ Mumbai Areas</span>
-                    </div>
-                  </div>
-
-                  <div className="screen-focus-alert">
-                    <div className="alert-badge">CERTIFIED OEM PARTS &amp; 90-DAY WARRANTY</div>
-                    <h3>Inspection Fee: ₹350 (100% Refundable)</h3>
-                    <p>Professional chip-level repairs, genuine screens, batteries &amp; motherboards with free doorstep pickup across Mumbai.</p>
-                    <div className="alert-actions">
-                      <Link to="/search" className="btn-alert-primary">
-                        <FaCheck /> Book Doorstep Pickup
-                      </Link>
-                      <Link to="/search" className="btn-alert-secondary">View Services</Link>
-                    </div>
+                {/* Screen Content: Designed Image covering all things while preserving outer UI */}
+                <div className="screen-body screen-image-body">
+                  <img
+                    src="/solution-service-hud.jpg"
+                    alt="Solution Systems - Expert IT Services & Laptop Repair | Borivali • Dahisar • Mira-Bhayandar • Mumbai | Call 8291104928"
+                    className="screen-display-img"
+                  />
+                  <div className="screen-floating-quickbar">
+                    <a
+                      href="tel:8291104928"
+                      className="quickbar-btn call"
+                      title="Call Solution Systems"
+                    >
+                      <FaPhone />
+                      <span>Call: 8291104928</span>
+                    </a>
+                    <a
+                      href="https://wa.me/918291104928?text=Hi%20Solution%20Systems,%20I%20need%20expert%20IT%20care%20or%20laptop%20repair"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="quickbar-btn whatsapp"
+                      title="Chat on WhatsApp"
+                    >
+                      <FaWhatsapp />
+                      <span>WhatsApp</span>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -416,8 +419,11 @@ const MorrowHero = () => {
 
         {/* Narrative Statement */}
         <p className="morrow-statement">
-          <strong>Solution Systems</strong> delivers express same-day laptop repair, 100% genuine OEM spare parts,
-          a 90-day comprehensive warranty, and doorstep pickup across 50+ areas in Mumbai.
+          <strong>Solution Systems</strong> offers expert IT services in
+          Borivali, Dahisar, and Mira-Bhayandar. From computer and laptop repair,
+          we provide reliable, affordable solutions with timely service. Call us
+          on <strong>8291104928</strong> or <strong>+91 74997 61196</strong> for
+          all your IT Care needs.
         </p>
       </section>
   );
