@@ -615,3 +615,60 @@
     }
   }
 }
+
+// Blue-to-Indigo Gradient Repair Marquee Ribbon (from inspector reference)
+.repair-marquee-ribbon {
+  width: 100%;
+  background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 50%, #4338ca 100%);
+  color: #ffffff;
+  padding: 0.75rem 0; // py-3
+  overflow: hidden;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 4px 16px rgba(29, 78, 216, 0.2);
+
+  .repair-marquee-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    white-space: nowrap;
+    animation: repairRibbonScroll 32s linear infinite;
+    will-change: transform;
+
+    &:hover {
+      animation-play-state: paused;
+    }
+
+    .marquee-entry {
+      display: inline-flex;
+      align-items: center;
+      gap: 2rem; // gap-8
+      margin-right: 2rem;
+      flex-shrink: 0;
+
+      .marquee-text {
+        font-size: 0.875rem; // text-sm
+        font-weight: 600; // font-semibold
+        letter-spacing: 0.015em;
+        white-space: nowrap;
+        color: #ffffff;
+      }
+
+      .marquee-sep {
+        color: rgba(255, 255, 255, 0.3); // text-white/30
+        font-size: 1.125rem; // text-lg
+        line-height: 1;
+        user-select: none;
+      }
+    }
+  }
+}
+
+@keyframes repairRibbonScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
