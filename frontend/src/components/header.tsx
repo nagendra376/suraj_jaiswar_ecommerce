@@ -19,12 +19,13 @@ import { RootState } from "../redux/store";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import toast from "react-hot-toast";
+import solutionLogo from "../assets/solution-systems-logo.png";
 
 interface PropsType {
   user: User | null;
 }
 
-// Categories from Computech Store Browse Gear dropdown
+// Categories from Browse Gear dropdown
 const browseCategories = [
   { name: "Custom Pc Build", path: "/search?category=custom-pc-build" },
   { name: "Laptops", path: "/search?category=laptops" },
@@ -39,62 +40,6 @@ const browseCategories = [
   { name: "Cabinet", path: "/search?category=cabinet" },
   { name: "View All", path: "/search" },
 ];
-
-// Computech Logo SVG
-const ComputechLogo = () => (
-  <svg
-    viewBox="0 0 230 42"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="computech-logo-svg"
-  >
-    {/* Stylized Cog / Gear Icon with red curved C */}
-    <g transform="translate(2, 3)">
-      {/* Outer Gear Ring */}
-      <circle cx="18" cy="18" r="14.5" stroke="#111827" strokeWidth="3.5" fill="none" />
-      {/* Red Arc Accent on C */}
-      <path
-        d="M 18 3.5 A 14.5 14.5 0 0 0 18 32.5"
-        stroke="#f32122"
-        strokeWidth="3.5"
-        fill="none"
-        strokeLinecap="round"
-      />
-      {/* Gear Teeth / Cogs */}
-      <path
-        d="M 18 0 L 18 3.5 M 18 32.5 L 18 36 M 0 18 L 3.5 18 M 32.5 18 L 36 18 M 5 5 L 7.5 7.5 M 28.5 28.5 L 31 31 M 5 31 L 7.5 28.5 M 28.5 7.5 L 31 5"
-        stroke="#111827"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-      {/* Inner C */}
-      <text
-        x="12"
-        y="24"
-        fontFamily="system-ui, -apple-system, sans-serif"
-        fontSize="18"
-        fontWeight="900"
-        fill="#111827"
-      >
-        C
-      </text>
-    </g>
-
-    {/* Brand Text: COMPUT E CH */}
-    <text
-      x="46"
-      y="27"
-      fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-      fontSize="22"
-      fontWeight="900"
-      letterSpacing="-0.3px"
-    >
-      <tspan fill="#111827">COMPUT</tspan>
-      <tspan fill="#f32122">E</tspan>
-      <tspan fill="#111827">CH</tspan>
-    </text>
-  </svg>
-);
 
 const Header = ({ user }: PropsType) => {
   const navigate = useNavigate();
@@ -170,7 +115,7 @@ const Header = ({ user }: PropsType) => {
         <div className="marquee-inner">
           <div className="marquee-content">
             <span className="red-dot" />
-            <span>WELCOME TO COMPUTECH STORE</span>
+            <span>WELCOME TO SOLUTION SYSTEMS</span>
             <span>|</span>
             <span>CASH ON DELIVERY (COD) <span className="highlight-alert">❌ NOT AVAILABLE</span></span>
             <span>|</span>
@@ -199,9 +144,13 @@ const Header = ({ user }: PropsType) => {
             <FaBars />
           </button>
 
-          {/* Computech Brand Logo */}
-          <Link to="/" className="brand-logo-link" aria-label="Computech Store Homepage">
-            <ComputechLogo />
+          {/* Solution Systems Brand Logo */}
+          <Link to="/" className="brand-logo-link" aria-label="Solution Systems Homepage">
+            <img
+              src={solutionLogo}
+              alt="Solution Systems"
+              className="header-brand-logo"
+            />
           </Link>
 
           {/* Desktop Search Bar */}
@@ -416,7 +365,14 @@ const Header = ({ user }: PropsType) => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="drawer-header">
-              <ComputechLogo />
+              <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+                <img
+                  src={solutionLogo}
+                  alt="Solution Systems"
+                  className="header-brand-logo"
+                  style={{ height: "46px" }}
+                />
+              </Link>
               <button
                 type="button"
                 className="drawer-close-btn"
