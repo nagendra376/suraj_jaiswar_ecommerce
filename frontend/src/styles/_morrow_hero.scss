@@ -153,10 +153,18 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 1060px;
-      height: 520px;
       pointer-events: none;
       z-index: 2;
+
+      &.desktop-arc-svg {
+        width: 1060px;
+        height: 520px;
+        display: block;
+      }
+
+      &.mobile-arc-svg {
+        display: none;
+      }
 
       .apex-arrow-chain {
         animation: pulseDown 2s ease-in-out infinite;
@@ -554,73 +562,292 @@
 @media (max-width: 1024px) {
   .morrow-hero-wrapper {
     .orbit-stage-wrapper {
-      transform: scale(0.92);
-      height: 480px;
+      transform: scale(0.9);
+      transform-origin: center bottom;
     }
   }
 }
 
 @media (max-width: 768px) {
   .morrow-hero-wrapper {
-    padding: 1.5rem 1rem 2.5rem;
+    padding: 1.5rem 0.75rem 2.5rem;
 
+    .morrow-header {
+      margin-bottom: 1.5rem;
+
+      .hero-title {
+        font-size: clamp(1.65rem, 6.5vw, 2.25rem);
+        line-height: 1.2;
+        margin-bottom: 0.85rem;
+
+        .title-line {
+          white-space: normal;
+        }
+      }
+
+      .hero-subtitle {
+        font-size: 0.82rem;
+        line-height: 1.5;
+        margin-bottom: 1.25rem;
+        padding: 0 0.5rem;
+      }
+
+      .hero-cta-group {
+        gap: 0.65rem;
+
+        .btn-primary-pill,
+        .btn-secondary-pill {
+          padding: 0.65rem 1.25rem;
+          font-size: 0.82rem;
+        }
+      }
+    }
+
+    // === MOBILE ORBIT STAGE (180° Upper Arc Animation Preserved) ===
     .orbit-stage-wrapper {
-      height: auto;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.25rem;
-      padding-bottom: 0;
+      position: relative;
+      width: 100%;
+      max-width: 390px;
+      height: 380px;
+      margin: 1rem auto 2.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      padding-bottom: 15px;
+      overflow: visible;
       transform: none;
 
-      .orbital-arc-svg {
+      .desktop-arc-svg {
         display: none !important;
       }
 
+      .mobile-arc-svg {
+        display: block !important;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 380px;
+        height: 240px;
+        pointer-events: none;
+        z-index: 2;
+
+        .apex-arrow-chain {
+          animation: pulseDown 2s ease-in-out infinite;
+        }
+      }
+
       .ambient-aura {
-        width: 280px;
-        height: 280px;
+        width: 240px;
+        height: 240px;
+        top: 45%;
       }
 
-      .center-laptop-container {
-        position: static;
-        width: 100%;
-        max-width: 340px;
-        margin-bottom: 1rem;
-
-        .laptop-screen-bezel {
-          width: 320px;
-          height: 215px;
-        }
-
-        .laptop-base {
-          width: 340px;
-        }
-      }
-
+      // Moving Arc Container for Mobile
       .arc-items-container {
-        position: static;
-        width: 100%;
-        height: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.85rem;
+        position: absolute;
+        top: 195px; // Matches mobile arc center
+        left: 50%;
+        width: 0;
+        height: 0;
+        pointer-events: none;
+        z-index: 6;
 
         .arc-item-anchor {
-          position: static;
-          width: 100%;
-          display: flex;
-          justify-content: center;
-          transform: none !important;
-          opacity: 1 !important;
+          position: absolute;
+          top: 0;
+          left: 0;
+          pointer-events: auto;
+          will-change: transform, opacity;
+        }
 
-          .orbit-pill,
-          .orbit-card {
-            width: 100%;
-            max-width: 330px;
+        // Compact Mobile Pill
+        .orbit-pill {
+          padding: 0.35rem 0.65rem;
+          font-size: 0.68rem;
+          gap: 0.35rem;
+          border-radius: 9999px;
+          box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+
+          .pill-icon {
+            font-size: 0.8rem;
+          }
+        }
+
+        // Compact Mobile Card
+        .orbit-card {
+          width: 140px;
+          max-width: 140px;
+          padding: 0.45rem 0.6rem;
+          border-radius: 12px;
+          gap: 0.45rem;
+          box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+
+          .node-logo {
+            width: 24px;
+            height: 24px;
+            font-size: 0.75rem;
+            border-radius: 6px;
+          }
+
+          .node-info {
+            .info-top {
+              margin-bottom: 0.1rem;
+              strong {
+                font-size: 0.68rem;
+              }
+              .node-time {
+                font-size: 0.55rem;
+              }
+            }
+
+            p {
+              font-size: 0.58rem;
+              line-height: 1.2;
+              display: -webkit-box;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+            }
           }
         }
       }
+
+      // Compact Mobile Laptop Console
+      .center-laptop-container {
+        position: relative;
+        z-index: 3;
+        width: 260px;
+        max-width: 260px;
+
+        .laptop-screen-bezel {
+          width: 240px;
+          height: 155px;
+          border-width: 3px;
+          border-radius: 12px 12px 2px 2px;
+          padding: 4px;
+
+          .laptop-camera {
+            width: 4px;
+            height: 4px;
+            margin: 0 auto 2px;
+          }
+
+          .laptop-screen-glass {
+            border-radius: 6px;
+
+            .screen-header {
+              padding: 0.25rem 0.45rem;
+
+              .header-left {
+                gap: 0.25rem;
+                .dot {
+                  width: 5px;
+                  height: 5px;
+                }
+                .screen-title {
+                  font-size: 0.55rem;
+                  margin-left: 0.25rem;
+                }
+              }
+
+              .header-status {
+                font-size: 0.52rem;
+                gap: 0.2rem;
+                .status-ping {
+                  width: 5px;
+                  height: 5px;
+                }
+              }
+            }
+
+            .screen-body {
+              padding: 0.45rem;
+
+              .dashboard-stats-grid {
+                gap: 0.35rem;
+
+                .stat-card {
+                  padding: 0.3rem 0.4rem;
+                  border-radius: 6px;
+
+                  .stat-label {
+                    font-size: 0.5rem;
+                  }
+
+                  .stat-value {
+                    font-size: 0.78rem;
+                    margin: 0;
+                  }
+
+                  .stat-badge {
+                    font-size: 0.48rem;
+                    padding: 0.05rem 0.25rem;
+                  }
+                }
+              }
+
+              .screen-focus-alert {
+                padding: 0.35rem 0.45rem;
+                margin-top: 0.35rem;
+                border-radius: 6px;
+
+                .alert-badge {
+                  font-size: 0.48rem;
+                }
+
+                h3 {
+                  font-size: 0.58rem;
+                  margin-bottom: 0.1rem;
+                }
+
+                p {
+                  display: none; // Keep mobile console clear and concise
+                }
+
+                .alert-actions {
+                  margin-top: 0.25rem;
+                  gap: 0.3rem;
+
+                  .btn-alert-primary,
+                  .btn-alert-secondary {
+                    font-size: 0.52rem;
+                    padding: 0.2rem 0.45rem;
+                    border-radius: 4px;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .laptop-base {
+          width: 260px;
+          height: 10px;
+          border-radius: 2px 2px 10px 10px;
+
+          .laptop-hinge {
+            width: 60px;
+            height: 2px;
+          }
+
+          .laptop-notch {
+            width: 35px;
+            height: 3px;
+          }
+        }
+
+        .laptop-reflection {
+          width: 220px;
+          height: 8px;
+        }
+      }
+    }
+
+    .morrow-statement {
+      font-size: 0.8rem;
+      line-height: 1.5;
+      padding: 0 0.75rem;
     }
   }
 }

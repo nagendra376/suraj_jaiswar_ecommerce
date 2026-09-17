@@ -41,21 +41,21 @@ const services = [
     bgColor: "#f0f9ff",
   },
   {
-    id: "parts",
-    type: "pill",
-    title: "✅ Genuine OEM Parts",
-    icon: <FaCircleCheck />,
-    color: "#10b981",
-  },
-  {
     id: "pickup",
-    type: "card",
-    title: "Doorstep Pickup & Drop",
-    badge: "🛵 Free in Mumbai",
-    desc: "Hassle-free collection at your home or office.",
+    type: "pill",
+    title: "🛵 Doorstep Pickup",
     icon: <FaMotorcycle />,
     color: "#8b5cf6",
-    bgColor: "#f5f3ff",
+  },
+  {
+    id: "parts",
+    type: "card",
+    title: "Genuine OEM Parts",
+    badge: "✅ 100% Original",
+    desc: "Screens, batteries & chip-level boards.",
+    icon: <FaCircleCheck />,
+    color: "#10b981",
+    bgColor: "#ecfdf5",
   },
   {
     id: "rating",
@@ -86,27 +86,23 @@ const MorrowHero = () => {
   useEffect(() => {
     const mm = gsap.matchMedia();
 
+    // Desktop / Tablet (> 768px): 6 items, large radius
     mm.add("(min-width: 769px)", () => {
       const progressObj = { value: 0 };
-      const Rx = 460; // Horizontal radius of the 180° arc
-      const Ry = 300; // Vertical radius of the 180° arc (expanded for generous gap above laptop)
-      const totalSpan = Math.PI + 0.8; // Extended span for smooth left entrance and right exit
+      const Rx = 460;
+      const Ry = 300;
+      const totalSpan = Math.PI + 0.8;
       const count = services.length;
       const step = totalSpan / count;
 
-      // Mathematical update: items travel smoothly along the 180° upper arc from left to right
       const updateItems = () => {
         itemRefs.current.forEach((el, index) => {
           if (!el) return;
 
-          // Angle in radians: starts at -0.4 (left entrance) and advances to π + 0.4 (right exit)
           let angle = (progressObj.value * totalSpan + index * step) % totalSpan - 0.4;
-
-          // Compute X, Y coordinates: X from -Rx (left) to +Rx (right); Y arched upward
           const x = -Rx * Math.cos(angle);
           const y = -Ry * Math.sin(Math.max(0, Math.min(Math.PI, angle)));
 
-          // Smooth fade-in on left entrance, fade-out on right exit
           let opacity = 1;
           let scale = 1;
 
@@ -120,8 +116,8 @@ const MorrowHero = () => {
             scale = 0.8 + factor * 0.2;
           }
 
-          // Positioning uses xPercent/yPercent: cards remain 100% upright and never flip or tilt!
           gsap.set(el, {
+            display: "block",
             xPercent: -50,
             yPercent: -50,
             x,
@@ -133,7 +129,6 @@ const MorrowHero = () => {
         });
       };
 
-      // Entrance animation
       gsap.from(".morrow-header", {
         opacity: 0,
         y: 25,
@@ -149,7 +144,6 @@ const MorrowHero = () => {
         ease: "back.out(1.5)",
       });
 
-      // Continuous Left-to-Right 180° Arc Motion
       tweenRef.current = gsap.to(progressObj, {
         value: 1,
         duration: 26,
@@ -158,8 +152,74 @@ const MorrowHero = () => {
         onUpdate: updateItems,
       });
 
-      // Initial placement
       updateItems();
+    });
+
+    // Mobile (<= 768px): 4 items, compact radius, circular motion preserved
+    mm.add("(max-width: 768px)", () => {
+      const progressObj = { value: 0 };
+      const Rx = 155; // Mobile horizontal radius
+      const Ry = 105; // Mobile vertical radius
+      const totalSpan = Math.PI + 0.8;
+      const mobileCount = 4; // Exactly 4 items for mobile breathing room
+      const step = totalSpan / mobileCount;
+
+      const updateMobileItems = () => {
+        itemRefs.current.forEach((el, index) => {
+          if (!el) return;
+
+          // Hide items beyond index 3 on mobile
+          if (index >= mobileCount) {
+            gsap.set(el, { display: "none" });
+            return;
+          }
+
+          let angle = (progressObj.value * totalSpan + index * step) % totalSpan - 0.4;
+          const x = -Rx * Math.cos(angle);
+          const y = -Ry * Math.sin(Math.max(0, Math.min(Math.PI, angle)));
+
+          let opacity = 1;
+          let scale = 1;
+
+          if (angle < 0.2) {
+            const factor = Math.max(0, (angle + 0.4) / 0.6);
+            opacity = factor;
+            scale = 0.8 + factor * 0.2;
+          } else if (angle > Math.PI - 0.2) {
+            const factor = Math.max(0, (Math.PI + 0.4 - angle) / 0.6);
+            opacity = factor;
+            scale = 0.8 + factor * 0.2;
+          }
+
+          gsap.set(el, {
+            display: "block",
+            xPercent: -50,
+            yPercent: -50,
+            x,
+            y,
+            opacity,
+            scale,
+            zIndex: angle > 0.8 && angle < 2.3 ? 8 : 4,
+          });
+        });
+      };
+
+      gsap.from(".center-laptop-container", {
+        opacity: 0,
+        scale: 0.94,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+
+      tweenRef.current = gsap.to(progressObj, {
+        value: 1,
+        duration: 20,
+        repeat: -1,
+        ease: "none",
+        onUpdate: updateMobileItems,
+      });
+
+      updateMobileItems();
     });
 
     return () => mm.revert();
@@ -208,9 +268,9 @@ const MorrowHero = () => {
           {/* Soft Ambient Emerald Aura */}
           <div className="ambient-aura"></div>
 
-          {/* Single 180° Upper Orbital Arc SVG + Downward Pointer Chevrons */}
+          {/* Desktop 180° Upper Orbital Arc SVG */}
           <svg
-            className="orbital-arc-svg"
+            className="orbital-arc-svg desktop-arc-svg"
             viewBox="0 0 1060 520"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -225,7 +285,6 @@ const MorrowHero = () => {
               </linearGradient>
             </defs>
 
-            {/* 180-degree Arch Line (Expanded vertical height for generous gap above laptop) */}
             <path
               d="M 70 400 A 460 300 0 0 1 990 400"
               stroke="url(#arcStrokeGrad)"
@@ -233,13 +292,44 @@ const MorrowHero = () => {
               strokeDasharray="5 5"
             />
 
-            {/* Downward Pointer Chevrons at Apex (pointing directly down to laptop screen) */}
             <g className="apex-arrow-chain">
               <polygon points="530,135 524,125 536,125" fill="#10b981" opacity="0.3" />
               <polygon points="530,165 524,155 536,155" fill="#10b981" opacity="0.48" />
               <polygon points="530,195 524,185 536,185" fill="#10b981" opacity="0.65" />
               <polygon points="530,225 524,215 536,215" fill="#10b981" opacity="0.82" />
               <polygon points="530,255 524,245 536,245" fill="#10b981" opacity="1.0" />
+            </g>
+          </svg>
+
+          {/* Mobile 180° Upper Orbital Arc SVG */}
+          <svg
+            className="orbital-arc-svg mobile-arc-svg"
+            viewBox="0 0 400 240"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="arcStrokeGradMob" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#10b981" stopOpacity="0.05" />
+                <stop offset="15%" stopColor="#10b981" stopOpacity="0.45" />
+                <stop offset="50%" stopColor="#10b981" stopOpacity="0.8" />
+                <stop offset="85%" stopColor="#10b981" stopOpacity="0.45" />
+                <stop offset="100%" stopColor="#10b981" stopOpacity="0.05" />
+              </linearGradient>
+            </defs>
+
+            <path
+              d="M 45 195 A 155 105 0 0 1 355 195"
+              stroke="url(#arcStrokeGradMob)"
+              strokeWidth="1.5"
+              strokeDasharray="4 4"
+            />
+
+            <g className="apex-arrow-chain">
+              <polygon points="200,105 196,99 204,99" fill="#10b981" opacity="0.35" />
+              <polygon points="200,119 196,113 204,113" fill="#10b981" opacity="0.55" />
+              <polygon points="200,133 196,127 204,127" fill="#10b981" opacity="0.75" />
+              <polygon points="200,147 196,141 204,141" fill="#10b981" opacity="1.0" />
             </g>
           </svg>
 
