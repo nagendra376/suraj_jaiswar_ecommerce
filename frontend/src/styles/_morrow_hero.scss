@@ -112,102 +112,72 @@
   }
 
   // === ORBIT STAGE (Circle line + Moving Services + Central Laptop) ===
+  // === 180-DEGREE ORBITAL ARC STAGE ===
   .orbit-stage-wrapper {
     position: relative;
     max-width: 1040px;
-    height: 620px;
-    margin: 2rem auto 4.5rem;
+    height: 520px;
+    margin: 1.5rem auto 3.5rem;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 10px;
 
     // Green Ambient Aura
     .ambient-aura {
       position: absolute;
-      width: 580px;
-      height: 580px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 480px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.24) 0%, rgba(52, 211, 153, 0.1) 40%, rgba(255, 255, 255, 0) 70%);
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, rgba(52, 211, 153, 0.08) 40%, rgba(255, 255, 255, 0) 70%);
       filter: blur(60px);
       pointer-events: none;
       z-index: 1;
     }
 
-    // Circular Orbit Line (Exact Circle Track from Video)
-    .orbital-ring {
+    // 180° Upper Orbital Arc SVG + Downward Pointer Arrows
+    .orbital-arc-svg {
       position: absolute;
-      width: 620px;
-      height: 620px;
-      border-radius: 50%;
-      border: 1.5px solid rgba(16, 185, 129, 0.35);
-      box-shadow: 0 0 35px rgba(16, 185, 129, 0.08);
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 450px;
       pointer-events: none;
       z-index: 2;
-      animation: rotateOrbit 28s linear infinite;
 
-      .orbit-particle {
-        position: absolute;
-        top: -6px;
-        left: 50%;
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: #10b981;
-        box-shadow: 0 0 12px #10b981, 0 0 20px #34d399;
-        transform: translateX(-50%);
+      .apex-arrow-chain {
+        animation: pulseDown 2s ease-in-out infinite;
       }
     }
 
-    // Outer Faint Ring for Depth
-    .orbital-ring-outer {
+    // Container for upright items travelling along the 180° arc
+    .arc-items-container {
       position: absolute;
-      width: 780px;
-      height: 780px;
-      border-radius: 50%;
-      border: 1px dashed rgba(203, 213, 225, 0.6);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    // === GSAP ORBIT ROTATING CONTAINER ===
-    .gsap-orbit-rotator {
-      position: absolute;
-      top: 50%;
+      top: 360px;
       left: 50%;
       width: 0;
       height: 0;
-      z-index: 5;
       pointer-events: none;
+      z-index: 6;
 
-      .orbit-item-slot {
+      .arc-item-anchor {
         position: absolute;
         top: 0;
         left: 0;
-        width: 0;
-        height: 0;
-        transform-origin: 0 0;
-        pointer-events: none;
-      }
-
-      .counter-rotator {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 0;
-        height: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transform-origin: 0 0;
         pointer-events: auto;
+        will-change: transform, opacity;
       }
 
-      // Pill Badges along the orbit line
+      // Pill Badges along the arc
       .orbit-pill {
         position: relative;
-        background: rgba(255, 255, 255, 0.95);
+        background: rgba(255, 255, 255, 0.96);
         backdrop-filter: blur(12px);
-        border: 1px solid rgba(226, 232, 240, 0.9);
+        border: 1px solid rgba(226, 232, 240, 0.95);
         border-radius: 9999px;
         padding: 0.55rem 1.15rem;
         display: inline-flex;
@@ -233,7 +203,7 @@
         }
       }
 
-      // Expanded Info Cards along the orbit line
+      // Expanded Notification Cards along the arc
       .orbit-card {
         position: relative;
         background: rgba(255, 255, 255, 0.96);
@@ -246,8 +216,8 @@
         gap: 0.75rem;
         box-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.02);
         text-align: left;
-        width: 270px;
-        max-width: 270px;
+        width: 260px;
+        max-width: 260px;
         cursor: pointer;
         white-space: normal;
         transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
@@ -301,41 +271,6 @@
             line-height: 1.4;
           }
         }
-      }
-    }
-
-    // Orbit Interactive Play/Pause Indicator Button
-    .orbit-control-btn {
-      position: absolute;
-      bottom: -16px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.45rem 1.15rem;
-      background: rgba(255, 255, 255, 0.95);
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      border-radius: 9999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #0f172a;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-      cursor: pointer;
-      backdrop-filter: blur(8px);
-      transition: all 0.2s ease;
-
-      svg {
-        font-size: 0.75rem;
-        color: #10b981;
-      }
-
-      &:hover {
-        background: #f8fafc;
-        border-color: #10b981;
-        transform: translateX(-50%) translateY(-2px);
-        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
       }
     }
 
@@ -595,51 +530,53 @@
 }
 
 // Animations
-@keyframes rotateOrbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes bounceDown {
-  0%, 100% { transform: translate(-50%, 0); }
-  50% { transform: translate(-50%, 4px); }
+@keyframes pulseDown {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(4px);
+    opacity: 1;
+  }
 }
 
 // Responsive Adjustments
 @media (max-width: 1024px) {
   .morrow-hero-wrapper {
     .orbit-stage-wrapper {
-      transform: scale(0.9);
-      height: 560px;
+      transform: scale(0.92);
+      height: 480px;
     }
   }
 }
 
 @media (max-width: 768px) {
   .morrow-hero-wrapper {
-    padding: 2rem 1rem 3rem;
+    padding: 1.5rem 1rem 2.5rem;
 
     .orbit-stage-wrapper {
       height: auto;
       flex-direction: column;
-      gap: 1.5rem;
+      align-items: center;
+      gap: 1.25rem;
+      padding-bottom: 0;
       transform: none;
 
-      .orbital-ring,
-      .orbital-ring-outer,
-      .orbit-control-btn {
+      .orbital-arc-svg {
         display: none !important;
       }
 
       .ambient-aura {
-        width: 300px;
-        height: 300px;
+        width: 280px;
+        height: 280px;
       }
 
       .center-laptop-container {
+        position: static;
         width: 100%;
         max-width: 340px;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
 
         .laptop-screen-bezel {
           width: 320px;
@@ -651,40 +588,28 @@
         }
       }
 
-      .gsap-orbit-rotator {
+      .arc-items-container {
         position: static;
         width: 100%;
         height: auto;
-        transform: none !important;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 0.85rem;
 
-        .orbit-item-slot {
+        .arc-item-anchor {
           position: static;
           width: 100%;
-          height: auto;
-          transform: none !important;
           display: flex;
           justify-content: center;
-        }
-
-        .counter-rotator {
-          position: static;
-          width: 100%;
-          height: auto;
           transform: none !important;
-          display: flex;
-          justify-content: center;
-        }
+          opacity: 1 !important;
 
-        .orbit-pill,
-        .orbit-card {
-          position: static;
-          width: 100%;
-          max-width: 330px;
-          transform: none !important;
+          .orbit-pill,
+          .orbit-card {
+            width: 100%;
+            max-width: 330px;
+          }
         }
       }
     }
