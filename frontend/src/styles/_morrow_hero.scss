@@ -1,4 +1,4 @@
-﻿// Solution Systems Morrow-Style Hero & Circular Orbit Styles
+// Solution Systems Morrow-Style Hero & Circular Orbit Styles
 
 .morrow-hero-wrapper {
   position: relative;
@@ -169,152 +169,173 @@
       z-index: 1;
     }
 
-    // === ORBITING NODES (Badges & Cards on the circle track) ===
-    .orbit-pill {
+    // === GSAP ORBIT ROTATING CONTAINER ===
+    .gsap-orbit-rotator {
       position: absolute;
-      z-index: 4;
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(226, 232, 240, 0.9);
-      border-radius: 9999px;
-      padding: 0.5rem 1.1rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.55rem;
-      box-shadow: 0 8px 20px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #0f172a;
-      cursor: default;
-      transition: all 0.25s ease;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      z-index: 5;
+      pointer-events: none;
 
-      &:hover {
-        transform: translateY(-3px) scale(1.03);
-        box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.12);
-        border-color: #10b981;
+      .orbit-item-slot {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        transform-origin: 0 0;
+        pointer-events: none;
       }
 
-      .pill-icon {
+      .counter-rotator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 0;
         display: flex;
-        font-size: 1rem;
+        align-items: center;
+        justify-content: center;
+        transform-origin: 0 0;
+        pointer-events: auto;
       }
 
-      // Positions along circle line
-      &.node-top-right {
-        top: 14%;
-        right: 12%;
+      // Pill Badges along the orbit line
+      .orbit-pill {
+        position: relative;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(226, 232, 240, 0.9);
+        border-radius: 9999px;
+        padding: 0.55rem 1.15rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: #0f172a;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+
+        &:hover {
+          transform: scale(1.08);
+          box-shadow: 0 14px 28px -4px rgba(16, 185, 129, 0.22);
+          border-color: #10b981;
+        }
+
+        .pill-icon {
+          display: flex;
+          font-size: 1.05rem;
+        }
       }
 
-      &.node-mid-right {
-        top: 50%;
-        right: -1%;
-        transform: translateY(-50%);
-      }
+      // Expanded Info Cards along the orbit line
+      .orbit-card {
+        position: relative;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(226, 232, 240, 0.95);
+        border-radius: 18px;
+        padding: 0.85rem 1.15rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        box-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.02);
+        text-align: left;
+        width: 270px;
+        max-width: 270px;
+        cursor: pointer;
+        white-space: normal;
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
 
-      &.node-bottom-left {
-        bottom: 12%;
-        left: 8%;
-      }
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: 0 18px 36px -6px rgba(16, 185, 129, 0.25);
+          border-color: #10b981;
+        }
 
-      &.node-mid-left {
-        top: 50%;
-        left: -1%;
-        transform: translateY(-50%);
+        .node-logo {
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 1.15rem;
+          flex-shrink: 0;
+        }
+
+        .node-info {
+          flex: 1;
+          min-width: 0;
+
+          .info-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.2rem;
+            gap: 0.4rem;
+
+            strong {
+              font-size: 0.82rem;
+              color: #0f172a;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+
+            .node-time {
+              font-size: 0.68rem;
+              font-weight: 600;
+              flex-shrink: 0;
+            }
+          }
+
+          p {
+            font-size: 0.73rem;
+            color: #64748b;
+            line-height: 1.4;
+          }
+        }
       }
     }
 
-    // Expanded Notification Cards on the Orbit
-    .orbit-card {
+    // Orbit Interactive Play/Pause Indicator Button
+    .orbit-control-btn {
       position: absolute;
-      z-index: 4;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(226, 232, 240, 0.95);
-      border-radius: 18px;
-      padding: 0.85rem 1.1rem;
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.02);
-      text-align: left;
-      max-width: 290px;
-      cursor: default;
-      transition: all 0.25s ease;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1.15rem;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #0f172a;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
+
+      svg {
+        font-size: 0.75rem;
+        color: #10b981;
+      }
 
       &:hover {
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 18px 36px -8px rgba(0, 0, 0, 0.14);
+        background: #f8fafc;
         border-color: #10b981;
-      }
-
-      .node-logo {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 1.15rem;
-        flex-shrink: 0;
-
-        &.cloud-logo { background: #ecfdf5; color: #059669; }
-        &.backup-logo { background: #eff6ff; color: #2563eb; }
-        &.laptop-logo { background: #fef3c7; color: #d97706; }
-      }
-
-      .node-info {
-        flex: 1;
-
-        .info-top {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 0.2rem;
-
-          strong {
-            font-size: 0.82rem;
-            color: #0f172a;
-          }
-
-          .node-time {
-            font-size: 0.68rem;
-            color: #10b981;
-            font-weight: 600;
-          }
-        }
-
-        p {
-          font-size: 0.73rem;
-          color: #64748b;
-          line-height: 1.4;
-        }
-      }
-
-      .pulse-arrow-down {
-        position: absolute;
-        bottom: -22px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: #10b981;
-        font-size: 0.8rem;
-        animation: bounceDown 1.5s infinite;
-      }
-
-      // Card positions on orbit
-      &.node-top {
-        top: 2%;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      &.node-top-left {
-        top: 12%;
-        left: 6%;
-      }
-
-      &.node-bottom-right {
-        bottom: 8%;
-        right: 4%;
+        transform: translateX(-50%) translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
       }
     }
 
@@ -601,25 +622,28 @@
     .orbit-stage-wrapper {
       height: auto;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: 1.5rem;
       transform: none;
 
-      .orbital-ring, .orbital-ring-outer {
-        display: none;
+      .orbital-ring,
+      .orbital-ring-outer,
+      .orbit-control-btn {
+        display: none !important;
       }
 
       .ambient-aura {
-        width: 320px;
-        height: 320px;
+        width: 300px;
+        height: 300px;
       }
 
       .center-laptop-container {
         width: 100%;
         max-width: 340px;
+        margin-bottom: 0.5rem;
 
         .laptop-screen-bezel {
           width: 320px;
-          height: 220px;
+          height: 215px;
         }
 
         .laptop-base {
@@ -627,11 +651,41 @@
         }
       }
 
-      .orbit-pill, .orbit-card {
+      .gsap-orbit-rotator {
         position: static;
         width: 100%;
-        max-width: 320px;
+        height: auto;
         transform: none !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.85rem;
+
+        .orbit-item-slot {
+          position: static;
+          width: 100%;
+          height: auto;
+          transform: none !important;
+          display: flex;
+          justify-content: center;
+        }
+
+        .counter-rotator {
+          position: static;
+          width: 100%;
+          height: auto;
+          transform: none !important;
+          display: flex;
+          justify-content: center;
+        }
+
+        .orbit-pill,
+        .orbit-card {
+          position: static;
+          width: 100%;
+          max-width: 330px;
+          transform: none !important;
+        }
       }
     }
   }

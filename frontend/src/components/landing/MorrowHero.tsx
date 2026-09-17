@@ -1,31 +1,184 @@
-﻿import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import gsap from "gsap";
 import {
   FaLaptopCode,
   FaCloud,
   FaShieldHalved,
   FaNetworkWired,
-  FaServer,
   FaHeadset,
   FaDatabase,
   FaArrowRight,
   FaCheck,
-  FaArrowDown
+  FaPlay,
+  FaPause
 } from "react-icons/fa6";
 
+const services = [
+  {
+    id: "cloud",
+    angle: 0,
+    type: "card",
+    title: "Cloud & Hybrid Servers",
+    badge: "AWS & Azure",
+    desc: "Scalable clusters with 99.99% high availability.",
+    icon: <FaCloud />,
+    color: "#059669",
+    bgColor: "#ecfdf5",
+  },
+  {
+    id: "security",
+    angle: 60,
+    type: "pill",
+    title: "Cyber Security & Firewall",
+    icon: <FaShieldHalved />,
+    color: "#2563eb",
+  },
+  {
+    id: "backup",
+    angle: 120,
+    type: "card",
+    title: "Disaster Recovery & Backup",
+    badge: "Encrypted",
+    desc: "Automated multi-location daily snapshots.",
+    icon: <FaDatabase />,
+    color: "#7c3aed",
+    bgColor: "#f5f3ff",
+  },
+  {
+    id: "amc",
+    angle: 180,
+    type: "pill",
+    title: "24/7 Managed IT & AMC",
+    icon: <FaHeadset />,
+    color: "#10b981",
+  },
+  {
+    id: "network",
+    angle: 240,
+    type: "pill",
+    title: "Enterprise LAN & SD-WAN",
+    icon: <FaNetworkWired />,
+    color: "#d97706",
+  },
+  {
+    id: "laptops",
+    angle: 300,
+    type: "card",
+    title: "Enterprise Laptops & Workstations",
+    badge: "Fleet Ready",
+    desc: "MacBook Pro, ThinkPad, and Dell enterprise units.",
+    icon: <FaLaptopCode />,
+    color: "#0284c7",
+    bgColor: "#f0f9ff",
+  },
+];
+
 const MorrowHero = () => {
+  const orbitRef = useRef<HTMLDivElement>(null);
+  const orbitTween = useRef<gsap.core.Tween | null>(null);
+  const counterTweens = useRef<gsap.core.Tween[]>([]);
+  const [isPaused, setIsPaused] = useState(false);
+  const isManuallyPaused = useRef(false);
+
+  useEffect(() => {
+    if (!orbitRef.current) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 769px)", () => {
+      // 1. Entrance timeline on load
+      const tl = gsap.timeline();
+      tl.from(".morrow-header", {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power3.out",
+      })
+      .from(".center-laptop-container", {
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.8,
+        ease: "back.out(1.7)",
+      }, "-=0.4")
+      .from(".orbital-ring", {
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.8,
+        ease: "power2.out",
+      }, "-=0.5")
+      .from(".orbit-item-slot", {
+        opacity: 0,
+        scale: 0.5,
+        stagger: 0.1,
+        duration: 0.6,
+        ease: "back.out(1.5)",
+      }, "-=0.3");
+
+      // 2. Smooth 360-degree continuous GSAP Orbit rotation
+      orbitTween.current = gsap.to(orbitRef.current, {
+        rotation: 360,
+        duration: 40,
+        repeat: -1,
+        ease: "none",
+      });
+
+      // 3. Counter-rotate each item so text and icons stay upright
+      const items = gsap.utils.toArray<HTMLElement>(".counter-rotator");
+      counterTweens.current = items.map((item) =>
+        gsap.to(item, {
+          rotation: -360,
+          duration: 40,
+          repeat: -1,
+          ease: "none",
+        })
+      );
+    });
+
+    return () => mm.revert();
+  }, []);
+
+  const pauseAnimation = () => {
+    orbitTween.current?.pause();
+    counterTweens.current.forEach((t) => t.pause());
+    setIsPaused(true);
+  };
+
+  const resumeAnimation = () => {
+    orbitTween.current?.resume();
+    counterTweens.current.forEach((t) => t.resume());
+    setIsPaused(false);
+  };
+
+  const handleMouseEnter = () => {
+    if (!isManuallyPaused.current) {
+      pauseAnimation();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isManuallyPaused.current) {
+      resumeAnimation();
+    }
+  };
+
+  const toggleAnimation = () => {
+    if (isPaused) {
+      isManuallyPaused.current = false;
+      resumeAnimation();
+    } else {
+      isManuallyPaused.current = true;
+      pauseAnimation();
+    }
+  };
+
   return (
     <section className="morrow-hero-wrapper">
-      {/* Top Header Section */}
-      <motion.div
-        className="morrow-header"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
+      {/* Header */}
+      <div className="morrow-header">
         <div className="pill-badge">
           <span className="badge-dot"></span>
-          <span>Solution Systems • Enterprise IT & Infrastructure</span>
+          <span>Solution Systems • Enterprise IT Architecture</span>
         </div>
 
         <h1 className="hero-title">
@@ -34,8 +187,8 @@ const MorrowHero = () => {
         </h1>
 
         <p className="hero-subtitle">
-          From enterprise-grade laptops and high-performance workstations to cyber security,
-          cloud servers, and 24/7 managed IT support — unified into one seamless ecosystem.
+          Empowering organizations with enterprise laptops, cloud servers, cyber security,
+          and 24/7 dedicated IT support — revolving around your business in one cohesive circle.
         </p>
 
         <div className="hero-cta-group">
@@ -47,141 +200,75 @@ const MorrowHero = () => {
             <span>Request Solution</span>
           </a>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Interactive Orbit Stage with Laptop in Center */}
-      <div className="orbit-stage-wrapper">
-        {/* Emerald Ambient Aura Glow */}
+      {/* GSAP Orbital Stage */}
+      <div
+        className="orbit-stage-wrapper"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Ambient Emerald Aura */}
         <div className="ambient-aura"></div>
 
-        {/* Circular Orbital Track Line */}
-        <div className="orbital-ring">
-          {/* Animated Particle traveling on the orbital ring */}
-          <div className="orbit-particle"></div>
-        </div>
+        {/* Circular Orbital Ring (Visible Track Line) */}
+        <div className="orbital-ring"></div>
 
-        {/* Outer Circular Dashed Ring for Visual Depth */}
+        {/* Outer Circular Depth Ring */}
         <div className="orbital-ring-outer"></div>
 
-        {/* === ORBITING SERVICE NODES (Positioned along the circular line) === */}
-
-        {/* Node 1: Top Center - Cloud Infrastructure (Expanded Notification Card) */}
-        <motion.div
-          className="orbit-card node-top"
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="node-logo cloud-logo">
-            <FaCloud />
-          </div>
-          <div className="node-info">
-            <div className="info-top">
-              <strong>Cloud & Server Hosting</strong>
-              <span className="node-time">Live</span>
+        {/* GSAP Rotating Container */}
+        <div className="gsap-orbit-rotator" ref={orbitRef}>
+          {services.map((s) => (
+            <div
+              key={s.id}
+              className="orbit-item-slot"
+              style={{
+                transform: `rotate(${s.angle}deg) translateY(-310px)`,
+              }}
+            >
+              {/* Counter-rotator to keep content upright */}
+              <div className="counter-rotator">
+                {s.type === "card" ? (
+                  <div className="orbit-card">
+                    <div className="node-logo" style={{ background: s.bgColor, color: s.color }}>
+                      {s.icon}
+                    </div>
+                    <div className="node-info">
+                      <div className="info-top">
+                        <strong>{s.title}</strong>
+                        <span className="node-time" style={{ color: s.color }}>
+                          {s.badge}
+                        </span>
+                      </div>
+                      <p>{s.desc}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="orbit-pill">
+                    <div className="pill-icon" style={{ color: s.color }}>
+                      {s.icon}
+                    </div>
+                    <span>{s.title}</span>
+                  </div>
+                )}
+              </div>
             </div>
-            <p>AWS & Azure hybrid server clusters running with 99.99% uptime.</p>
-          </div>
-          <div className="pulse-arrow-down">
-            <FaArrowDown />
-          </div>
-        </motion.div>
+          ))}
+        </div>
 
-        {/* Node 2: Top-Right - Cyber Security (Pill Badge) */}
-        <motion.div
-          className="orbit-pill node-top-right"
-          animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 }}
-        >
-          <div className="pill-icon" style={{ color: "#059669" }}>
-            <FaShieldHalved />
-          </div>
-          <span>Cyber Security & Firewall</span>
-        </motion.div>
-
-        {/* Node 3: Mid-Right - High-Speed Networking (Pill Badge) */}
-        <motion.div
-          className="orbit-pill node-mid-right"
-          animate={{ y: [0, -5, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.7 }}
-        >
-          <div className="pill-icon" style={{ color: "#2563eb" }}>
-            <FaNetworkWired />
-          </div>
-          <span>Enterprise LAN & SD-WAN</span>
-        </motion.div>
-
-        {/* Node 4: Bottom-Right - Data Backup (Expanded Card) */}
-        <motion.div
-          className="orbit-card node-bottom-right"
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-        >
-          <div className="node-logo backup-logo">
-            <FaDatabase />
-          </div>
-          <div className="node-info">
-            <div className="info-top">
-              <strong>Disaster Recovery & Backup</strong>
-              <span className="node-time">Syncing</span>
-            </div>
-            <p>Automated multi-site snapshots with zero data loss guarantee.</p>
-          </div>
-        </motion.div>
-
-        {/* Node 5: Bottom-Left - 24/7 Managed IT AMC (Pill Badge) */}
-        <motion.div
-          className="orbit-pill node-bottom-left"
-          animate={{ y: [0, -5, 0] }}
-          transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-        >
-          <div className="pill-icon" style={{ color: "#7c3aed" }}>
-            <FaHeadset />
-          </div>
-          <span>24/7 Managed Support & AMC</span>
-        </motion.div>
-
-        {/* Node 6: Mid-Left - Server Hardware (Pill Badge) */}
-        <motion.div
-          className="orbit-pill node-mid-left"
-          animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-        >
-          <div className="pill-icon" style={{ color: "#ea580c" }}>
-            <FaServer />
-          </div>
-          <span>Rack Servers & Storage</span>
-        </motion.div>
-
-        {/* Node 7: Top-Left - IT Hardware / Laptops (Expanded Card) */}
-        <motion.div
-          className="orbit-card node-top-left"
-          animate={{ y: [0, -6, 0] }}
-          transition={{ duration: 4.6, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-        >
-          <div className="node-logo laptop-logo">
-            <FaLaptopCode />
-          </div>
-          <div className="node-info">
-            <div className="info-top">
-              <strong>Commercial Laptops & PCs</strong>
-              <span className="node-time">Ready</span>
-            </div>
-            <p>MacBook Pro, ThinkPad, and Dell Latitude fleet deployments.</p>
-          </div>
-        </motion.div>
-
-        {/* === CENTRAL LAPTOP MOCKUP (Precision-crafted CSS Laptop) === */}
+        {/* Center Laptop Mockup */}
         <div className="center-laptop-container">
           <div className="laptop-screen-bezel">
             <div className="laptop-camera"></div>
             <div className="laptop-screen-glass">
-              {/* Screen Header Bar */}
+              {/* Screen Top Bar */}
               <div className="screen-header">
                 <div className="header-left">
                   <span className="dot red"></span>
                   <span className="dot yellow"></span>
                   <span className="dot green"></span>
-                  <span className="screen-title">Solution Systems • Central Control</span>
+                  <span className="screen-title">Solution Systems • Console</span>
                 </div>
                 <div className="header-status">
                   <span className="status-ping"></span>
@@ -189,11 +276,11 @@ const MorrowHero = () => {
                 </div>
               </div>
 
-              {/* Screen Dashboard Body */}
+              {/* Screen Content */}
               <div className="screen-body">
                 <div className="dashboard-stats-grid">
                   <div className="stat-card">
-                    <span className="stat-label">Active Endpoints</span>
+                    <span className="stat-label">Active Workstations</span>
                     <span className="stat-value">1,420</span>
                     <span className="stat-badge green">100% Protected</span>
                   </div>
@@ -204,11 +291,10 @@ const MorrowHero = () => {
                   </div>
                 </div>
 
-                {/* Central Focus Notification inside Screen */}
                 <div className="screen-focus-alert">
-                  <div className="alert-badge">SYSTEM REPORT • READY</div>
-                  <h3>Infrastructure Close is Ready!</h3>
-                  <p>All 52 servers, cloud backups, and corporate workstations reconciled with zero failures.</p>
+                  <div className="alert-badge">INFRASTRUCTURE RECONCILED</div>
+                  <h3>Daily IT Health: 100% Ready</h3>
+                  <p>All cloud clusters, local firewalls, and enterprise laptops verified with zero downtime.</p>
                   <div className="alert-actions">
                     <button className="btn-alert-primary">
                       <FaCheck /> Generate Report
@@ -220,19 +306,28 @@ const MorrowHero = () => {
             </div>
           </div>
 
-          {/* Laptop Base & Trackpad */}
           <div className="laptop-base">
             <div className="laptop-hinge"></div>
             <div className="laptop-notch"></div>
           </div>
           <div className="laptop-reflection"></div>
         </div>
+
+        {/* Orbit Interactive Play/Pause Indicator Button */}
+        <button
+          className="orbit-control-btn"
+          onClick={toggleAnimation}
+          title={isPaused ? "Resume Orbit" : "Pause Orbit"}
+        >
+          {isPaused ? <FaPlay /> : <FaPause />}
+          <span>{isPaused ? "Orbit Paused (Hovered)" : "Live GSAP Orbit"}</span>
+        </button>
       </div>
 
-      {/* Editorial Narrative Statement below orbit */}
+      {/* Editorial Narrative Quote */}
       <p className="morrow-statement">
-        <strong>Solution Systems</strong> delivers end-to-end IT architecture — combining high-grade
-        laptops, enterprise servers, cloud infrastructure, and 24/7 dedicated support into one unified platform.
+        <strong>Solution Systems</strong> brings high-end commercial laptops, enterprise servers,
+        cloud networking, and 24/7 dedicated support into one seamless circular orbit.
       </p>
     </section>
   );
