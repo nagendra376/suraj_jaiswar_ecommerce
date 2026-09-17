@@ -11,7 +11,7 @@
 
   // Header & Typography
   .morrow-header {
-    max-width: 820px;
+    max-width: 980px;
     margin: 0 auto 2.5rem;
     display: flex;
     flex-direction: column;
@@ -41,12 +41,21 @@
     }
 
     .hero-title {
-      font-size: clamp(2.5rem, 5.2vw, 4.4rem);
+      font-size: clamp(2rem, 4.2vw, 3.8rem);
       font-weight: 700;
-      line-height: 1.08;
+      line-height: 1.15;
       letter-spacing: -0.035em;
       color: #0f172a;
       margin-bottom: 1.25rem;
+
+      .title-line {
+        display: block;
+        white-space: nowrap;
+
+        @media (max-width: 680px) {
+          white-space: normal;
+        }
+      }
 
       span.highlight {
         background: linear-gradient(135deg, #059669 0%, #10b981 100%);

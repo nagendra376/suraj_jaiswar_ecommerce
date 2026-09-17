@@ -179,8 +179,8 @@ const MorrowHero = () => {
         {/* Header */}
         <div className="morrow-header">
           <h1 className="hero-title">
-            Fast, Reliable Laptop Repair &amp; <br />
-            <span className="highlight">Genuine IT Hardware.</span>
+            <span className="title-line">Fast, Reliable Laptop Repair &amp;</span>
+            <span className="title-line highlight">Genuine IT Hardware.</span>
           </h1>
 
           <p className="hero-subtitle">
