@@ -176,11 +176,6 @@ const MorrowHero = () => {
     <section className="morrow-hero-wrapper">
       {/* Header */}
       <div className="morrow-header">
-        <div className="pill-badge">
-          <span className="badge-dot"></span>
-          <span>Solution Systems • Enterprise IT Architecture</span>
-        </div>
-
         <h1 className="hero-title">
           Know exactly how your <br />
           <span className="highlight">infrastructure runs.</span>
