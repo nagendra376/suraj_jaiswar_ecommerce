@@ -52,11 +52,8 @@ const repairServicesMenu = [
 ];
 
 const itServicesMenu = [
-  { name: "Networking & Wi-Fi", path: "/search?search=networking", icon: "🌐" },
-  { name: "Antivirus & Security", path: "/search?search=antivirus", icon: "🛡️" },
-  { name: "Corporate AMC Support", path: "/search?search=amc", icon: "🏢" },
-  { name: "Data Backup & Cloud", path: "/search?search=backup", icon: "☁️" },
-  { name: "Hardware & OS Setup", path: "/search?search=hardware", icon: "⚙️" },
+  { name: "Web Design", path: "/search?search=web-design", icon: "🌐" },
+  { name: "Mobile App Dev", path: "/search?search=mobile-app", icon: "📱" },
 ];
 
 const Header = ({ user }: PropsType) => {
