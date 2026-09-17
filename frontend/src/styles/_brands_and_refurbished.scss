@@ -1,0 +1,798 @@
+// ==========================================
+// Brands We Repair & Buy/Sell Refurbished SCSS
+// Reference: media_1789660282055.png
+// ==========================================
+
+// Brands Section
+.brands-repair-section {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 4.5rem 1.5rem 3.75rem;
+  border-top: 1px solid #f1f5f9;
+  box-sizing: border-box;
+
+  @media (max-width: 640px) {
+    padding: 3rem 1rem 2.5rem;
+  }
+
+  .brands-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .brands-header {
+    margin-bottom: 2.75rem;
+
+    @media (max-width: 640px) {
+      margin-bottom: 1.75rem;
+    }
+
+    .brands-title {
+      font-size: clamp(1.85rem, 3.2vw, 2.5rem);
+      font-weight: 900;
+      color: #111827;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .brands-subtitle {
+      font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+      color: #64748b;
+      margin: 0;
+    }
+  }
+
+  .brands-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    max-width: 1100px;
+    margin: 0 auto 2.25rem auto;
+
+    @media (max-width: 640px) {
+      gap: 0.65rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .brand-card {
+      flex: 0 0 calc(12.5% - 1rem);
+      min-width: 110px;
+      max-width: 125px;
+      height: 90px;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.75rem 0.5rem;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      text-decoration: none;
+      box-sizing: border-box;
+
+      @media (max-width: 1024px) {
+        flex: 0 0 calc(16.666% - 0.8rem);
+        min-width: 95px;
+      }
+
+      @media (max-width: 768px) {
+        flex: 0 0 calc(25% - 0.75rem);
+        min-width: 82px;
+        height: 82px;
+      }
+
+      @media (max-width: 480px) {
+        flex: 0 0 calc(33.333% - 0.5rem);
+        min-width: 80px;
+        height: 78px;
+        padding: 0.4rem;
+      }
+
+      &:hover {
+        transform: translateY(-3px);
+        border-color: #93c5fd;
+        box-shadow: 0 10px 20px -4px rgba(37, 99, 235, 0.12);
+
+        .brand-icon-wrap {
+          color: #2563eb;
+          transform: scale(1.08);
+        }
+      }
+
+      .brand-icon-wrap {
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #475569;
+        font-size: 1.55rem;
+        transition: all 0.2s ease;
+
+        svg {
+          max-height: 26px;
+          width: auto;
+        }
+
+        .brand-logo-text {
+          font-weight: 900;
+          font-size: 1.15rem;
+          letter-spacing: -0.02em;
+
+          &.brother {
+            color: #005bac;
+            font-size: 1.05rem;
+            letter-spacing: 0.02em;
+          }
+
+          &.canon {
+            color: #cc0000;
+            font-size: 1.1rem;
+            font-family: Arial, sans-serif;
+            letter-spacing: -0.03em;
+          }
+
+          &.hp {
+            color: #0096d6;
+            font-size: 1.25rem;
+          }
+        }
+      }
+
+      .brand-name {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #334155;
+        letter-spacing: -0.01em;
+      }
+    }
+  }
+
+  .brands-footer {
+    .view-all-brands-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: #2563eb;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: #1d4ed8;
+        transform: translateX(3px);
+      }
+
+      svg {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+
+// Buy & Sell Refurbished Section
+.refurbished-section {
+  width: 100%;
+  background-color: #f8fafc;
+  padding: 5rem 1.5rem 6rem;
+  border-top: 1px solid #e2e8f0;
+  box-sizing: border-box;
+
+  @media (max-width: 640px) {
+    padding: 3.5rem 1rem 4rem;
+  }
+
+  .refurbished-container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  // Section Header
+  .refurbished-header {
+    text-align: center;
+    max-width: 860px;
+    margin: 0 auto 3.5rem auto;
+
+    @media (max-width: 640px) {
+      margin-bottom: 2.25rem;
+    }
+
+    .buy-sell-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.4rem 1.15rem;
+      border-radius: 9999px;
+      margin-bottom: 1.25rem;
+
+      svg {
+        font-size: 0.9rem;
+      }
+    }
+
+    .refurbished-title {
+      font-size: clamp(2rem, 3.5vw, 2.85rem);
+      font-weight: 900;
+      color: #111827;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+
+      .highlight-green {
+        display: block;
+        color: #16a34a;
+      }
+    }
+
+    .refurbished-subtitle {
+      font-size: clamp(0.92rem, 1.2vw, 1.08rem);
+      color: #64748b;
+      line-height: 1.6;
+      margin: 0;
+    }
+  }
+
+  // Sub-block 1: Buy Certified Refurbished
+  .buy-subblock {
+    margin-bottom: 3.5rem;
+
+    .buy-subblock-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+
+      .header-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+
+        .cart-icon {
+          color: #16a34a;
+          font-size: 1.35rem;
+        }
+
+        h3 {
+          font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+          font-weight: 800;
+          color: #111827;
+          margin: 0;
+        }
+      }
+
+      .view-all-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        color: #2563eb;
+        font-weight: 700;
+        font-size: 0.92rem;
+        text-decoration: none;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: #1d4ed8;
+          transform: translateX(2px);
+        }
+      }
+    }
+
+    .refurbished-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
+
+      @media (max-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+      }
+
+      .refurb-card {
+        background: #ffffff;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 1.25rem;
+        padding: 1.6rem 1.25rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        text-decoration: none;
+        box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+
+        &:hover {
+          transform: translateY(-4px);
+          border-color: #93c5fd;
+          box-shadow: 0 16px 28px -6px rgba(15, 23, 42, 0.08);
+
+          .refurb-icon-box {
+            transform: scale(1.08);
+          }
+        }
+
+        .refurb-icon-box {
+          width: 56px;
+          height: 56px;
+          border-radius: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.75rem;
+          margin-bottom: 1.15rem;
+          transition: transform 0.25s ease;
+
+          &.blue {
+            background: #eff6ff;
+            color: #2563eb;
+          }
+          &.green {
+            background: #dcfce7;
+            color: #16a34a;
+          }
+          &.purple {
+            background: #ede9fe;
+            color: #7c3aed;
+          }
+          &.amber {
+            background: #fef3c7;
+            color: #d97706;
+          }
+          &.teal {
+            background: #ccfbf1;
+            color: #0d9488;
+          }
+        }
+
+        .refurb-card-title {
+          font-size: 1.05rem;
+          font-weight: 800;
+          color: #111827;
+          margin: 0 0 0.35rem 0;
+        }
+
+        .refurb-card-subtitle {
+          font-size: 0.8rem;
+          color: #64748b;
+          margin: 0 0 1.25rem 0;
+          line-height: 1.4;
+          min-height: 2.2em;
+        }
+
+        .refurb-price-pill {
+          display: inline-block;
+          font-size: 0.85rem;
+          font-weight: 800;
+          padding: 0.45rem 1.15rem;
+          border-radius: 9999px;
+          width: 100%;
+          box-sizing: border-box;
+          transition: all 0.2s ease;
+
+          &.blue {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+          }
+          &.green {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+          }
+          &.purple {
+            background: #ede9fe;
+            color: #6d28d9;
+            border: 1px solid #ddd6fe;
+          }
+          &.amber {
+            background: #fef3c7;
+            color: #b45309;
+            border: 1px solid #fde68a;
+          }
+          &.teal {
+            background: #ccfbf1;
+            color: #0f766e;
+            border: 1px solid #99f6e4;
+          }
+        }
+      }
+    }
+
+    // Trust Features Ribbon
+    .trust-guarantee-bar {
+      margin-top: 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.85rem 1.5rem;
+      padding: 0.85rem 1.5rem;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.85rem;
+
+      .trust-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-size: 0.84rem;
+        font-weight: 700;
+        color: #334155;
+
+        .check-icon {
+          color: #16a34a;
+          font-size: 0.95rem;
+        }
+      }
+
+      .trust-divider {
+        color: #cbd5e1;
+        font-weight: 300;
+        font-size: 0.85rem;
+
+        @media (max-width: 768px) {
+          display: none;
+        }
+      }
+    }
+  }
+
+  // Sub-block 2: Sell Your Laptop Card (Warm Amber Border & Cream Background)
+  .sell-laptop-container {
+    background: #fffcf3;
+    border: 1.5px solid #fed7aa;
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.06);
+
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr;
+      padding: 1.75rem;
+      gap: 2rem;
+    }
+
+    .sell-left-col {
+      .sell-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: #fef3c7;
+        color: #b45309;
+        border: 1px solid #fde68a;
+        font-size: 0.74rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.35rem 0.95rem;
+        border-radius: 9999px;
+        margin-bottom: 1.15rem;
+      }
+
+      .sell-heading {
+        font-size: clamp(1.5rem, 2.3vw, 2rem);
+        font-weight: 900;
+        color: #111827;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+        margin: 0 0 0.65rem 0;
+      }
+
+      .sell-description {
+        font-size: 0.92rem;
+        color: #4b5563;
+        line-height: 1.55;
+        margin: 0 0 1.5rem 0;
+      }
+
+      .device-selector-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.65rem;
+        margin-bottom: 1.75rem;
+
+        @media (max-width: 480px) {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .device-pill-btn {
+          background: #ffffff;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 0.75rem;
+          padding: 0.65rem 0.85rem;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.84rem;
+          font-weight: 700;
+          color: #334155;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          outline: none;
+
+          &:hover {
+            border-color: #fb923c;
+            background: #fff7ed;
+            color: #c2410c;
+          }
+
+          &.active {
+            border-color: #ea580c;
+            background: #fff7ed;
+            color: #c2410c;
+            box-shadow: 0 0 0 2px rgba(234, 88, 12, 0.15);
+          }
+
+          .device-icon {
+            font-size: 1.05rem;
+            color: #64748b;
+          }
+
+          &.active .device-icon {
+            color: #ea580c;
+          }
+        }
+      }
+
+      .btn-instant-quote {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        background: #c2410c;
+        color: #ffffff;
+        padding: 0.85rem 1.75rem;
+        border-radius: 0.75rem;
+        font-weight: 800;
+        font-size: 0.95rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        box-shadow: 0 4px 14px rgba(194, 65, 12, 0.25);
+
+        &:hover {
+          background: #9a3412;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 18px rgba(194, 65, 12, 0.35);
+        }
+      }
+    }
+
+    .sell-right-col {
+      .features-2x2-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+
+        @media (max-width: 480px) {
+          grid-template-columns: 1fr;
+        }
+
+        .sell-feature-box {
+          background: #ffffff;
+          border: 1px solid #fde68a;
+          border-radius: 1rem;
+          padding: 1.25rem 1.15rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.4rem;
+          box-shadow: 0 2px 8px rgba(245, 158, 11, 0.04);
+          transition: all 0.2s ease;
+
+          &:hover {
+            transform: translateY(-2px);
+            border-color: #f59e0b;
+            box-shadow: 0 6px 14px rgba(245, 158, 11, 0.1);
+          }
+
+          .feature-icon-row {
+            font-size: 1.35rem;
+            margin-bottom: 0.15rem;
+
+            &.amber {
+              color: #f59e0b;
+            }
+            &.green {
+              color: #10b981;
+            }
+            &.blue {
+              color: #3b82f6;
+            }
+            &.slate {
+              color: #64748b;
+            }
+          }
+
+          .feature-title {
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: #111827;
+            margin: 0;
+          }
+
+          .feature-desc {
+            font-size: 0.78rem;
+            color: #64748b;
+            line-height: 1.45;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+
+  // Sell Quote Modal
+  .sell-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    box-sizing: border-box;
+
+    .sell-modal-card {
+      background: #ffffff;
+      border-radius: 1.5rem;
+      max-width: 520px;
+      width: 100%;
+      padding: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+
+      .modal-close-btn {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.25rem;
+        background: #f1f5f9;
+        border: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        color: #64748b;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+          background: #e2e8f0;
+          color: #0f172a;
+        }
+      }
+
+      .modal-header {
+        margin-bottom: 1.5rem;
+
+        .modal-badge {
+          display: inline-block;
+          font-size: 0.72rem;
+          font-weight: 800;
+          color: #c2410c;
+          background: #fff7ed;
+          padding: 0.25rem 0.75rem;
+          border-radius: 9999px;
+          margin-bottom: 0.5rem;
+        }
+
+        h3 {
+          font-size: 1.4rem;
+          font-weight: 800;
+          color: #111827;
+          margin: 0 0 0.35rem 0;
+        }
+
+        p {
+          font-size: 0.85rem;
+          color: #64748b;
+          margin: 0;
+        }
+      }
+
+      .modal-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .form-group {
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+
+          label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #334155;
+          }
+
+          input, select {
+            padding: 0.65rem 0.85rem;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 0.65rem;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+
+            &:focus {
+              border-color: #ea580c;
+            }
+          }
+        }
+
+        .modal-action-row {
+          display: flex;
+          gap: 0.75rem;
+          margin-top: 0.5rem;
+
+          @media (max-width: 480px) {
+            flex-direction: column;
+          }
+
+          .btn-submit-modal {
+            flex: 1;
+            background: #c2410c;
+            color: #ffffff;
+            font-weight: 800;
+            padding: 0.75rem;
+            border-radius: 0.65rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            &:hover {
+              background: #9a3412;
+            }
+          }
+
+          .btn-whatsapp-modal {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            background: #16a34a;
+            color: #ffffff;
+            font-weight: 800;
+            padding: 0.75rem;
+            border-radius: 0.65rem;
+            text-decoration: none;
+            transition: all 0.2s;
+
+            &:hover {
+              background: #15803d;
+            }
+          }
+        }
+      }
+    }
+  }
+}
