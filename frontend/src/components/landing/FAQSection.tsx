@@ -16,7 +16,7 @@ const FAQ_ITEMS: FAQItem[] = [
   {
     question: "How do I book a laptop or computer repair with Solution Systems?",
     answer:
-      "You can easily book online using our booking form on this website, message us directly on WhatsApp at +91 74997 61196, or call us. We will confirm your pickup slot within 1 hour and dispatch a trained technician or pickup executive to your address.",
+      "You can easily book online using our booking form on this website, message us directly on WhatsApp at +91 86552 08382, or call us. We will confirm your pickup slot within 1 hour and dispatch a trained technician or pickup executive to your address.",
   },
   {
     question: "How much does a laptop or computer repair cost at Solution Systems?",

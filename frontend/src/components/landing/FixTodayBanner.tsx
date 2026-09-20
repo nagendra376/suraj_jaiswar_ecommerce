@@ -39,17 +39,17 @@ const FixTodayBanner: React.FC = () => {
         <div className="cta-buttons-row">
           {/* Phone Call Button */}
           <a
-            href="tel:+917499761196"
+            href="tel:+918655208382"
             className="cta-action-btn phone-btn"
-            aria-label="Call +91 74997 61196"
+            aria-label="Call +91 86552 08382"
           >
             <FaPhone className="btn-icon" />
-            <span>+91 74997 61196</span>
+            <span>+91 86552 08382</span>
           </a>
 
           {/* WhatsApp Button */}
           <a
-            href="https://wa.me/917499761196?text=Hi%20Solution%20Systems%2C%20I%20want%20to%20get%20my%20laptop%2Fcomputer%20fixed."
+            href="https://wa.me/918655208382?text=Hi%20Solution%20Systems%2C%20I%20want%20to%20get%20my%20laptop%2Fcomputer%20fixed."
             target="_blank"
             rel="noopener noreferrer"
             className="cta-action-btn whatsapp-btn"

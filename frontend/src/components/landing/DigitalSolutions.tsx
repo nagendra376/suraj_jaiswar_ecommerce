@@ -26,7 +26,7 @@ const APP_FEATURES = [
 const DigitalSolutions: React.FC = () => {
   const handleOpenWhatsApp = (service: string) => {
     const text = `Hello Solution Systems, I am interested in ${service}. Can you provide more details and portfolio samples?`;
-    window.open(`https://wa.me/917499761196?text=${encodeURIComponent(text)}`, "_blank");
+    window.open(`https://wa.me/918655208382?text=${encodeURIComponent(text)}`, "_blank");
   };
 
   return (

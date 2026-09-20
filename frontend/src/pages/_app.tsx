@@ -42,8 +42,15 @@ const AppContent = ({ Component, pageProps, router }: AppProps) => {
   return (
     <>
       <Head>
-        <title>Solution Systems - E-Commerce</title>
+        <title>Solution Systems - Laptop &amp; Computer Repair | Mumbai • MMR</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Solution Systems offers expert laptop, computer &amp; MacBook repair services, certified components, and doorstep pickup across Mumbai, Thane, and Palghar. Call +91 86552 08382."
+        />
+        <link rel="canonical" href="https://solutionsystems.in/" />
+        <meta property="og:url" content="https://solutionsystems.in/" />
+        <meta property="og:site_name" content="Solution Systems" />
       </Head>
       <Header user={user} />
       {!mounted || loading ? <Loader /> : <Component {...pageProps} />}

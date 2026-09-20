@@ -100,8 +100,7 @@ const WhyChooseUs: React.FC = () => {
                 alt="Solution Systems Laptop, Computer & MacBook Repair Technicians in Mumbai Lab"
                 loading="lazy"
                 onError={(e) => {
-                  e.currentTarget.src =
-                    "https://xigox.com/images/real-shop/xigox-computer-shop-virar-west-laptop-repair-shop--9.webp";
+                  e.currentTarget.src = "/it-care-workshop.jpg";
                 }}
               />
             </div>

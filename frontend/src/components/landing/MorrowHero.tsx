@@ -382,20 +382,20 @@ const MorrowHero = () => {
                 <div className="screen-body screen-image-body">
                   <img
                     src="/solution-service-hud.jpg"
-                    alt="Solution Systems - Expert IT Services & Laptop Repair | Borivali • Dahisar • Mira-Bhayandar • Mumbai | Call 8291104928"
+                    alt="Solution Systems - Expert IT Services & Laptop Repair | Borivali • Dahisar • Mira-Bhayandar • Mumbai | Call 86552 08382"
                     className="screen-display-img"
                   />
                   <div className="screen-floating-quickbar">
                     <a
-                      href="tel:8291104928"
+                      href="tel:8655208382"
                       className="quickbar-btn call"
                       title="Call Solution Systems"
                     >
                       <FaPhone />
-                      <span>Call: 8291104928</span>
+                      <span>Call: 86552 08382</span>
                     </a>
                     <a
-                      href="https://wa.me/918291104928?text=Hi%20Solution%20Systems,%20I%20need%20expert%20IT%20care%20or%20laptop%20repair"
+                      href="https://wa.me/918655208382?text=Hi%20Solution%20Systems,%20I%20need%20expert%20IT%20care%20or%20laptop%20repair"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="quickbar-btn whatsapp"
@@ -422,8 +422,7 @@ const MorrowHero = () => {
           <strong>Solution Systems</strong> offers expert IT services in
           Borivali, Dahisar, and Mira-Bhayandar. From computer and laptop repair,
           we provide reliable, affordable solutions with timely service. Call us
-          on <strong>8291104928</strong> or <strong>+91 74997 61196</strong> for
-          all your IT Care needs.
+          on <strong>+91 86552 08382</strong> for all your IT Care needs.
         </p>
       </section>
   );

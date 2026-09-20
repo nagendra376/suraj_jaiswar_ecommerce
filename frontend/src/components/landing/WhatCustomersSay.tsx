@@ -217,7 +217,7 @@ const WhatCustomersSay: React.FC = () => {
       {/* Bottom Read All Reviews Button */}
       <div className="cust-cta-footer">
         <a
-          href="https://wa.me/917499761196?text=Hi%20Solution%20Systems%2C%20I%20would%20like%20to%20read%20more%20customer%20reviews."
+          href="https://wa.me/918655208382?text=Hi%20Solution%20Systems%2C%20I%20would%20like%20to%20read%20more%20customer%20reviews."
           target="_blank"
           rel="noopener noreferrer"
           className="read-all-reviews-btn"

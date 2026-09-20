@@ -44,7 +44,10 @@ const allowedOrigins = [
   clientURL,
   "http://localhost:5173",
   "http://localhost:4173",
+  "http://localhost:3000",
   "https://suraj-jaiswar-ecommerce.vercel.app",
+  "https://solutionsystems.in",
+  "https://www.solutionsystems.in",
 ];
 
 app.use(

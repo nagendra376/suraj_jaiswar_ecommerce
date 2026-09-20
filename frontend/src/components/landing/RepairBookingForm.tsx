@@ -36,7 +36,7 @@ const RepairBookingForm: React.FC = () => {
     setIsSubmitting(true);
 
     const message = `*New Repair Booking Request:*\n• *Name:* ${fullName}\n• *Phone:* ${phone}\n• *Device Type:* ${selectedType}\n• *Issue:* ${problemDesc || "Needs diagnosis"}\n• *Inspection Fee:* Agreed to ₹250 (credited upon repair)`;
-    const whatsappUrl = `https://wa.me/917499761196?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/918655208382?text=${encodeURIComponent(message)}`;
 
     toast.success("Booking request prepared! Redirecting to WhatsApp...");
     setTimeout(() => {

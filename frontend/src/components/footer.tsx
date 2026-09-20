@@ -73,7 +73,7 @@ const quickLinks = [
   { name: "Repair Blog", path: "/search" },
   { name: "Customer reviews", path: "/#reviews" },
   { name: "About Us", path: "/" },
-  { name: "Contact Us", path: "tel:+917499761196", isExternal: true },
+  { name: "Contact Us", path: "tel:+918655208382", isExternal: true },
 ];
 
 const brandKeywords = [
@@ -165,13 +165,13 @@ const Footer: React.FC = () => {
             <div className="footer-contact-list">
               <div className="contact-item">
                 <FaPhone className="contact-icon" />
-                <a href="tel:+917499761196">+91 74997 61196</a>
+                <a href="tel:+918655208382">+91 86552 08382</a>
               </div>
 
               <div className="contact-item">
                 <FaWhatsapp className="contact-icon green" />
                 <a
-                  href="https://wa.me/917499761196?text=Hi%20Solution%20Systems,%20I%20have%20an%20inquiry"
+                  href="https://wa.me/918655208382?text=Hi%20Solution%20Systems,%20I%20have%20an%20inquiry"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -181,8 +181,8 @@ const Footer: React.FC = () => {
 
               <div className="contact-item">
                 <FaEnvelope className="contact-icon" />
-                <a href="mailto:info@solutionsystems.com">
-                  info@solutionsystems.com
+                <a href="mailto:info@solutionsystems.in">
+                  info@solutionsystems.in
                 </a>
               </div>
 
@@ -218,7 +218,7 @@ const Footer: React.FC = () => {
                 <span>Google Reviews</span>
               </a>
               <a
-                href="https://wa.me/917499761196"
+                href="https://wa.me/918655208382"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="badge-btn whatsapp"
@@ -475,15 +475,15 @@ const Footer: React.FC = () => {
           <FaArrowUp />
         </button>
         <a
-          href="tel:+917499761196"
+          href="tel:+918655208382"
           className="float-btn call"
           title="Call Solution Systems"
-          aria-label="Call +91 74997 61196"
+          aria-label="Call +91 86552 08382"
         >
           <FaPhone />
         </a>
         <a
-          href="https://wa.me/917499761196?text=Hi%20Solution%20Systems,%20I%20have%20an%20urgent%20laptop/computer%20repair%20inquiry"
+          href="https://wa.me/918655208382?text=Hi%20Solution%20Systems,%20I%20have%20an%20urgent%20laptop/computer%20repair%20inquiry"
           target="_blank"
           rel="noopener noreferrer"
           className="float-btn whatsapp"

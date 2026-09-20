@@ -45,7 +45,7 @@ const browseCategories = [
   { name: "View All", path: "/search" },
 ];
 
-// Content exactly matching reference website (xigox.com)
+// Repair Services Menu
 const repairServicesMenu = [
   { name: "Laptop Repair", path: "/search?search=laptop", icon: "💻" },
   { name: "Computer Repair", path: "/search?search=computer", icon: "🖥️" },
@@ -493,7 +493,7 @@ const Header = ({ user }: PropsType) => {
           {/* Right Action: WhatsApp Now Button */}
           <div className="nav-action-right">
             <a
-              href="https://wa.me/917499761196?text=Hi%20Solution%20Systems,%20I%20have%20an%20inquiry"
+              href="https://wa.me/918655208382?text=Hi%20Solution%20Systems,%20I%20have%20an%20inquiry"
               target="_blank"
               rel="noopener noreferrer"
               className="nav-whatsapp-now-btn"
@@ -611,14 +611,14 @@ const Header = ({ user }: PropsType) => {
 
             <div style={{ padding: "0.75rem 1rem" }}>
               <a
-                href="https://wa.me/917499761196?text=Hi%20Solution%20Systems,%20I%20have%20an%20inquiry"
+                href="https://wa.me/918655208382?text=Hi%20Solution%20Systems,%20I%20have%20an%20inquiry"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="nav-whatsapp-now-btn"
                 style={{ width: "100%", justifyContent: "center" }}
               >
                 <FaWhatsapp className="whatsapp-icon" />
-                <span>WhatsApp Now (+91 74997 61196)</span>
+                <span>WhatsApp Now (+91 86552 08382)</span>
               </a>
             </div>
 
