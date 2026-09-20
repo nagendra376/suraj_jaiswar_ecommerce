@@ -155,7 +155,6 @@ const Header = ({ user }: PropsType) => {
               key={item}
               aria-hidden={item > 1 ? "true" : undefined}
             >
-              <span className="red-dot" />
               <span>WELCOME TO SOLUTION SYSTEMS</span>
               <span>|</span>
               <span>
@@ -170,7 +169,7 @@ const Header = ({ user }: PropsType) => {
               <span>B2B BILLING AVAILABLE</span>
               <span>|</span>
               <span>100% NEW GENUINE &amp; ORIGINAL PRODUCTS</span>
-              <span className="red-dot" />
+              <span>|</span>
             </div>
           ))}
         </div>
