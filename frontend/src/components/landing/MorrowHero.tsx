@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "../../utils/router";
 import gsap from "gsap";
 import {
@@ -221,12 +221,25 @@ const MorrowHero = () => {
     tweenRef.current?.resume();
   };
 
+  const [deviceType, setDeviceType] = useState("");
+  const [issueDesc, setIssueDesc] = useState("");
+
+  const handleWhatsAppQuote = () => {
+    const device = deviceType ? deviceType : "Laptop / Computer";
+    const issue = issueDesc.trim() ? issueDesc.trim() : "Diagnosis & Repair Estimate";
+    const message = `*Hi Solution Systems, I would like a quick repair quote:*\n• *Device:* ${device}\n• *Issue:* ${issue}`;
+    window.open(
+      `https://wa.me/918655208382?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
+  };
+
   return (
     <section className="morrow-hero-wrapper">
         {/* Header */}
         <div className="morrow-header">
           <h1 className="hero-title">
-            <span className="title-line">Fastt, Reliable Laptop Repair &amp;</span>
+            <span className="title-line">Fast, Reliable Laptop Repair &amp;</span>
             <span className="title-line highlight">Genuine IT Hardware.</span>
           </h1>
 
@@ -424,6 +437,79 @@ const MorrowHero = () => {
           we provide reliable, affordable solutions with timely service. Call us
           on <strong>+91 86552 08382</strong> for all your IT Care needs.
         </p>
+
+        {/* Quick WhatsApp Quote Bar */}
+        <div className="hero-quick-quote-bar">
+          <h3 className="quick-quote-title">
+            BOOK A REPAIR — WHATSAPP QUOTE IN 60 SECONDS
+          </h3>
+          <form
+            className="quick-quote-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleWhatsAppQuote();
+            }}
+          >
+            <div className="quick-quote-field field-device">
+              <label htmlFor="quick-device-type">Device Type</label>
+              <select
+                id="quick-device-type"
+                value={deviceType}
+                onChange={(e) => setDeviceType(e.target.value)}
+              >
+                <option value="">Select model...</option>
+                <option value="MacBook">MacBook</option>
+                <option value="iMac">iMac</option>
+                <option value="Windows Laptop">Windows Laptop</option>
+                <option value="Dell Laptop / Desktop">Dell</option>
+                <option value="HP Laptop / Desktop">HP</option>
+                <option value="Lenovo Laptop / Desktop">Lenovo</option>
+                <option value="Asus Laptop / ROG">Asus</option>
+                <option value="Acer Laptop / Predator">Acer</option>
+                <option value="Custom Gaming PC">Custom PC</option>
+                <option value="All-in-One PC">All-in-One PC</option>
+                <option value="Printer / Scanner">Printer / Scanner</option>
+                <option value="Other Computer">Other</option>
+              </select>
+            </div>
+
+            <div className="quick-quote-field field-issue">
+              <label htmlFor="quick-issue-desc">
+                Describe the issue <span className="opt-label">(optional)</span>
+              </label>
+              <input
+                id="quick-issue-desc"
+                type="text"
+                placeholder="e.g. screen cracked, not turning on..."
+                value={issueDesc}
+                onChange={(e) => setIssueDesc(e.target.value)}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="btn-quote-whatsapp"
+              title="Get WhatsApp Quote"
+            >
+              <FaWhatsapp className="btn-icon" />
+              <span>WhatsApp Quote</span>
+            </button>
+
+            <a
+              href="tel:+918655208382"
+              className="btn-quote-call"
+              title="Call Solution Systems"
+            >
+              <FaPhone className="btn-icon" />
+              <span>Call Now</span>
+            </a>
+          </form>
+
+          <div className="quick-quote-footer-link">
+            <span>Or </span>
+            <a href="#book-repair">see all contact options &rarr;</a>
+          </div>
+        </div>
       </section>
   );
 };

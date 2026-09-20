@@ -652,7 +652,7 @@
   // Narrative Statement
   .morrow-statement {
     max-width: 800px;
-    margin: 1rem auto 4rem;
+    margin: 1rem auto 2rem;
     font-size: clamp(1.15rem, 2vw, 1.45rem);
     font-weight: 400;
     line-height: 1.5;
@@ -662,6 +662,186 @@
     strong {
       color: #0f172a;
       font-weight: 600;
+    }
+  }
+
+  // Quick WhatsApp Quote Bar (xigox style)
+  .hero-quick-quote-bar {
+    max-width: 960px;
+    margin: 0 auto 4rem;
+    padding: 1.5rem 1.75rem 1.25rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+    text-align: center;
+
+    .quick-quote-title {
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      color: #0f172a;
+      text-transform: uppercase;
+      margin: 0 0 1.25rem 0;
+    }
+
+    .quick-quote-form {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.75rem;
+      text-align: left;
+    }
+
+    .quick-quote-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+
+      label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #334155;
+
+        .opt-label {
+          font-weight: 400;
+          color: #64748b;
+        }
+      }
+
+      select,
+      input {
+        height: 44px;
+        padding: 0 0.85rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #ffffff;
+        font-size: 0.88rem;
+        color: #0f172a;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #2563eb;
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        &::placeholder {
+          color: #94a3b8;
+        }
+      }
+
+      &.field-device {
+        flex: 0 0 180px;
+
+        select {
+          cursor: pointer;
+        }
+      }
+
+      &.field-issue {
+        flex: 1;
+        min-width: 0;
+      }
+    }
+
+    .btn-quote-whatsapp {
+      height: 44px;
+      padding: 0 1.25rem;
+      background: #059669;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.2s ease, transform 0.15s ease;
+
+      .btn-icon {
+        font-size: 1.1rem;
+      }
+
+      &:hover {
+        background: #047857;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .btn-quote-call {
+      height: 44px;
+      padding: 0 1.25rem;
+      background: #f59e0b;
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.2s ease, transform 0.15s ease;
+
+      .btn-icon {
+        font-size: 0.95rem;
+      }
+
+      &:hover {
+        background: #d97706;
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    .quick-quote-footer-link {
+      margin-top: 0.9rem;
+      font-size: 0.82rem;
+      color: #64748b;
+
+      a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.15s ease, text-decoration 0.15s ease;
+
+        &:hover {
+          color: #1d4ed8;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    @media (max-width: 868px) {
+      padding: 1.25rem 1rem 1rem;
+      margin: 0 1rem 2.5rem;
+
+      .quick-quote-form {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+
+      .quick-quote-field.field-device {
+        flex: 1;
+      }
+
+      .btn-quote-whatsapp,
+      .btn-quote-call {
+        justify-content: center;
+        width: 100%;
+      }
     }
   }
 }
