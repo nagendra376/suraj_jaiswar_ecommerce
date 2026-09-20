@@ -394,8 +394,8 @@ const MorrowHero = () => {
                 {/* Screen Content: Designed Image covering all things while preserving outer UI */}
                 <div className="screen-body screen-image-body">
                   <img
-                    src="/solution-systems-hero.jpg"
-                    alt="Solution Systems - Expert IT Services & Laptop Repair | Borivali • Dahisar • Mira-Bhayandar • Mumbai | Call 86552 08382"
+                    src="/solution-service-console.jpg"
+                    alt="Solution Systems - Advanced Hardware Diagnostics & Service Console | Borivali • Dahisar • Mira-Bhayandar • Mumbai | Call 86552 08382"
                     className="screen-display-img"
                   />
                   <div className="screen-floating-quickbar">

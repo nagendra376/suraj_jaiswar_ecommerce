@@ -96,11 +96,11 @@ const WhyChooseUs: React.FC = () => {
             {/* Workshop Technician Image */}
             <div className="workshop-image-card">
               <img
-                src="/workshop-technician.webp"
-                alt="Solution Systems Laptop, Computer & MacBook Repair Technicians in Mumbai Lab"
+                src="/solution-systems-hero.jpg"
+                alt="Solution Systems Founder & Hardware Expert in Mumbai Lab"
                 loading="lazy"
                 onError={(e) => {
-                  e.currentTarget.src = "/it-care-workshop.jpg";
+                  e.currentTarget.src = "/solution-systems-person.png";
                 }}
               />
             </div>
