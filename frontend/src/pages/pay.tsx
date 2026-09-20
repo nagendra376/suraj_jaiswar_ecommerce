@@ -102,7 +102,12 @@ const Checkout = () => {
   const clientSecret: string | undefined = location.state;
 
   return (
-    <ProtectedRoute isAuthenticated={user ? true : false} redirect="/login">
+    <ProtectedRoute
+      isAuthenticated={user ? true : false}
+      adminOnly={true}
+      admin={user?.role === "admin"}
+      redirect="/"
+    >
       {!clientSecret ? (
         <Navigate to={"/shipping"} />
       ) : (
