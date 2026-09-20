@@ -1,4 +1,4 @@
-﻿// ==========================================
+// ==========================================
 // Computech-Style Shop By Category & Product Showcases
 // Reference: https://computechstore.in/
 // ==========================================
@@ -48,20 +48,107 @@ $brand-green-border: rgba(5, 124, 86, 0.35);
     }
   }
 
-  // Exact Computech Grid: flex flex-wrap justify-center gap-6 sm:gap-10 lg:gap-14
-  .categories-grid {
+  // Horizontal Category Track with Overflow Chevrons
+  .categories-scroll-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 100rem;
+    margin: 0 auto;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 1.5rem 1.5rem;
+    align-items: center;
 
-    @media (min-width: 640px) {
-      gap: 2rem 2.5rem;
+    .cat-scroll-arrow {
+      position: absolute;
+      top: 40px; // Centered with icon box (80px high on mobile)
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+      @media (min-width: 640px) {
+        top: 50px; // Centered with icon box (100px high on desktop)
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+      }
+
+      &.visible {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      &:hover:not(:disabled) {
+        background: $brand-green;
+        color: #ffffff;
+        border-color: $brand-green;
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 6px 20px rgba(5, 124, 86, 0.35);
+      }
+
+      &:disabled {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      &.left {
+        left: -12px;
+        @media (max-width: 768px) {
+          left: -4px;
+        }
+      }
+
+      &.right {
+        right: -12px;
+        @media (max-width: 768px) {
+          right: -4px;
+        }
+      }
     }
 
-    @media (min-width: 1024px) {
-      gap: 2.5rem 3.5rem;
+    .categories-horizontal-track {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 1.5rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding: 0.75rem 1rem 1.25rem 1rem;
+      width: 100%;
+      scrollbar-width: none; // Firefox
+      -ms-overflow-style: none; // IE/Edge
+
+      &::-webkit-scrollbar {
+        display: none; // Chrome/Safari/Opera
+      }
+
+      @media (min-width: 1536px) {
+        justify-content: safe center;
+        gap: 2.25rem;
+      }
+
+      .category-item-card {
+        flex: 0 0 85px;
+        width: 85px;
+
+        @media (min-width: 640px) {
+          flex: 0 0 100px;
+          width: 100px;
+        }
+      }
     }
   }
 
@@ -71,12 +158,17 @@ $brand-green-border: rgba(5, 124, 86, 0.35);
     flex-direction: column;
     align-items: center;
     text-decoration: none;
+    background: transparent;
+    border: none;
+    padding: 0;
     width: 80px;
+    flex-shrink: 0;
     cursor: pointer;
-    transition: transform 0.25s ease;
+    transition: all 0.25s ease;
 
     @media (min-width: 640px) {
       width: 100px;
+      flex-shrink: 0;
     }
 
     &:hover {
@@ -94,6 +186,27 @@ $brand-green-border: rgba(5, 124, 86, 0.35);
 
       .category-label {
         color: $brand-green;
+      }
+    }
+
+    // Active Category Highlight in Theme Green
+    &.active {
+      transform: translateY(-5px);
+
+      .category-icon-box {
+        background: linear-gradient(135deg, #057c56 0%, #046646 100%);
+        border-color: #057c56;
+        box-shadow: 0 10px 26px rgba(5, 124, 86, 0.42), 0 0 0 3.5px rgba(5, 124, 86, 0.2);
+
+        svg, img {
+          transform: scale(1.15);
+          color: #ffffff !important;
+        }
+      }
+
+      .category-label {
+        color: #057c56;
+        font-weight: 900;
       }
     }
   }
@@ -175,20 +288,21 @@ $brand-green-border: rgba(5, 124, 86, 0.35);
       gap: 0.85rem;
     }
 
-    .header-icon-badge {
+    .header-icon-badge,
+    .active-cat-badge {
       width: 38px;
       height: 38px;
       border-radius: 12px;
-      border: 1px solid rgba(245, 158, 11, 0.25);
-      background-color: rgba(245, 158, 11, 0.1);
+      border: 1.5px solid rgba(5, 124, 86, 0.25);
+      background-color: #ecfdf5;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
 
-      .gold-star-icon {
-        color: #f59e0b;
-        font-size: 18px;
+      svg {
+        color: $brand-green;
+        font-size: 20px;
       }
     }
 

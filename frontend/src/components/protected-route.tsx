@@ -1,5 +1,6 @@
-import { ReactElement } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { ReactElement, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Loader from "./loader";
 
 interface Props {
   children?: ReactElement;
@@ -16,11 +17,26 @@ const ProtectedRoute = ({
   admin,
   redirect = "/",
 }: Props) => {
-  if (!isAuthenticated) return <Navigate to={redirect} />;
+  const router = useRouter();
+  const [authorized, setAuthorized] = useState(false);
 
-  if (adminOnly && !admin) return <Navigate to={redirect} />;
+  useEffect(() => {
+    if (!router.isReady) return;
 
-  return children ? children : <Outlet />;
+    if (!isAuthenticated) {
+      router.replace(redirect);
+    } else if (adminOnly && !admin) {
+      router.replace(redirect);
+    } else {
+      setAuthorized(true);
+    }
+  }, [isAuthenticated, adminOnly, admin, redirect, router]);
+
+  if (!authorized) {
+    return <Loader />;
+  }
+
+  return children ? children : null;
 };
 
 export default ProtectedRoute;

@@ -7,6 +7,7 @@ import { Skeleton } from "../components/loader";
 import { useMyOrdersQuery } from "../redux/api/orderAPI";
 import { RootState } from "../redux/store";
 import { CustomError } from "../types/api-types";
+import ProtectedRoute from "../components/protected-route";
 
 type DataType = {
   _id: string;
@@ -42,7 +43,9 @@ const column: Column<DataType>[] = [
 const Orders = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-  const { isLoading, data, isError, error } = useMyOrdersQuery(user?._id!);
+  const { isLoading, data, isError, error } = useMyOrdersQuery(user?._id!, {
+    skip: !user?._id,
+  });
 
   const [rows, setRows] = useState<DataType[]>([]);
 
@@ -84,10 +87,12 @@ const Orders = () => {
     rows.length > 6
   )();
   return (
-    <div className="container">
-      <h1>My Orders</h1>
-      {isLoading ? <Skeleton length={20} /> : Table}
-    </div>
+    <ProtectedRoute isAuthenticated={user ? true : false} redirect="/login">
+      <div className="container">
+        <h1>My Orders</h1>
+        {isLoading ? <Skeleton length={20} /> : Table}
+      </div>
+    </ProtectedRoute>
   );
 };
 

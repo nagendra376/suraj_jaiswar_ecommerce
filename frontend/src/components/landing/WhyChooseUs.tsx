@@ -1,17 +1,13 @@
-﻿import React from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import {
   BsShieldCheck,
   BsLightningChargeFill,
   BsCheckCircleFill,
-  BsGeoAltFill,
 } from "react-icons/bs";
 import {
   FaMagnifyingGlass,
   FaTruckFast,
   FaIndianRupeeSign,
-  FaStar,
-  FaArrowRight,
 } from "react-icons/fa6";
 
 const whyFeatures = [
@@ -118,53 +114,6 @@ const WhyChooseUs: React.FC = () => {
                   <div className="stat-label">{s.label}</div>
                 </div>
               ))}
-            </div>
-
-            {/* Customer Rating Card */}
-            <div className="rating-card">
-              <div className="rating-top-row">
-                <div className="star-icons">
-                  <FaStar />
-                  <FaStar />
-                  <FaStar />
-                  <FaStar />
-                  <FaStar />
-                </div>
-                <span className="score-big">4.9</span>
-                <span className="score-max">/ 5</span>
-              </div>
-              <p className="rating-text">
-                Based on 15,244+ Google &amp; customer reviews from all across Mumbai
-              </p>
-              <Link to="/search" className="read-reviews-link">
-                <span>Read All Reviews</span>
-                <FaArrowRight />
-              </Link>
-            </div>
-
-            {/* Workshop Address Card */}
-            <div className="workshop-address-card">
-              <div className="address-pin-box">
-                <BsGeoAltFill />
-              </div>
-              <div className="address-details">
-                <h4 className="address-title">Our Workshop</h4>
-                <address className="address-text">
-                  Gala No 2, Dafftary Complex, Datt Mandir Rd,
-                  <br />
-                  Virar West, Vasai-Virar, Maharashtra 401303
-                </address>
-                <div className="address-timings">Mon–Sun · 9 AM – 9 PM</div>
-                <a
-                  href="https://www.google.com/maps/place/Xigox/@19.4536818,72.8061033,17z"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="maps-link"
-                >
-                  <span>View on Google Maps</span>
-                  <FaArrowRight />
-                </a>
-              </div>
             </div>
           </div>
         </div>

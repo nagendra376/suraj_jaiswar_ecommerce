@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -51,6 +52,10 @@ export const BarChart = ({
   horizontal = false,
   labels = months,
 }: BarChartProps) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
   const options: ChartOptions<"bar"> = {
     responsive: true,
     indexAxis: horizontal ? "y" : "x",
@@ -120,6 +125,10 @@ export const DoughnutChart = ({
   legends = true,
   offset,
 }: DoughnutChartProps) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
   const doughnutData: ChartData<"doughnut", number[], string> = {
     labels,
     datasets: [
@@ -161,6 +170,10 @@ export const PieChart = ({
   backgroundColor,
   offset,
 }: PieChartProps) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
   const pieChartData: ChartData<"pie", number[], string> = {
     labels,
     datasets: [
@@ -200,6 +213,10 @@ export const LineChart = ({
   borderColor,
   labels = months,
 }: LineChartProps) => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
   const options: ChartOptions<"line"> = {
     responsive: true,
     plugins: {

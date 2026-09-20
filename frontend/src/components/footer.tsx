@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "../utils/router";
 import toast from "react-hot-toast";
 import solutionLogo from "../assets/solution-systems-logo.png";
 import {
@@ -146,7 +146,7 @@ const Footer: React.FC = () => {
           <div className="footer-brand-col">
             <div className="footer-logo-row">
               <img
-                src={solutionLogo}
+                src={solutionLogo.src}
                 alt="Solution Systems"
                 className="footer-logo-img"
               />

@@ -3,7 +3,7 @@ import { BsSearch } from "react-icons/bs";
 import { FaRegBell } from "react-icons/fa";
 import { HiTrendingDown, HiTrendingUp } from "react-icons/hi";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
+import { Navigate } from "../../utils/router";
 import AdminSidebar from "../../components/admin/AdminSidebar";
 import { BarChart, DoughnutChart } from "../../components/admin/Charts";
 import Table from "../../components/admin/DashboardTable";
@@ -11,6 +11,7 @@ import { Skeleton } from "../../components/loader";
 import { useStatsQuery } from "../../redux/api/dashboardAPI";
 import { RootState } from "../../redux/store";
 import { getLastMonths } from "../../utils/features";
+import ProtectedRoute from "../../components/protected-route";
 
 const userImg =
   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJxA5cTf-5dh5Eusm0puHbvAhOrCRPtckzjA&usqp";
@@ -20,15 +21,23 @@ const { last6Months: months } = getLastMonths();
 const Dashboard = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-  const { isLoading, data, isError } = useStatsQuery(user?._id!);
+  const { isLoading, data, isError } = useStatsQuery(user?._id!, {
+    skip: !user?._id || user?.role !== "admin",
+  });
 
   const stats = data?.stats!;
 
   if (isError) return <Navigate to={"/"} />;
 
   return (
-    <div className="admin-container">
-      <AdminSidebar />
+    <ProtectedRoute
+      isAuthenticated={true}
+      adminOnly={true}
+      admin={user?.role === "admin"}
+      redirect="/"
+    >
+      <div className="admin-container">
+        <AdminSidebar />
       <main className="dashboard">
         {isLoading ? (
           <Skeleton length={20} />
@@ -124,7 +133,8 @@ const Dashboard = () => {
           </>
         )}
       </main>
-    </div>
+      </div>
+    </ProtectedRoute>
   );
 };
 

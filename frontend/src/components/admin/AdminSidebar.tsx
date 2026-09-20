@@ -14,7 +14,7 @@ import {
   RiDashboardFill,
   RiShoppingBag3Fill,
 } from "react-icons/ri";
-import { Link, Location, useLocation } from "react-router-dom";
+import { Link, CustomLocation as Location, useLocation } from "../../utils/router";
 import { IconType } from "react-icons";
 import { MdDiscount } from "react-icons/md";
 
@@ -22,15 +22,14 @@ const AdminSidebar = () => {
   const location = useLocation();
 
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [phoneActive, setPhoneActive] = useState<boolean>(
-    window.innerWidth < 1100
-  );
+  const [phoneActive, setPhoneActive] = useState<boolean>(false);
 
   const resizeHandler = () => {
     setPhoneActive(window.innerWidth < 1100);
   };
 
   useEffect(() => {
+    setPhoneActive(window.innerWidth < 1100);
     window.addEventListener("resize", resizeHandler);
 
     return () => {
