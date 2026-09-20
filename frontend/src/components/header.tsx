@@ -148,22 +148,31 @@ const Header = ({ user }: PropsType) => {
 
       {/* 2. Top Ticker Marquee Announcement Bar */}
       <div className="announcement-bar">
-        <div className="marquee-inner">
-          <div className="marquee-content">
-            <span className="red-dot" />
-            <span>WELCOME TO SOLUTION SYSTEMS</span>
-            <span>|</span>
-            <span>CASH ON DELIVERY (COD) <span className="highlight-alert">❌ NOT AVAILABLE</span></span>
-            <span>|</span>
-            <span>FLEXIBLE EMI FINANCE OPTIONS AVAILABLE</span>
-            <span>|</span>
-            <span>SHIPPING ALL OVER INDIA</span>
-            <span>|</span>
-            <span>B2B BILLING AVAILABLE</span>
-            <span>|</span>
-            <span>100% NEW GENUINE &amp; ORIGINAL PRODUCTS</span>
-            <span className="red-dot" />
-          </div>
+        <div className="marquee-track">
+          {[1, 2, 3, 4].map((item) => (
+            <div
+              className="marquee-content"
+              key={item}
+              aria-hidden={item > 1 ? "true" : undefined}
+            >
+              <span className="red-dot" />
+              <span>WELCOME TO SOLUTION SYSTEMS</span>
+              <span>|</span>
+              <span>
+                CASH ON DELIVERY (COD){" "}
+                <span className="highlight-alert">❌ NOT AVAILABLE</span>
+              </span>
+              <span>|</span>
+              <span>FLEXIBLE EMI FINANCE OPTIONS AVAILABLE</span>
+              <span>|</span>
+              <span>SHIPPING ALL OVER INDIA</span>
+              <span>|</span>
+              <span>B2B BILLING AVAILABLE</span>
+              <span>|</span>
+              <span>100% NEW GENUINE &amp; ORIGINAL PRODUCTS</span>
+              <span className="red-dot" />
+            </div>
+          ))}
         </div>
       </div>
 
