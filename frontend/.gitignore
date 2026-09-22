@@ -26,4 +26,4 @@ out
 *.sw?
 .env
 
-.env-sample
+.env.sample
