@@ -129,7 +129,9 @@ const Footer: React.FC = () => {
       toast.error("Please enter a valid email address");
       return;
     }
-    toast.success("Thank you for subscribing to repair tips & exclusive discounts!");
+    toast.success(
+      "Thank you for subscribing to repair tips & exclusive discounts!",
+    );
     setNewsletterEmail("");
   };
 
@@ -156,9 +158,10 @@ const Footer: React.FC = () => {
             </div>
 
             <p className="footer-brand-desc">
-              Mumbai&apos;s trusted laptop, computer &amp; MacBook repair center.
-              Expert screen replacement, motherboard repair, data recovery &amp;
-              upgrades for all brands, serving Mumbai, Thane &amp; Palghar since 2011.
+              Mumbai&apos;s trusted laptop, computer &amp; MacBook repair
+              center. Expert screen replacement, motherboard repair, data
+              recovery &amp; upgrades for all brands, serving Mumbai, Thane
+              &amp; Palghar since 2011.
             </p>
 
             {/* Contact Details */}
@@ -194,10 +197,9 @@ const Footer: React.FC = () => {
               <div className="contact-item">
                 <FaLocationDot className="contact-icon" />
                 <span>
-                  Head Office: Gala No 2, Dafftary Complex, D.S. Estate, Datt
-                  Mandir Rd, near PD Medical Centre, near Vartak Hall Patho Lab,
-                  Doghar Pada, Bhabhal Nagar, Virar West, Vasai-Virar,
-                  Maharashtra 401303, India
+                  Shop no.38, Chandak Nishchay Bldg, Swami Vivekanand Rd, opp.
+                  Jain Mandir Road, Parbat Nagar, Dahisar, Mumbai, Maharashtra
+                  400068
                 </span>
               </div>
 
