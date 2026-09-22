@@ -11,6 +11,7 @@ const initialState: CartReducerInitialState = {
   discount: 0,
   total: 0,
   coupon: undefined,
+  isCartOpen: false,
   shippingInfo: {
     address: "",
     city: "",
@@ -18,6 +19,18 @@ const initialState: CartReducerInitialState = {
     country: "",
     pinCode: "",
   },
+};
+
+const updateCartPricing = (state: CartReducerInitialState) => {
+  const subtotal = state.cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  state.subtotal = subtotal;
+  state.shippingCharges = state.subtotal > 1000 ? 0 : 200;
+  state.tax = Math.round(state.subtotal * 0.18);
+  state.total =
+    state.subtotal + state.tax + state.shippingCharges - state.discount;
 };
 
 export const cartReducer = createSlice({
@@ -33,6 +46,9 @@ export const cartReducer = createSlice({
 
       if (index !== -1) state.cartItems[index] = action.payload;
       else state.cartItems.push(action.payload);
+
+      updateCartPricing(state);
+      state.isCartOpen = true;
       state.loading = false;
     },
 
@@ -41,24 +57,29 @@ export const cartReducer = createSlice({
       state.cartItems = state.cartItems.filter(
         (i) => i.productId !== action.payload
       );
+      updateCartPricing(state);
       state.loading = false;
     },
 
-    calculatePrice: (state) => {
-      const subtotal = state.cartItems.reduce(
-        (total, item) => total + item.price * item.quantity,
-        0
-      );
+    openCart: (state) => {
+      state.isCartOpen = true;
+    },
 
-      state.subtotal = subtotal;
-      state.shippingCharges = state.subtotal > 1000 ? 0 : 200;
-      state.tax = Math.round(state.subtotal * 0.18);
-      state.total =
-        state.subtotal + state.tax + state.shippingCharges - state.discount;
+    closeCart: (state) => {
+      state.isCartOpen = false;
+    },
+
+    toggleCart: (state) => {
+      state.isCartOpen = !state.isCartOpen;
+    },
+
+    calculatePrice: (state) => {
+      updateCartPricing(state);
     },
 
     discountApplied: (state, action: PayloadAction<number>) => {
       state.discount = action.payload;
+      updateCartPricing(state);
     },
 
     saveCoupon: (state, action: PayloadAction<string>) => {
@@ -79,4 +100,7 @@ export const {
   saveShippingInfo,
   resetCart,
   saveCoupon,
+  openCart,
+  closeCart,
+  toggleCart,
 } = cartReducer.actions;

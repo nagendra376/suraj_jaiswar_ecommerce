@@ -66,15 +66,15 @@ const RepairProcessBento: React.FC = () => {
             <div className="bento-card-footer">
               <div className="contact-action-chips">
                 <a
-                  href="tel:+917499761196"
+                  href="tel:+918655208382"
                   className="btn-quick-chip call"
                   title="Call Solution Systems"
                 >
                   <FaPhone />
-                  <span>Call +91 74997 61196</span>
+                  <span>Call +91 86552 08382</span>
                 </a>
                 <a
-                  href="https://wa.me/917499761196?text=Hi%20Solution%20Systems,%20I%20need%20a%20laptop%20or%20computer%20repair"
+                  href="https://wa.me/918655208382?text=Hi%20Solution%20Systems,%20I%20need%20a%20laptop%20or%20computer%20repair"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-quick-chip whatsapp"
@@ -244,15 +244,15 @@ const RepairProcessBento: React.FC = () => {
 
             <div className="banner-right-actions">
               <a
-                href="tel:+917499761196"
+                href="tel:+918655208382"
                 className="btn-banner-primary"
                 title="Call Now"
               >
                 <FaPhone />
-                <span>Call +91 74997 61196</span>
+                <span>Call +91 86552 08382</span>
               </a>
               <a
-                href="https://wa.me/917499761196?text=Hi%20Solution%20Systems,%20I%20want%20to%20book%20a%20repair%20pickup"
+                href="https://wa.me/918655208382?text=Hi%20Solution%20Systems,%20I%20want%20to%20book%20a%20repair%20pickup"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-banner-whatsapp"

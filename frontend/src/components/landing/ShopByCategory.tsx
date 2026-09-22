@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useRef, useState, useEffect } from "react";
+import { Link, useNavigate } from "../../utils/router";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import {
@@ -21,14 +21,7 @@ import { addToCart } from "../../redux/reducer/cartReducer";
 import { useSearchProductsQuery } from "../../redux/api/productAPI";
 import { Product, CartItem } from "../../types/types";
 import { transformImage } from "../../utils/features";
-import {
-  CATEGORIES_NAV,
-  FALLBACK_FEATURED,
-  FALLBACK_PROCESSORS,
-  FALLBACK_MOTHERBOARDS,
-  FALLBACK_RAM,
-  FALLBACK_GPUS,
-} from "../../data/categoryProducts";
+import { CATEGORIES_NAV } from "../../data/categoryProducts";
 
 // Helper to render category icons
 const renderCategoryIcon = (iconName: string) => {
@@ -165,6 +158,7 @@ interface CarouselRowProps {
   iconBadge?: React.ReactNode;
   viewAllSlug?: string;
   products: Product[];
+  isLoading?: boolean;
 }
 
 const CarouselRow: React.FC<CarouselRowProps> = ({
@@ -173,6 +167,7 @@ const CarouselRow: React.FC<CarouselRowProps> = ({
   iconBadge,
   viewAllSlug,
   products,
+  isLoading,
 }) => {
   const rowRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
@@ -244,9 +239,76 @@ const CarouselRow: React.FC<CarouselRowProps> = ({
         ref={rowRef}
         onScroll={handleScrollEvent}
       >
-        {products.map((item) => (
-          <ComputechProductCard key={item._id} product={item} />
-        ))}
+        {isLoading ? (
+          Array.from({ length: 6 }).map((_, idx) => (
+            <div
+              key={idx}
+              className="computech-product-card"
+              style={{
+                minWidth: 260,
+                height: 380,
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+                padding: "16px",
+                background: "#ffffff",
+                borderRadius: "12px",
+                border: "1px solid #e2e8f0",
+              }}
+            >
+              <div
+                style={{
+                  width: "100%",
+                  height: "200px",
+                  background: "#f1f5f9",
+                  borderRadius: "8px",
+                  animation: "pulse 1.5s infinite",
+                }}
+              />
+              <div
+                style={{
+                  width: "80%",
+                  height: "16px",
+                  background: "#f1f5f9",
+                  borderRadius: "4px",
+                }}
+              />
+              <div
+                style={{
+                  width: "50%",
+                  height: "14px",
+                  background: "#f1f5f9",
+                  borderRadius: "4px",
+                }}
+              />
+              <div
+                style={{
+                  width: "100%",
+                  height: "36px",
+                  background: "#f1f5f9",
+                  borderRadius: "8px",
+                  marginTop: "auto",
+                }}
+              />
+            </div>
+          ))
+        ) : products.length === 0 ? (
+          <div
+            style={{
+              padding: "48px 24px",
+              textAlign: "center",
+              width: "100%",
+              color: "#64748b",
+              fontSize: "15px",
+            }}
+          >
+            No products found in this category.
+          </div>
+        ) : (
+          products.map((item) => (
+            <ComputechProductCard key={item._id} product={item} />
+          ))
+        )}
       </div>
 
       {/* Bottom Scroll Track with mini chevrons matching reference */}
@@ -280,128 +342,138 @@ const CarouselRow: React.FC<CarouselRowProps> = ({
 
 // Main Component
 const ShopByCategory: React.FC = () => {
-  // Query each category dynamically from backend API
-  const { data: featuredData } = useSearchProductsQuery({
+  const [activeCategory, setActiveCategory] = useState<string>("processor");
+  const catTrackRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkCatScroll = () => {
+    const el = catTrackRef.current;
+    if (!el) return;
+    const hasOverflow = el.scrollWidth > el.clientWidth + 2;
+    setCanScrollLeft(hasOverflow && el.scrollLeft > 10);
+    setCanScrollRight(
+      hasOverflow && el.scrollLeft < el.scrollWidth - el.clientWidth - 10
+    );
+  };
+
+  useEffect(() => {
+    // Initial check after render & image/font settlement
+    checkCatScroll();
+    const timer = setTimeout(checkCatScroll, 300);
+    window.addEventListener("resize", checkCatScroll);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", checkCatScroll);
+    };
+  }, []);
+
+  const handleCatScroll = (direction: "left" | "right") => {
+    const el = catTrackRef.current;
+    if (!el) return;
+    const scrollAmount = 280;
+    el.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
+
+  // Query active category dynamically from backend API - Page 1
+  const { data: page1Data, isLoading: isPage1Loading } = useSearchProductsQuery({
     search: "",
-    category: "featured",
+    category: activeCategory,
     page: 1,
     price: 500000,
     sort: "",
   });
 
-  const { data: processorData } = useSearchProductsQuery({
-    search: "",
-    category: "processor",
-    page: 1,
-    price: 500000,
-    sort: "",
-  });
+  // Query page 2 to get all 10+ seeded products (backend paginates 8 per page)
+  const { data: page2Data } = useSearchProductsQuery(
+    {
+      search: "",
+      category: activeCategory,
+      page: 2,
+      price: 500000,
+      sort: "",
+    },
+    {
+      skip: !page1Data || (page1Data.totalPage ?? 1) < 2,
+    }
+  );
 
-  const { data: motherboardData } = useSearchProductsQuery({
-    search: "",
-    category: "motherboard",
-    page: 1,
-    price: 500000,
-    sort: "",
-  });
+  const activeCategoryInfo =
+    CATEGORIES_NAV.find((c) => c.slug === activeCategory) || CATEGORIES_NAV[0];
 
-  const { data: ramData } = useSearchProductsQuery({
-    search: "",
-    category: "ram",
-    page: 1,
-    price: 500000,
-    sort: "",
-  });
-
-  const { data: gpuData } = useSearchProductsQuery({
-    search: "",
-    category: "graphics-card",
-    page: 1,
-    price: 500000,
-    sort: "",
-  });
-
-  // Use dynamic products from database if present, else use fallback
-  const featuredProducts =
-    featuredData?.products && featuredData.products.length > 0
-      ? featuredData.products
-      : FALLBACK_FEATURED;
-
-  const processorProducts =
-    processorData?.products && processorData.products.length > 0
-      ? processorData.products
-      : FALLBACK_PROCESSORS;
-
-  const motherboardProducts =
-    motherboardData?.products && motherboardData.products.length > 0
-      ? motherboardData.products
-      : FALLBACK_MOTHERBOARDS;
-
-  const ramProducts =
-    ramData?.products && ramData.products.length > 0
-      ? ramData.products
-      : FALLBACK_RAM;
-
-  const gpuProducts =
-    gpuData?.products && gpuData.products.length > 0
-      ? gpuData.products
-      : FALLBACK_GPUS;
+  const activeProducts = [
+    ...(page1Data?.products || []),
+    ...(page2Data?.products || []),
+  ];
 
   return (
     <div className="computech-shop-container">
       {/* 1. SHOP BY CATEGORY BAR */}
       <div className="shop-by-category-bar">
         <h2 className="shop-by-category-title">SHOP BY CATEGORY</h2>
-        <div className="categories-grid">
-          {CATEGORIES_NAV.map((cat) => (
-            <Link
-              key={cat.slug}
-              to={`/search?category=${encodeURIComponent(cat.slug)}`}
-              className="category-item-card"
-            >
-              <div className="category-icon-box">
-                {renderCategoryIcon(cat.iconName)}
-              </div>
-              <span className="category-label">{cat.name}</span>
-            </Link>
-          ))}
+        <div className="categories-scroll-wrapper">
+          <button
+            type="button"
+            className={`cat-scroll-arrow left ${canScrollLeft ? "visible" : ""}`}
+            onClick={() => handleCatScroll("left")}
+            disabled={!canScrollLeft}
+            aria-label="Previous categories"
+          >
+            <BsChevronLeft />
+          </button>
+
+          <div
+            className="categories-horizontal-track"
+            ref={catTrackRef}
+            onScroll={checkCatScroll}
+          >
+            {CATEGORIES_NAV.map((cat) => {
+              const isActive = activeCategory === cat.slug;
+              return (
+                <button
+                  key={cat.slug}
+                  type="button"
+                  className={`category-item-card ${isActive ? "active" : ""}`}
+                  onClick={() => setActiveCategory(cat.slug)}
+                  aria-pressed={isActive}
+                >
+                  <div className="category-icon-box">
+                    {renderCategoryIcon(cat.iconName)}
+                  </div>
+                  <span className="category-label">{cat.name}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            type="button"
+            className={`cat-scroll-arrow right ${canScrollRight ? "visible" : ""}`}
+            onClick={() => handleCatScroll("right")}
+            disabled={!canScrollRight}
+            aria-label="Next categories"
+          >
+            <BsChevronRight />
+          </button>
         </div>
       </div>
 
-      {/* 2. FEATURED HIGHLIGHTS */}
+      {/* 2. ONLY THE ACTIVE CATEGORY CAROUSEL */}
       <CarouselRow
-        title="FEATURED HIGHLIGHTS"
+        key={activeCategory}
+        title={activeCategoryInfo.name.toUpperCase()}
         subtitle="TOP HANDPICKED PRODUCTS"
-        iconBadge={<FaStar className="gold-star-icon" />}
-        products={featuredProducts}
-      />
-
-      {/* 3. PROCESSOR */}
-      <CarouselRow
-        title="PROCESSOR"
-        viewAllSlug="processor"
-        products={processorProducts}
-      />
-
-      {/* 4. MOTHERBOARD */}
-      <CarouselRow
-        title="MOTHERBOARD"
-        viewAllSlug="motherboard"
-        products={motherboardProducts}
-      />
-
-      {/* 5. MEMORY (RAM) */}
-      <CarouselRow
-        title="MEMORY (RAM)"
-        viewAllSlug="ram"
-        products={ramProducts}
-      />
-
-      {/* 6. GRAPHICS CARD */}
-      <CarouselRow
-        title="GRAPHICS CARD"
-        viewAllSlug="graphics-card"
-        products={gpuProducts}
+        iconBadge={
+          <div className="active-cat-badge">
+            {renderCategoryIcon(activeCategoryInfo.iconName)}
+          </div>
+        }
+        viewAllSlug={activeCategoryInfo.slug}
+        products={activeProducts}
+        isLoading={isPage1Loading}
       />
     </div>
   );

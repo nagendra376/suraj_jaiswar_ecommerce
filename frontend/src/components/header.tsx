@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate, useLocation } from "../utils/router";
+import { useSelector, useDispatch } from "react-redux";
+import { openCart } from "../redux/reducer/cartReducer";
 import {
   FaSearch,
   FaShoppingBag,
@@ -13,6 +14,8 @@ import {
   FaTimes,
   FaBoxOpen,
   FaShieldAlt,
+  FaPhoneAlt,
+  FaWhatsapp,
 } from "react-icons/fa";
 import { User } from "../types/types";
 import { RootState } from "../redux/store";
@@ -20,12 +23,13 @@ import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import toast from "react-hot-toast";
 import solutionLogo from "../assets/solution-systems-logo.png";
+import { serviceAreasData } from "../data/serviceAreas";
 
 interface PropsType {
   user: User | null;
 }
 
-// Categories from Browse Gear dropdown
+// Categories from Browse Gear dropdown (kept unchanged)
 const browseCategories = [
   { name: "Custom Pc Build", path: "/search?category=custom-pc-build" },
   { name: "Laptops", path: "/search?category=laptops" },
@@ -41,13 +45,14 @@ const browseCategories = [
   { name: "View All", path: "/search" },
 ];
 
+// Repair Services Menu
 const repairServicesMenu = [
   { name: "Laptop Repair", path: "/search?search=laptop", icon: "💻" },
   { name: "Computer Repair", path: "/search?search=computer", icon: "🖥️" },
   { name: "MacBook & iMac Repair", path: "/search?search=macbook", icon: "🍎" },
   { name: "Computer Shop", path: "/search", icon: "🛠️" },
   { name: "Printer Repair", path: "/search?search=printer", icon: "🖨️" },
-  { name: "Screen Replacement", path: "/search?search=screen", icon: "📱" },
+  { name: "Screen Replacement", path: "/search?search=screen", icon: "🖥" },
   { name: "Data Recovery", path: "/search?search=data", icon: "💾" },
 ];
 
@@ -56,9 +61,25 @@ const itServicesMenu = [
   { name: "Mobile App Dev", path: "/search?search=mobile-app", icon: "📱" },
 ];
 
+const buySellMenu = [
+  { name: "Buy Refurbished Laptops", path: "/search?category=laptops", isBlue: false },
+  { name: "View All Laptops & Computers", path: "/search?category=laptops", isBlue: true },
+  { name: "Sell Old Laptop", path: "/search?search=sell-laptop", isBlue: false, isDividerBefore: true },
+  { name: "Sell Your Laptop", path: "/search?search=sell-laptop", isBlue: true },
+];
+
+const companyMenu = [
+  { name: "About Us", path: "/search?search=about", isBlue: false },
+  { name: "Customer Reviews", path: "/search?search=reviews", isBlue: false },
+  { name: "Supported Brands", path: "/search?search=brands", isBlue: false },
+  { name: "Blog", path: "/search?search=blog", isBlue: false },
+  { name: "Contact Us", path: "/search?search=contact", isBlue: true, isDividerBefore: true },
+];
+
 const Header = ({ user }: PropsType) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   // Redux Cart Count
   const { cartItems } = useSelector((state: RootState) => state.cartReducer);
@@ -127,22 +148,30 @@ const Header = ({ user }: PropsType) => {
 
       {/* 2. Top Ticker Marquee Announcement Bar */}
       <div className="announcement-bar">
-        <div className="marquee-inner">
-          <div className="marquee-content">
-            <span className="red-dot" />
-            <span>WELCOME TO SOLUTION SYSTEMS</span>
-            <span>|</span>
-            <span>CASH ON DELIVERY (COD) <span className="highlight-alert">❌ NOT AVAILABLE</span></span>
-            <span>|</span>
-            <span>FLEXIBLE EMI FINANCE OPTIONS AVAILABLE</span>
-            <span>|</span>
-            <span>SHIPPING ALL OVER INDIA</span>
-            <span>|</span>
-            <span>B2B BILLING AVAILABLE</span>
-            <span>|</span>
-            <span>100% NEW GENUINE &amp; ORIGINAL PRODUCTS</span>
-            <span className="red-dot" />
-          </div>
+        <div className="marquee-track">
+          {[1, 2, 3, 4].map((item) => (
+            <div
+              className="marquee-content"
+              key={item}
+              aria-hidden={item > 1 ? "true" : undefined}
+            >
+              <span>WELCOME TO SOLUTION SYSTEMS</span>
+              <span>|</span>
+              <span>
+                CASH ON DELIVERY (COD){" "}
+                <span className="highlight-alert">❌ NOT AVAILABLE</span>
+              </span>
+              <span>|</span>
+              <span>FLEXIBLE EMI FINANCE OPTIONS AVAILABLE</span>
+              <span>|</span>
+              <span>SHIPPING ALL OVER INDIA</span>
+              <span>|</span>
+              <span>B2B BILLING AVAILABLE</span>
+              <span>|</span>
+              <span>100% NEW GENUINE &amp; ORIGINAL PRODUCTS</span>
+              <span>|</span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -162,7 +191,7 @@ const Header = ({ user }: PropsType) => {
           {/* Solution Systems Brand Logo */}
           <Link to="/" className="brand-logo-link" aria-label="Solution Systems Homepage">
             <img
-              src={solutionLogo}
+              src={solutionLogo.src}
               alt="Solution Systems"
               className="header-brand-logo"
             />
@@ -241,11 +270,16 @@ const Header = ({ user }: PropsType) => {
             )}
 
             {/* Shopping Cart Pill Button */}
-            <Link to="/cart" className="btn-cart-pill" aria-label="View Shopping Cart">
+            <button
+              type="button"
+              onClick={() => dispatch(openCart())}
+              className="btn-cart-pill"
+              aria-label="View Shopping Cart"
+            >
               <FaShoppingBag className="cart-icon" />
               <span className="cart-label">Cart</span>
               <span className="cart-badge-count">{totalCartCount}</span>
-            </Link>
+            </button>
           </div>
         </div>
 
@@ -304,15 +338,22 @@ const Header = ({ user }: PropsType) => {
             )}
           </div>
 
-          {/* Horizontal Navigation Links */}
+          {/* Horizontal Navigation Links matching media_1789671189103.png */}
           <nav className="nav-links-menu">
-            {/* Repair Services with Popover (matching media_1789661765589.png) */}
-            <div className="nav-link-item service-tab-item active-pill">
-              <Link to="/search?search=repair" className="nav-link-anchor service-pill-btn">
-                <span>Repair Services</span>
-                <FaChevronDown className="service-tab-chevron" />
+            {/* 1. Home */}
+            <div className="nav-link-item">
+              <Link to="/" className="nav-link-anchor">
+                Home
               </Link>
-              <div className="services-dropdown-popover">
+            </div>
+
+            {/* 2. Repair Services with Dropdown */}
+            <div className="nav-link-item has-dropdown">
+              <Link to="/search?search=repair" className="nav-link-anchor">
+                <span>Repair Services</span>
+                <FaChevronDown className="nav-dropdown-chevron" />
+              </Link>
+              <div className="nav-dropdown-popover services-style-popover">
                 <div className="services-list">
                   {repairServicesMenu.map((item) => (
                     <Link
@@ -326,83 +367,149 @@ const Header = ({ user }: PropsType) => {
                   ))}
                 </div>
                 <div className="services-dropdown-divider" />
-                <Link to="/search" className="view-all-services-btn">
+                <Link to="/search?search=repair" className="view-all-services-btn">
                   View All Services
                 </Link>
               </div>
             </div>
 
-            {/* IT Services with Popover (matching media_1789661765589.png) */}
-            <div className="nav-link-item service-tab-item">
-              <Link to="/search?search=it-services" className="nav-link-anchor service-pill-btn">
+            {/* 3. IT Services with Dropdown (matching media_1789671792519.png) */}
+            <div className="nav-link-item has-dropdown">
+              <Link to="/search?search=it-services" className="nav-link-anchor">
                 <span>IT Services</span>
-                <FaChevronDown className="service-tab-chevron" />
+                <FaChevronDown className="nav-dropdown-chevron" />
               </Link>
-              <div className="services-dropdown-popover">
-                <div className="services-list">
-                  {itServicesMenu.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      className="service-dropdown-item"
-                    >
-                      <span className="service-item-icon">{item.icon}</span>
-                      <span className="service-item-name">{item.name}</span>
-                    </Link>
-                  ))}
+              <div className="nav-dropdown-popover simple-dropdown-popover it-dropdown-popover">
+                {itServicesMenu.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.path}
+                    className="it-dropdown-item"
+                  >
+                    <span className="it-item-icon">{item.icon}</span>
+                    <span className="it-item-title">{item.name}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* 4. Service Areas with Scrollable Mega Menu (matching media_1789671736710.png & media_1789671763632.png) */}
+            <div className="nav-link-item has-dropdown service-areas-item">
+              <Link to="/search?search=locations" className="nav-link-anchor">
+                <span>Service Areas</span>
+                <FaChevronDown className="nav-dropdown-chevron" />
+              </Link>
+              <div className="service-areas-mega-popover">
+                {/* Top Blue Header Banner */}
+                <div className="areas-header-bar">
+                  <div className="header-left">
+                    <span className="shield-icon">🛡️</span>
+                    <span>We Repair Across Mumbai MMR</span>
+                  </div>
+                  <span className="areas-pill-badge">365+ areas covered</span>
                 </div>
-                <div className="services-dropdown-divider" />
-                <Link to="/search" className="view-all-services-btn">
-                  View All IT Services
-                </Link>
+
+                {/* 4 Columns Scrollable Body */}
+                <div className="areas-scrollable-body">
+                  <div className="areas-grid">
+                    {serviceAreasData.map((col) => (
+                      <div key={col.region} className="area-column">
+                        <div className="area-column-header">
+                          <div className="col-title-row">
+                            <span className="col-icon">{col.icon}</span>
+                            <span className="col-name">{col.region}</span>
+                          </div>
+                          <div className="col-count-text">{col.count}</div>
+                          <div
+                            className="col-accent-line"
+                            style={{ backgroundColor: col.accentColor }}
+                          />
+                        </div>
+                        <div className="area-links-list">
+                          {col.spots.map((spot) => (
+                            <Link
+                              key={spot}
+                              to={`/search?search=${encodeURIComponent(spot)}`}
+                              className="area-link"
+                            >
+                              <span className="bullet-dot" style={{ color: col.accentColor }}>•</span>
+                              <span className="area-spot-name">{spot}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Sticky Bottom Footer */}
+                <div className="areas-footer-bar">
+                  <div className="footer-left">
+                    <span className="truck-icon">🚚</span>
+                    <span>Free pickup &amp; delivery across all 365+ locations</span>
+                  </div>
+                  <Link to="/search?search=locations" className="btn-view-all-areas">
+                    View All 365 Areas &rarr;
+                  </Link>
+                </div>
               </div>
             </div>
 
-            {/* Gamer's Tech */}
-            <div className="nav-link-item">
-              <Link to="/search?category=gaming" className="nav-link-anchor">
-                Gamer&apos;s Tech
-              </Link>
-            </div>
-
-            {/* Peripherals with Popover */}
-            <div className="nav-link-item">
-              <Link to="/search?category=peripherals" className="nav-link-anchor">
-                Peripherals
-              </Link>
-              <div className="mega-menu-popover">
-                <Link to="/search?category=mouse" className="mega-item">
-                  Gaming Mouse
-                </Link>
-                <Link to="/search?category=keyboard" className="mega-item">
-                  Mechanical Keyboards
-                </Link>
-                <Link to="/search?category=mouse-pad" className="mega-item">
-                  RGB Mouse Pads
-                </Link>
-                <Link to="/search?category=headphones" className="mega-item">
-                  Gaming Headsets
-                </Link>
-                <Link to="/search?category=game-controllers" className="mega-item">
-                  Game Controllers
-                </Link>
-              </div>
-            </div>
-
-            {/* Laptop Zone */}
-            <div className="nav-link-item">
+            {/* 5. Buy & Sell with Dropdown (matching media_1789671783789.png) */}
+            <div className="nav-link-item has-dropdown">
               <Link to="/search?category=laptops" className="nav-link-anchor">
-                Laptop Zone
+                <span>Buy &amp; Sell</span>
+                <FaChevronDown className="nav-dropdown-chevron" />
               </Link>
+              <div className="nav-dropdown-popover simple-dropdown-popover">
+                {buySellMenu.map((item) => (
+                  <div key={item.name}>
+                    {item.isDividerBefore && <div className="dropdown-divider-line" />}
+                    <Link
+                      to={item.path}
+                      className={`simple-dropdown-item ${item.isBlue ? "item-blue" : ""}`}
+                    >
+                      <span className="item-title">{item.name}</span>
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* INNO3D Zone */}
-            <div className="nav-link-item">
-              <Link to="/search?category=graphics-card" className="nav-link-anchor">
-                INNO3D Zone
+            {/* 6. Company with Dropdown (matching media_1789671775293.png) */}
+            <div className="nav-link-item has-dropdown">
+              <Link to="/search?search=about" className="nav-link-anchor">
+                <span>Company</span>
+                <FaChevronDown className="nav-dropdown-chevron" />
               </Link>
+              <div className="nav-dropdown-popover simple-dropdown-popover">
+                {companyMenu.map((item) => (
+                  <div key={item.name}>
+                    {item.isDividerBefore && <div className="dropdown-divider-line" />}
+                    <Link
+                      to={item.path}
+                      className={`simple-dropdown-item ${item.isBlue ? "item-blue" : ""}`}
+                    >
+                      <span className="item-title">{item.name}</span>
+                    </Link>
+                  </div>
+                ))}
+              </div>
             </div>
           </nav>
+
+          {/* Right Action: WhatsApp Now Button */}
+          <div className="nav-action-right">
+            <a
+              href="https://wa.me/918655208382?text=Hi%20Solution%20Systems,%20I%20have%20an%20inquiry"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-whatsapp-now-btn"
+            >
+              <FaWhatsapp className="whatsapp-icon" />
+              <span>WhatsApp Now</span>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -416,7 +523,7 @@ const Header = ({ user }: PropsType) => {
             <div className="drawer-header">
               <Link to="/" onClick={() => setMobileMenuOpen(false)}>
                 <img
-                  src={solutionLogo}
+                  src={solutionLogo.src}
                   alt="Solution Systems"
                   className="header-brand-logo"
                   style={{ height: "46px" }}
@@ -444,7 +551,7 @@ const Header = ({ user }: PropsType) => {
               </Link>
             ))}
 
-            <div className="drawer-section-title">Repair &amp; IT Services</div>
+            <div className="drawer-section-title">Repair Services</div>
             {repairServicesMenu.map((item) => (
               <Link
                 key={item.name}
@@ -457,31 +564,71 @@ const Header = ({ user }: PropsType) => {
               </Link>
             ))}
 
-            <div className="drawer-section-title">Featured Zones</div>
+            <div className="drawer-section-title">IT Services</div>
+            {itServicesMenu.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className="drawer-link"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>{item.icon} {item.name}</span>
+                <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
+              </Link>
+            ))}
+
+            <div className="drawer-section-title">Service Areas (Mumbai MMR)</div>
             <Link
-              to="/search?category=peripherals"
+              to="/search?search=locations"
               className="drawer-link"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <span>Peripherals</span>
+              <span>📍 View All 365+ Service Locations</span>
               <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
             </Link>
-            <Link
-              to="/search?category=laptops"
-              className="drawer-link"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span>Laptop Zone</span>
-              <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
-            </Link>
-            <Link
-              to="/search?category=graphics-card"
-              className="drawer-link"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span>INNO3D Zone</span>
-              <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
-            </Link>
+
+            <div className="drawer-section-title">Buy &amp; Sell</div>
+            {buySellMenu.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className="drawer-link"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span style={item.isBlue ? { color: "#2563eb", fontWeight: 700 } : undefined}>
+                  {item.name}
+                </span>
+                <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
+              </Link>
+            ))}
+
+            <div className="drawer-section-title">Company</div>
+            {companyMenu.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                className="drawer-link"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span style={item.isBlue ? { color: "#2563eb", fontWeight: 700 } : undefined}>
+                  {item.name}
+                </span>
+                <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
+              </Link>
+            ))}
+
+            <div style={{ padding: "0.75rem 1rem" }}>
+              <a
+                href="https://wa.me/918655208382?text=Hi%20Solution%20Systems,%20I%20have%20an%20inquiry"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-whatsapp-now-btn"
+                style={{ width: "100%", justifyContent: "center" }}
+              >
+                <FaWhatsapp className="whatsapp-icon" />
+                <span>WhatsApp Now (+91 86552 08382)</span>
+              </a>
+            </div>
 
             <div className="drawer-footer">
               {user?._id ? (

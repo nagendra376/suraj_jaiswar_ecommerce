@@ -16,7 +16,7 @@ import {
   uploadToCloudinary,
 } from "../utils/features.js";
 import ErrorHandler from "../utils/utility-class.js";
-// import { faker } from "@faker-js/faker";
+import { faker } from "@faker-js/faker";
 
 // Revalidate on New,Update,Delete Product & on New Order
 export const getlatestProducts = TryCatch(async (req, res, next) => {
@@ -369,36 +369,72 @@ export const deleteReview = TryCatch(async (req, res, next) => {
   });
 });
 
-// const generateRandomProducts = async (count: number = 10) => {
-//   const products = [];
+export const generateRandomProducts = async (
+  count: number = 10,
+  targetCategories?: string[]
+) => {
+  const defaultCategories = [
+    "processor",
+    "motherboard",
+    "ram",
+    "graphics-card",
+    "ssd",
+    "storage",
+    "cooler",
+    "power-supply",
+    "cabinet",
+    "monitor",
+  ];
 
-//   for (let i = 0; i < count; i++) {
-//     const product = {
-//       name: faker.commerce.productName(),
-//       photo: "uploads\\5ba9bd91-b89c-40c2-bb8a-66703408f986.png",
-//       price: faker.commerce.price({ min: 1500, max: 80000, dec: 0 }),
-//       stock: faker.commerce.price({ min: 0, max: 100, dec: 0 }),
-//       category: faker.commerce.department(),
-//       createdAt: new Date(faker.date.past()),
-//       updatedAt: new Date(faker.date.recent()),
-//       __v: 0,
-//     };
+  const categories =
+    targetCategories && targetCategories.length > 0
+      ? targetCategories
+      : defaultCategories;
+  const products = [];
 
-//     products.push(product);
-//   }
+  for (const cat of categories) {
+    for (let i = 0; i < count; i++) {
+      const price = Number(
+        faker.commerce.price({ min: 1500, max: 80000, dec: 0 })
+      );
+      const product = {
+        name: `${faker.commerce.productName()} (${cat.toUpperCase()} Edition)`,
+        photos: [
+          {
+            public_id: `faker_${cat}_${i}_${Date.now()}`,
+            url: "/products/bundle_4.png",
+          },
+        ],
+        price,
+        originalPrice: Math.round(price * 1.5),
+        stock: faker.number.int({ min: 5, max: 50 }),
+        category: cat.toLowerCase(),
+        description: faker.commerce.productDescription(),
+        ratings: faker.number.int({ min: 4, max: 5 }),
+        numOfReviews: faker.number.int({ min: 5, max: 50 }),
+        createdAt: new Date(faker.date.past()),
+        updatedAt: new Date(),
+        __v: 0,
+      };
 
-//   await Product.create(products);
+      products.push(product);
+    }
+  }
 
-//   console.log({ succecss: true });
-// };
+  await Product.create(products);
+  await invalidateCache({ product: true, admin: true });
 
-// const deleteRandomsProducts = async (count: number = 10) => {
-//   const products = await Product.find({}).skip(2);
+  console.log({ success: true, count: products.length });
+};
 
-//   for (let i = 0; i < products.length; i++) {
-//     const product = products[i];
-//     await product.deleteOne();
-//   }
+export const deleteRandomsProducts = async (count: number = 10) => {
+  const products = await Product.find({}).skip(2);
 
-//   console.log({ succecss: true });
-// };
+  for (let i = 0; i < products.length; i++) {
+    const product = products[i];
+    await product.deleteOne();
+  }
+
+  await invalidateCache({ product: true, admin: true });
+  console.log({ success: true });
+};

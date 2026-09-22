@@ -13,11 +13,12 @@ import {
   SearchProductsResponse,
   UpdateProductRequest,
 } from "../../types/api-types";
+import { server } from "../apiConfig";
 
 export const productAPI = createApi({
   reducerPath: "productApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_SERVER}/api/v1/product/`,
+    baseUrl: `${server}/api/v1/product/`,
   }),
   tagTypes: ["product"],
   endpoints: (builder) => ({

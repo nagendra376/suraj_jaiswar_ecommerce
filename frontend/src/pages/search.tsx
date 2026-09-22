@@ -10,7 +10,7 @@ import { Skeleton } from "../components/loader";
 import { CartItem } from "../types/types";
 import { addToCart } from "../redux/reducer/cartReducer";
 import { useDispatch } from "react-redux";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "../utils/router";
 
 const Search = () => {
   const searchQuery = useSearchParams()[0];

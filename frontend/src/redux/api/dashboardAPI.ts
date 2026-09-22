@@ -5,11 +5,12 @@ import {
   PieResponse,
   StatsResponse,
 } from "../../types/api-types";
+import { server } from "../apiConfig";
 
 export const dashboardApi = createApi({
   reducerPath: "dashboardApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${import.meta.env.VITE_SERVER}/api/v1/dashboard/`,
+    baseUrl: `${server}/api/v1/dashboard/`,
   }),
   endpoints: (builder) => ({
     stats: builder.query<StatsResponse, string>({

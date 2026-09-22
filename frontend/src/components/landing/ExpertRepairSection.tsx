@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
 import {
   BsLaptop,
@@ -15,6 +15,8 @@ import {
   FaArrowRight,
   FaWhatsapp,
   FaXmark,
+  FaChevronLeft,
+  FaChevronRight,
 } from "react-icons/fa6";
 
 interface RepairServiceItem {
@@ -164,14 +166,104 @@ const repairServices: RepairServiceItem[] = [
   },
 ];
 
+// 3 sets of services for seamless continuous infinite wrap
+const duplicatedServices = [
+  ...repairServices,
+  ...repairServices,
+  ...repairServices,
+];
+
 const ExpertRepairSection: React.FC = () => {
   const [selectedService, setSelectedService] = useState<RepairServiceItem | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftStartRef = useRef(0);
+
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     area: "",
     issue: "",
   });
+
+  // Auto-scroll loop using requestAnimationFrame
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    let animationFrameId: number;
+    let lastTime: number | null = null;
+    const scrollSpeed = 50; // pixels per second
+
+    const animate = (time: number) => {
+      if (lastTime === null) {
+        lastTime = time;
+      }
+      const delta = (time - lastTime) / 1000;
+      lastTime = time;
+
+      if (!isPaused && !isDraggingRef.current && container) {
+        container.scrollLeft += scrollSpeed * delta;
+
+        const singleSetWidth = container.scrollWidth / 3;
+        if (singleSetWidth > 0 && container.scrollLeft >= singleSetWidth * 2) {
+          container.scrollLeft -= singleSetWidth;
+        }
+      }
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [isPaused]);
+
+  const handleScrollPrev = () => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const singleSetWidth = container.scrollWidth / 3;
+    if (container.scrollLeft <= singleSetWidth * 0.2) {
+      container.scrollLeft += singleSetWidth;
+    }
+    container.scrollBy({ left: -388, behavior: "smooth" });
+  };
+
+  const handleScrollNext = () => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const singleSetWidth = container.scrollWidth / 3;
+    if (container.scrollLeft >= singleSetWidth * 2) {
+      container.scrollLeft -= singleSetWidth;
+    }
+    container.scrollBy({ left: 388, behavior: "smooth" });
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const container = scrollRef.current;
+    if (!container) return;
+    isDraggingRef.current = true;
+    startXRef.current = e.pageX - container.offsetLeft;
+    scrollLeftStartRef.current = container.scrollLeft;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingRef.current) return;
+    const container = scrollRef.current;
+    if (!container) return;
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
+    container.scrollLeft = scrollLeftStartRef.current - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    isDraggingRef.current = false;
+  };
 
   const handleOpenBooking = (service: RepairServiceItem) => {
     setSelectedService(service);
@@ -217,45 +309,81 @@ const ExpertRepairSection: React.FC = () => {
           </p>
         </div>
 
-        {/* 7 Repair Service Cards Grid */}
-        <div className="repair-cards-grid">
-          {repairServices.map((service) => (
-            <div
-              key={service.id}
-              className={`repair-card ${service.theme}`}
-            >
-              {/* Card Top */}
-              <div className="card-top">
-                <div className="card-icon-box">{service.icon}</div>
-                <div className="card-titles">
-                  <h3 className="card-heading">{service.title}</h3>
-                  <span className="card-starting-price">{service.price}</span>
-                </div>
-              </div>
+        {/* Horizontal Auto-Scroll Carousel with Hover Pause */}
+        <div
+          className="repair-carousel-wrapper"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => {
+            setIsPaused(false);
+            handleMouseUpOrLeave();
+          }}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
+        >
+          {/* Navigation Arrows */}
+          <button
+            type="button"
+            className="carousel-nav-btn prev"
+            onClick={handleScrollPrev}
+            aria-label="Previous services"
+          >
+            <FaChevronLeft />
+          </button>
+          <button
+            type="button"
+            className="carousel-nav-btn next"
+            onClick={handleScrollNext}
+            aria-label="Next services"
+          >
+            <FaChevronRight />
+          </button>
 
-              {/* Description */}
-              <p className="card-description">{service.desc}</p>
-
-              {/* 8 Feature Checkmarks */}
-              <div className="card-features-grid">
-                {service.features.map((feat, idx) => (
-                  <span key={idx} className="feature-item">
-                    <FaCheck className="check-symbol" />
-                    <span>{feat}</span>
-                  </span>
-                ))}
-              </div>
-
-              {/* Card Action Button */}
-              <button
-                type="button"
-                className="card-action-btn"
-                onClick={() => handleOpenBooking(service)}
+          {/* Scrolling Track */}
+          <div
+            className="repair-cards-scroll-track"
+            ref={scrollRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUpOrLeave}
+          >
+            {duplicatedServices.map((service, index) => (
+              <div
+                key={`${service.id}-${index}`}
+                className={`repair-card ${service.theme}`}
               >
-                <span>{service.btnText}</span>
-              </button>
-            </div>
-          ))}
+                {/* Card Top */}
+                <div className="card-top">
+                  <div className="card-icon-box">{service.icon}</div>
+                  <div className="card-titles">
+                    <h3 className="card-heading">{service.title}</h3>
+                    <span className="card-starting-price">{service.price}</span>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <p className="card-description">{service.desc}</p>
+
+                {/* 8 Feature Checkmarks */}
+                <div className="card-features-grid">
+                  {service.features.map((feat, idx) => (
+                    <span key={idx} className="feature-item">
+                      <FaCheck className="check-symbol" />
+                      <span>{feat}</span>
+                    </span>
+                  ))}
+                </div>
+
+                {/* Card Action Button */}
+                <button
+                  type="button"
+                  className="card-action-btn"
+                  onClick={() => handleOpenBooking(service)}
+                >
+                  <span>{service.btnText}</span>
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Centered Bottom Action */}
@@ -361,7 +489,7 @@ const ExpertRepairSection: React.FC = () => {
                   Confirm Booking
                 </button>
                 <a
-                  href={`https://wa.me/917499761196?text=${whatsappMessage}`}
+                  href={`https://wa.me/918655208382?text=${whatsappMessage}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-whatsapp-booking"

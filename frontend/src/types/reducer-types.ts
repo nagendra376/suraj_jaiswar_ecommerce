@@ -15,4 +15,5 @@ export interface CartReducerInitialState {
   total: number;
   shippingInfo: ShippingInfo;
   coupon: string | undefined;
+  isCartOpen: boolean;
 }
