@@ -25,3 +25,5 @@ out
 *.sln
 *.sw?
 .env
+
+.env.sample
