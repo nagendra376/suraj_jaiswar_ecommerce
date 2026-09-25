@@ -2,9 +2,6 @@ import React from "react";
 import { Link } from "../../utils/router";
 import { BsArrowRight, BsCheckCircleFill } from "react-icons/bs";
 import { FaShieldAlt } from "react-icons/fa";
-import { useSearchProductsQuery } from "../../redux/api/productAPI";
-import CategoryProductCard from "../../components/category-product-card";
-import { Skeleton } from "../../components/loader";
 
 // All store categories with rich metadata and real images
 const ALL_CATEGORIES = [
@@ -95,24 +92,6 @@ const ALL_CATEGORIES = [
 ];
 
 const CategoriesHubPage = () => {
-  // Fetch top processor products for showcase
-  const { data: processorData, isLoading: loadingCpu } = useSearchProductsQuery({
-    category: "processor",
-    page: 1,
-    search: "",
-    sort: "",
-    price: 1000000,
-  });
-
-  // Fetch top graphics card products for showcase
-  const { data: gpuData, isLoading: loadingGpu } = useSearchProductsQuery({
-    category: "graphics-card",
-    page: 1,
-    search: "",
-    sort: "",
-    price: 1000000,
-  });
-
   return (
     <div className="category-page-wrapper">
       <div className="category-content-container">
@@ -123,7 +102,7 @@ const CategoriesHubPage = () => {
         >
           <Link to="/">HOME</Link>
           <span className="breadcrumb-separator">/</span>
-          <span className="breadcrumb-active">CATEGORIES</span>
+          <span className="breadcrumb-active">ALL CATEGORIES</span>
         </nav>
 
         {/* 2. Hero Banner */}
@@ -135,7 +114,7 @@ const CategoriesHubPage = () => {
 
           <h1>Explore All PC Hardware &amp; Components</h1>
           <p>
-            Choose a category to find genuine desktop components, high-FPS graphics
+            Choose a category to browse genuine desktop components, high-FPS graphics
             cards, lightning-fast SSDs, and custom workstation hardware tailored to
             your build.
           </p>
@@ -159,7 +138,7 @@ const CategoriesHubPage = () => {
         {/* 3. Categories Directory Grid */}
         <section aria-labelledby="all-categories-title">
           <div className="hub-preview-section-header">
-            <h2 id="all-categories-title">All Hardware Categories</h2>
+            <h2 id="all-categories-title">Browse By Category</h2>
           </div>
 
           <div className="hub-categories-directory">
@@ -182,69 +161,13 @@ const CategoriesHubPage = () => {
                   <h3 className="hub-cat-title">{cat.name}</h3>
                   <p className="hub-cat-description">{cat.desc}</p>
                   <div className="hub-cat-explore-btn">
-                    <span>View {cat.name.split(" ")[0]}</span>
+                    <span>Explore {cat.name.split(" ")[0]}</span>
                     <BsArrowRight className="explore-arrow" />
                   </div>
                 </div>
               </Link>
             ))}
           </div>
-        </section>
-
-        {/* 4. Showcase: Featured in Processors */}
-        <section style={{ marginBottom: "3.5rem" }}>
-          <div className="hub-preview-section-header">
-            <h2>Trending in Processors</h2>
-            <Link
-              to="/category/processor"
-              className="link-view-all-category"
-            >
-              <span>View All Processors</span>
-              <BsArrowRight />
-            </Link>
-          </div>
-
-          {loadingCpu ? (
-            <div className="products-4col-grid">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <Skeleton key={i} length={6} width="100%" />
-              ))}
-            </div>
-          ) : (
-            <div className="products-4col-grid">
-              {processorData?.products?.slice(0, 4).map((p) => (
-                <CategoryProductCard key={p._id} product={p} />
-              ))}
-            </div>
-          )}
-        </section>
-
-        {/* 5. Showcase: Featured in Graphics Cards */}
-        <section style={{ marginBottom: "2rem" }}>
-          <div className="hub-preview-section-header">
-            <h2>Trending in Graphics Cards</h2>
-            <Link
-              to="/category/graphics-card"
-              className="link-view-all-category"
-            >
-              <span>View All Graphics Cards</span>
-              <BsArrowRight />
-            </Link>
-          </div>
-
-          {loadingGpu ? (
-            <div className="products-4col-grid">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <Skeleton key={i} length={6} width="100%" />
-              ))}
-            </div>
-          ) : (
-            <div className="products-4col-grid">
-              {gpuData?.products?.slice(0, 4).map((p) => (
-                <CategoryProductCard key={p._id} product={p} />
-              ))}
-            </div>
-          )}
         </section>
       </div>
     </div>
