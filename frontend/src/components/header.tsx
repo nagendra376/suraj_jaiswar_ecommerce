@@ -90,10 +90,32 @@ const Header = ({ user }: PropsType) => {
   const [browseGearOpen, setBrowseGearOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Refs for click outside handling
   const browseGearRef = useRef<HTMLDivElement>(null);
   const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Check if we are on the Home page (hero section)
+  const isHomePage =
+    location.pathname === "/" ||
+    location.pathname === "" ||
+    location.pathname === "/index";
+
+  // Hide top announcement ticker when scrolling down, show only in hero section of home page
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 40) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [location.pathname]);
 
   // Close dropdowns on route change
   useEffect(() => {
@@ -146,34 +168,36 @@ const Header = ({ user }: PropsType) => {
       {/* 1. Top Red Accent Line */}
       <div className="top-accent-line" />
 
-      {/* 2. Top Ticker Marquee Announcement Bar */}
-      <div className="announcement-bar">
-        <div className="marquee-track">
-          {[1, 2, 3, 4].map((item) => (
-            <div
-              className="marquee-content"
-              key={item}
-              aria-hidden={item > 1 ? "true" : undefined}
-            >
-              <span>WELCOME TO SOLUTION SYSTEMS</span>
-              <span>|</span>
-              <span>
-                CASH ON DELIVERY (COD){" "}
-                <span className="highlight-alert">❌ NOT AVAILABLE</span>
-              </span>
-              <span>|</span>
-              <span>FLEXIBLE EMI FINANCE OPTIONS AVAILABLE</span>
-              <span>|</span>
-              <span>SHIPPING ALL OVER INDIA</span>
-              <span>|</span>
-              <span>B2B BILLING AVAILABLE</span>
-              <span>|</span>
-              <span>100% NEW GENUINE &amp; ORIGINAL PRODUCTS</span>
-              <span>|</span>
-            </div>
-          ))}
+      {/* 2. Top Ticker Marquee Announcement Bar (Only in hero section of Home page; hides on scroll down and on other pages) */}
+      {isHomePage && (
+        <div className={`announcement-bar ${isScrolled ? "hidden-on-scroll" : ""}`}>
+          <div className="marquee-track">
+            {[1, 2, 3, 4].map((item) => (
+              <div
+                className="marquee-content"
+                key={item}
+                aria-hidden={item > 1 ? "true" : undefined}
+              >
+                <span>WELCOME TO SOLUTION SYSTEMS</span>
+                <span>|</span>
+                <span>
+                  CASH ON DELIVERY (COD){" "}
+                  <span className="highlight-alert">❌ NOT AVAILABLE</span>
+                </span>
+                <span>|</span>
+                <span>FLEXIBLE EMI FINANCE OPTIONS AVAILABLE</span>
+                <span>|</span>
+                <span>SHIPPING ALL OVER INDIA</span>
+                <span>|</span>
+                <span>B2B BILLING AVAILABLE</span>
+                <span>|</span>
+                <span>100% NEW GENUINE &amp; ORIGINAL PRODUCTS</span>
+                <span>|</span>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* 3. Main Header Bar (Logo, Search, User, Cart) */}
       <div className="main-header-row">

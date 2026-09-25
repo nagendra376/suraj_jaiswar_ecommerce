@@ -42,6 +42,21 @@ $text-muted: #64748b;
     box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.05);
     user-select: none;
     cursor: default;
+    max-height: 40px;
+    opacity: 1;
+    transform: translateY(0);
+    transition: max-height 0.35s ease, opacity 0.25s ease, padding 0.35s ease, transform 0.35s ease;
+
+    &.hidden-on-scroll {
+      max-height: 0;
+      opacity: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      transform: translateY(-100%);
+      pointer-events: none;
+      box-shadow: none;
+      border: none;
+    }
 
     // Pause on hover
     &:hover .marquee-track {
