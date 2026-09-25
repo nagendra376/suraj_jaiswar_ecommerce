@@ -194,14 +194,14 @@ $brand-green-border: rgba(5, 124, 86, 0.35);
       transform: translateY(-5px);
 
       .category-icon-box {
-        background-color: #ecfdf5;
+        background-color: #ffffff;
         border-color: #057c56;
         border-width: 2.5px;
-        box-shadow: 0 10px 26px rgba(5, 124, 86, 0.35), 0 0 0 3.5px rgba(5, 124, 86, 0.2);
+        box-shadow: 0 10px 24px rgba(5, 124, 86, 0.28), 0 0 0 3.5px rgba(5, 124, 86, 0.25);
 
         .category-real-img,
         img {
-          transform: scale(1.12);
+          transform: scale(1.1);
         }
 
         svg {

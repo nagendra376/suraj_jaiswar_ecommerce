@@ -6,14 +6,15 @@ export interface CategoryItem {
 }
 
 export const CATEGORIES_NAV: CategoryItem[] = [
-  { name: "Processor", slug: "processor", iconName: "cpu", image: "/categories/cpu.jpg" },
-  { name: "Motherboard", slug: "motherboard", iconName: "motherboard", image: "/categories/mobo.jpg" },
-  { name: "Memory (RAM)", slug: "ram", iconName: "ram", image: "/categories/memory.jpg" },
-  { name: "Graphics Card", slug: "graphics-card", iconName: "gpu", image: "/categories/gpu.jpg" },
-  { name: "SSD", slug: "ssd", iconName: "ssd", image: "/categories/ssd.jpg" },
-  { name: "Storage", slug: "storage", iconName: "hdd", image: "/categories/hdd.jpg" },
-  { name: "Cooling System", slug: "cooler", iconName: "cooler", image: "/categories/cpu-cooler.jpg" },
-  { name: "Power Supply", slug: "power-supply", iconName: "power", image: "/categories/smps.jpg" },
-  { name: "Cabinet (Case)", slug: "cabinet", iconName: "cabinet", image: "/categories/cabinet.jpg" },
-  { name: "Monitor", slug: "monitor", iconName: "monitor", image: "/categories/monitor.jpg" },
+  { name: "Processor", slug: "processor", iconName: "cpu", image: "/categories/processor.webp" },
+  { name: "Motherboard", slug: "motherboard", iconName: "motherboard", image: "/categories/motherboard.webp" },
+  { name: "Memory (RAM)", slug: "ram", iconName: "ram", image: "/categories/ram.webp" },
+  { name: "Graphics Card", slug: "graphics-card", iconName: "gpu", image: "/categories/gpu.webp" },
+  { name: "SSD", slug: "ssd", iconName: "ssd", image: "/categories/ssd.webp" },
+  { name: "Storage", slug: "storage", iconName: "hdd", image: "/categories/storage.jpg" },
+  { name: "Cooling System", slug: "cooler", iconName: "cooler", image: "/categories/cooler.webp" },
+  { name: "Power Supply", slug: "power-supply", iconName: "power", image: "/categories/power.jpg" },
+  { name: "Cabinet (Case)", slug: "cabinet", iconName: "cabinet", image: "/categories/cabinet.webp" },
+  { name: "Monitor", slug: "monitor", iconName: "monitor", image: "/categories/monitor.webp" },
 ];
+

@@ -446,7 +446,13 @@ const ShopByCategory: React.FC = () => {
                         src={cat.image}
                         alt={cat.name}
                         className="category-real-img"
-                        loading="lazy"
+                        loading="eager"
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (target.src.endsWith(".webp")) {
+                            target.src = target.src.replace(".webp", ".jpg");
+                          }
+                        }}
                       />
                     ) : (
                       renderCategoryIcon(cat.iconName)
