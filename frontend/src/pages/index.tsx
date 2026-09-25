@@ -1,6 +1,7 @@
 import MorrowHero from "../components/landing/MorrowHero";
 import ExpertRepairSection from "../components/landing/ExpertRepairSection";
 import FestiveDealsBanner from "../components/landing/FestiveDealsBanner";
+import PrebuiltCustomPcSection from "../components/landing/PrebuiltCustomPcSection";
 import WhyChooseUs from "../components/landing/WhyChooseUs";
 import RepairProcessBento from "../components/landing/RepairProcessBento";
 import BrandsWeRepair from "../components/landing/BrandsWeRepair";
@@ -20,6 +21,7 @@ const Home = () => {
       <MorrowHero />
       <ExpertRepairSection />
       <FestiveDealsBanner />
+      <PrebuiltCustomPcSection />
       <ShopByCategory />
       <RefurbishedBuySell />
       <BrandsWeRepair />
