@@ -1,0 +1,395 @@
+// Festive Deals Promo Showcase Styles
+
+.festive-deals-section {
+  width: 100%;
+  padding: 3rem 1.5rem;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 50%, #f8fafc 100%);
+  position: relative;
+  overflow: hidden;
+
+  .festive-deals-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  // Header
+  .festive-section-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .festive-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 1rem;
+      border-radius: 9999px;
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      color: #92400e;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+
+      .badge-flame {
+        color: #d97706;
+        animation: pulseFlame 1.8s infinite ease-in-out;
+      }
+    }
+
+    .festive-title {
+      font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+      font-weight: 800;
+      line-height: 1.2;
+      color: #0f172a;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.6rem;
+
+      .highlight-gold {
+        background: linear-gradient(135deg, #d97706 0%, #b45309 50%, #92400e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+
+    .festive-subtitle {
+      font-size: 1rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+  }
+
+  // Base Card Styles
+  .festive-card {
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #0f172a;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.12),
+                0 4px 12px -4px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(226, 232, 240, 0.6);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s ease;
+
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.22),
+                  0 8px 20px -6px rgba(0, 0, 0, 0.12);
+      border-color: rgba(217, 119, 6, 0.4);
+
+      .festive-banner-img {
+        transform: scale(1.035);
+      }
+
+      .btn-arrow {
+        transform: translateX(4px);
+      }
+    }
+  }
+
+  .festive-img-wrap {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    background: #0f172a;
+
+    .festive-banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  }
+
+  // Overlay Elements
+  .festive-card-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.25rem;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.35) 0%,
+      transparent 35%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+
+    .deal-chip-top {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+
+      .chip-icon {
+        color: #f59e0b;
+      }
+
+      &.gold-chip {
+        background: rgba(217, 119, 6, 0.9);
+        color: #ffffff;
+        border-color: rgba(253, 230, 138, 0.6);
+      }
+
+      &.red-chip {
+        background: rgba(220, 38, 38, 0.9);
+        color: #ffffff;
+        border-color: rgba(254, 202, 202, 0.5);
+      }
+    }
+
+    .deal-bottom-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+
+      .price-tag-badge {
+        display: flex;
+        flex-direction: column;
+        background: rgba(15, 23, 42, 0.88);
+        backdrop-filter: blur(8px);
+        padding: 0.35rem 0.75rem;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+
+        .mrp-strike {
+          font-size: 0.72rem;
+          color: #94a3b8;
+          text-decoration: line-through;
+        }
+
+        .festive-deal-price {
+          font-size: 1.15rem;
+          font-weight: 800;
+          color: #f59e0b;
+          letter-spacing: -0.02em;
+        }
+      }
+
+      &.centerpiece-bottom {
+        .deal-text-block {
+          display: flex;
+          flex-direction: column;
+          color: #ffffff;
+
+          .center-tag {
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            color: #fde68a;
+            text-transform: uppercase;
+          }
+
+          .center-sub {
+            font-size: 0.8rem;
+            color: #e2e8f0;
+          }
+        }
+      }
+    }
+  }
+
+  // CTA Pill Buttons
+  .action-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: 9999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #ffffff;
+    background: #057c56;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 12px rgba(5, 124, 86, 0.3);
+    transition: all 0.25s ease;
+
+    .btn-arrow {
+      font-size: 0.75rem;
+      transition: transform 0.25s ease;
+    }
+
+    &:hover {
+      background: #046646;
+      box-shadow: 0 6px 16px rgba(5, 124, 86, 0.45);
+    }
+
+    &.action-pill-gold {
+      background: #d97706;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.4);
+
+      &:hover {
+        background: #b45309;
+      }
+    }
+
+    &.action-pill-dark {
+      background: #0f172a;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.4);
+
+      &:hover {
+        background: #1e293b;
+      }
+    }
+  }
+
+  // Row 1: Trio Grid
+  .festive-trio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.65fr 1fr;
+    gap: 1.25rem;
+
+    .festive-card-portrait {
+      min-height: 380px;
+
+      .festive-img-wrap {
+        height: 100%;
+        min-height: 380px;
+      }
+    }
+
+    .festive-card-centerpiece {
+      min-height: 380px;
+
+      .festive-img-wrap {
+        height: 100%;
+        min-height: 380px;
+      }
+    }
+  }
+
+  // Row 2: Dual Grid
+  .festive-dual-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+
+    .festive-card-wide {
+      min-height: 240px;
+
+      .festive-img-wrap {
+        height: 100%;
+        min-height: 240px;
+      }
+
+      .wide-overlay {
+        padding: 1.25rem 1.5rem;
+
+        .wide-text-content {
+          display: flex;
+          flex-direction: column;
+          color: #ffffff;
+
+          .wide-headline {
+            font-size: 0.95rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            color: #fde68a;
+            text-transform: uppercase;
+          }
+
+          .wide-sub {
+            font-size: 0.82rem;
+            color: #e2e8f0;
+          }
+        }
+      }
+    }
+  }
+
+  // Responsive Breakpoints
+  @media (max-width: 1080px) {
+    .festive-trio-grid {
+      grid-template-columns: 1fr 1fr;
+
+      .festive-card-centerpiece {
+        grid-column: 1 / -1;
+        min-height: 320px;
+
+        .festive-img-wrap {
+          min-height: 320px;
+        }
+      }
+
+      .festive-card-portrait {
+        min-height: 340px;
+
+        .festive-img-wrap {
+          min-height: 340px;
+        }
+      }
+    }
+
+    .festive-dual-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    padding: 2rem 1rem;
+
+    .festive-trio-grid {
+      grid-template-columns: 1fr;
+
+      .festive-card-centerpiece,
+      .festive-card-portrait {
+        min-height: 280px;
+
+        .festive-img-wrap {
+          min-height: 280px;
+        }
+      }
+    }
+
+    .festive-dual-grid {
+      grid-template-columns: 1fr;
+
+      .festive-card-wide {
+        min-height: 200px;
+
+        .festive-img-wrap {
+          min-height: 200px;
+        }
+      }
+    }
+  }
+}
+
+@keyframes pulseFlame {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.85;
+  }
+}
