@@ -32,20 +32,20 @@ interface PropsType {
   user: User | null;
 }
 
-// Categories from Browse Gear dropdown (kept unchanged)
+// Categories from Browse Gear dropdown
 const browseCategories = [
-  { name: "Custom Pc Build", path: "/search?category=custom-pc-build" },
-  { name: "Laptops", path: "/search?category=laptops" },
-  { name: "Processor", path: "/search?category=processor" },
-  { name: "Motherboard", path: "/search?category=motherboard" },
-  { name: "HDD", path: "/search?category=hdd" },
-  { name: "Memory (Ram)", path: "/search?category=memory-ram" },
-  { name: "Graphics Card", path: "/search?category=graphics-card" },
-  { name: "SSD", path: "/search?category=ssd" },
-  { name: "CPU Cooler", path: "/search?category=cpu-cooler" },
-  { name: "Power Supply", path: "/search?category=power-supply" },
-  { name: "Cabinet", path: "/search?category=cabinet" },
-  { name: "View All", path: "/search" },
+  { name: "Processor", path: "/category/processor" },
+  { name: "Graphics Card", path: "/category/graphics-card" },
+  { name: "Motherboard", path: "/category/motherboard" },
+  { name: "Memory (RAM)", path: "/category/ram" },
+  { name: "SSD", path: "/category/ssd" },
+  { name: "Storage (HDD)", path: "/category/storage" },
+  { name: "CPU Cooler", path: "/category/cooler" },
+  { name: "Power Supply", path: "/category/power-supply" },
+  { name: "Cabinet", path: "/category/cabinet" },
+  { name: "Gaming Monitor", path: "/category/monitor" },
+  { name: "Custom PC Build", path: "/category/custom-pc-build" },
+  { name: "Laptops", path: "/category/laptop" },
 ];
 
 // Pre Built PC Submenu (matching NCL dropdown structure)
@@ -424,17 +424,29 @@ const Header = ({ user }: PropsType) => {
             {/* Dropdown Items List */}
             {browseGearOpen && (
               <div className="browse-dropdown-menu">
-                {browseCategories.map((cat) => (
+                <div className="browse-items-list">
+                  {browseCategories.map((cat) => (
+                    <Link
+                      key={cat.name}
+                      to={cat.path}
+                      className="dropdown-item"
+                      onClick={() => setBrowseGearOpen(false)}
+                    >
+                      <span className="cat-name">{cat.name}</span>
+                      <FaChevronRight className="cat-arrow" />
+                    </Link>
+                  ))}
+                </div>
+                <div className="browse-dropdown-footer">
                   <Link
-                    key={cat.name}
-                    to={cat.path}
-                    className="dropdown-item"
+                    to="/category"
+                    className="btn-view-all-categories"
                     onClick={() => setBrowseGearOpen(false)}
                   >
-                    <span className="cat-name">{cat.name}</span>
-                    <FaChevronRight className="cat-arrow" />
+                    <span>View All Categories</span>
+                    <FaArrowRight className="footer-arrow" />
                   </Link>
-                ))}
+                </div>
               </div>
             )}
           </div>
@@ -797,6 +809,14 @@ const Header = ({ user }: PropsType) => {
                 <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
               </Link>
             ))}
+            <Link
+              to="/category"
+              className="drawer-link drawer-view-all-cat-btn"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span>View All Categories</span>
+              <FaArrowRight style={{ fontSize: "0.75rem" }} />
+            </Link>
 
             <div className="drawer-section-title">Repair Services</div>
             {repairServicesMenu.map((item) => (
