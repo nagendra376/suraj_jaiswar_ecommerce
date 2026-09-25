@@ -20,11 +20,11 @@ const Home = () => {
       <MorrowHero />
       <ExpertRepairSection />
       <FestiveDealsBanner />
-      <WhyChooseUs />
       <ShopByCategory />
       <RepairProcessBento />
       <BrandsWeRepair />
       <RefurbishedBuySell />
+      <WhyChooseUs />
       <WhatCustomersSay />
       <CustomerStories />
       <FAQSection />
