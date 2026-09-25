@@ -4,6 +4,7 @@ import FestiveDealsBanner from "../components/landing/FestiveDealsBanner";
 import PrebuiltCustomPcSection from "../components/landing/PrebuiltCustomPcSection";
 import WhyChooseUs from "../components/landing/WhyChooseUs";
 import RepairProcessBento from "../components/landing/RepairProcessBento";
+import CustomerStoreShowcase from "../components/landing/CustomerStoreShowcase";
 import BrandsWeRepair from "../components/landing/BrandsWeRepair";
 import RefurbishedBuySell from "../components/landing/RefurbishedBuySell";
 import ShopByCategory from "../components/landing/ShopByCategory";
@@ -26,6 +27,7 @@ const Home = () => {
       <BrandsWeRepair />
       <WhyChooseUs />
       <RepairProcessBento />
+      <CustomerStoreShowcase />
       <WhatCustomersSay />
       <FAQSection />
       <LocationsCoverage />

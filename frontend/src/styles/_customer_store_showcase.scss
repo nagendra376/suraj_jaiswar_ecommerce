@@ -1,0 +1,369 @@
+// ==========================================
+// Customer Showcase & Our Store Showcase Section
+// Positioned directly above "What Our Customers Say"
+// Reference: media_1790357100156.png
+// ==========================================
+
+$frame-orange: #ea580c;
+$frame-orange-hover: #c2410c;
+$accent-blue: #0284c7;
+$accent-blue-dark: #0369a1;
+$pin-red: #dc2626;
+
+.customer-store-showcase-section {
+  width: 100%;
+  background-color: #e5e9f0;
+  padding: 2.5rem 3% 2.75rem 3%;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 1.75rem 1rem 2rem 1rem;
+  }
+
+  .showcase-container {
+    max-width: 96rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 1.75rem;
+    align-items: stretch;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: 1fr 310px;
+      gap: 1.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  // ----------------------------------------
+  // LEFT COLUMN: Customer Delivery Showcase Carousel
+  // ----------------------------------------
+  .customers-carousel-column {
+    position: relative;
+    width: 100%;
+    min-width: 0; // Prevent grid blowout
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    // Navigation chevrons
+    .carousel-nav-btn {
+      position: absolute;
+      top: calc(50% - 16px);
+      transform: translateY(-50%);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(203, 213, 225, 0.8);
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 5;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #ffffff;
+        color: $accent-blue;
+        transform: translateY(-50%) scale(1.12);
+        box-shadow: 0 6px 16px rgba(2, 132, 199, 0.25);
+      }
+
+      &.left {
+        left: -8px;
+        @media (min-width: 768px) {
+          left: -12px;
+        }
+      }
+
+      &.right {
+        right: -8px;
+        @media (min-width: 768px) {
+          right: -12px;
+        }
+      }
+    }
+
+    // Scrollable track
+    .customers-scroll-track {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: none; // Firefox
+      -ms-overflow-style: none; // IE/Edge
+      padding: 0.5rem 0.5rem 1rem 0.5rem;
+
+      &::-webkit-scrollbar {
+        display: none; // Chrome/Safari
+      }
+
+      @media (max-width: 640px) {
+        gap: 0.85rem;
+      }
+    }
+
+    // Orange Framed Customer Card (Exact Reference Design)
+    .customer-framed-card {
+      position: relative;
+      flex: 0 0 280px;
+      width: 280px;
+      aspect-ratio: 1 / 1;
+      background: $frame-orange;
+      border-radius: 12px;
+      padding: 9px;
+      box-sizing: border-box;
+      box-shadow: 0 6px 20px rgba(234, 88, 12, 0.25);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+      cursor: grab;
+
+      @media (min-width: 640px) {
+        flex: 0 0 310px;
+        width: 310px;
+      }
+
+      @media (min-width: 1440px) {
+        flex: 0 0 330px;
+        width: 330px;
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(234, 88, 12, 0.38);
+      }
+
+      // Decorative Blue Tabs on Left and Right borders
+      .card-side-tab {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 7px;
+        height: 32px;
+        background: $accent-blue;
+        z-index: 2;
+
+        &.left {
+          left: -4px;
+          border-radius: 4px 0 0 4px;
+        }
+
+        &.right {
+          right: -4px;
+          border-radius: 0 4px 4px 0;
+        }
+      }
+
+      // Inner White Frame with Rounded Corners
+      .card-inner-frame {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        border: 2px solid #ffffff;
+        overflow: hidden;
+        background: #0f172a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .customer-showcase-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.4s ease;
+        }
+      }
+
+      &:hover .card-inner-frame .customer-showcase-img {
+        transform: scale(1.04);
+      }
+    }
+
+    // Bottom Pagination Dots
+    .carousel-dots-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+
+      .dot-pill {
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #94a3b8;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &.active {
+          width: 26px;
+          border-radius: 6px;
+          background-color: $accent-blue;
+          box-shadow: 0 2px 8px rgba(2, 132, 199, 0.4);
+        }
+
+        &:hover:not(.active) {
+          background-color: #64748b;
+        }
+      }
+    }
+  }
+
+  // ----------------------------------------
+  // RIGHT COLUMN: "Our Store" Showcase Card
+  // ----------------------------------------
+  .our-store-showcase-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .our-store-card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 1.5rem 1.25rem;
+      box-sizing: border-box;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      min-height: 340px;
+
+      @media (max-width: 1024px) {
+        max-width: 480px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      // Ornamental Header
+      .store-header-wrap {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 1rem;
+
+        .store-title {
+          font-size: clamp(2rem, 2.8vw, 2.5rem);
+          font-weight: 900;
+          color: $accent-blue;
+          letter-spacing: -0.02em;
+          margin: 0.25rem 0;
+          text-shadow: 0 2px 4px rgba(2, 132, 199, 0.15);
+        }
+
+        .ornament-line {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          color: $accent-blue;
+          opacity: 0.7;
+
+          .line {
+            flex: 1;
+            max-width: 90px;
+            height: 1.5px;
+            background: linear-gradient(
+              90deg,
+              transparent,
+              rgba(2, 132, 199, 0.6),
+              transparent
+            );
+          }
+
+          .diamond {
+            font-size: 0.65rem;
+            color: $accent-blue;
+          }
+        }
+      }
+
+      // Storefront Image Box
+      .store-image-box {
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        border-radius: 10px;
+        overflow: hidden;
+        background: #0f172a;
+        border: 1px solid rgba(203, 213, 225, 0.6);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        margin-bottom: 1.25rem;
+
+        .store-front-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.3s ease;
+        }
+
+        &:hover .store-front-img {
+          transform: scale(1.03);
+        }
+      }
+
+      // Bottom Location Badge
+      .store-location-badge {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .location-pin-row {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+
+          .red-map-pin {
+            font-size: 1.85rem;
+            color: $pin-red;
+            flex-shrink: 0;
+            filter: drop-shadow(0 2px 4px rgba(220, 38, 38, 0.3));
+          }
+
+          .location-city-name {
+            font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+            font-weight: 900;
+            color: #0f172a;
+            letter-spacing: -0.01em;
+          }
+        }
+
+        .location-dotted-line {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 4px;
+          margin-top: 0.35rem;
+          color: $accent-blue;
+
+          .dash {
+            width: 28px;
+            height: 1.5px;
+            background-color: #cbd5e1;
+          }
+
+          .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: $accent-blue;
+          }
+        }
+      }
+    }
+  }
+}
