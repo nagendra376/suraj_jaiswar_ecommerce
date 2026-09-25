@@ -15,6 +15,12 @@ import {
   FaMinus,
   FaUndo,
   FaBoxOpen,
+  FaChevronLeft,
+  FaChevronRight,
+  FaShareAlt,
+  FaCalendarAlt,
+  FaEye,
+  FaRegClock,
 } from "react-icons/fa";
 import { BsArrowRight } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -204,6 +210,87 @@ const ProductDetails = () => {
   const discountPercent =
     originalPrice > 0 ? Math.round((savingsAmount / originalPrice) * 100) : 0;
 
+  // Gallery Photo Navigation Arrows
+  const handlePrevPhoto = () => {
+    if (!product?.photos?.length) return;
+    setSelectedPhotoIndex((prev) =>
+      prev === 0 ? product.photos.length - 1 : prev - 1
+    );
+  };
+
+  const handleNextPhoto = () => {
+    if (!product?.photos?.length) return;
+    setSelectedPhotoIndex((prev) =>
+      prev === product.photos.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  // Dynamic estimated delivery date range (+3 to +7 days from today)
+  const deliveryEstimate = useMemo(() => {
+    const now = new Date();
+    const start = new Date(now);
+    start.setDate(now.getDate() + 3);
+    const end = new Date(now);
+    end.setDate(now.getDate() + 7);
+
+    const formatDay = (d: Date) => {
+      const day = d.getDate();
+      const suffix =
+        day === 1 || day === 21 || day === 31
+          ? "st"
+          : day === 2 || day === 22
+          ? "nd"
+          : day === 3 || day === 23
+          ? "rd"
+          : "th";
+      const month = d.toLocaleDateString("en-IN", { month: "short" });
+      return `${day}${suffix} ${month}`;
+    };
+
+    return `${formatDay(start)} to ${formatDay(end)}`;
+  }, []);
+
+  // Dynamic SKU code
+  const sku = useMemo(() => {
+    if (!product) return "SS-HW-001";
+    const catCode = (product.category || "HW").slice(0, 3).toUpperCase();
+    const idCode = (product._id || "").slice(-6).toUpperCase();
+    return `${catCode}-${idCode}`;
+  }, [product]);
+
+  // Detected Brand
+  const detectedBrand = useMemo(() => {
+    if (!product) return "SOLUTION SYSTEMS";
+    const name = product.name.toLowerCase();
+    if (name.includes("amd") || name.includes("ryzen")) return "AMD";
+    if (name.includes("intel")) return "INTEL";
+    if (name.includes("nvidia") || name.includes("rtx") || name.includes("gtx")) return "NVIDIA";
+    if (name.includes("samsung")) return "SAMSUNG";
+    if (name.includes("asus")) return "ASUS";
+    if (name.includes("msi")) return "MSI";
+    if (name.includes("gigabyte")) return "GIGABYTE";
+    if (name.includes("crucial")) return "CRUCIAL";
+    if (name.includes("corsair")) return "CORSAIR";
+    if (name.includes("geil")) return "GEIL";
+    if (name.includes("g.skill")) return "G.SKILL";
+    return "SOLUTION SYSTEMS";
+  }, [product]);
+
+  // Share Handler
+  const handleShare = () => {
+    if (typeof window !== "undefined") {
+      if (navigator.share) {
+        navigator.share({
+          title: product?.name,
+          url: window.location.href,
+        }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        toast.success("Product link copied to clipboard!");
+      }
+    }
+  };
+
   // Quantity Handlers
   const decrement = () => setQuantity((prev) => Math.max(1, prev - 1));
   const increment = () => {
@@ -347,38 +434,69 @@ const ProductDetails = () => {
           <ProductPageSkeleton />
         ) : product ? (
           <>
-            {/* 2. Top Two-Column Hero Showcase */}
+            {/* 2. Top Two-Column Hero Showcase (matching media_1790370724848.png) */}
             <div className="product-hero-showcase">
-              {/* Left Column: Image Gallery (matching User Image 1) */}
-              <div className="product-gallery-column">
-                <div className="product-main-image-frame">
-                  <span className="gallery-badge-sale">SALE</span>
+              {/* Left Card: Gallery Card */}
+              <div className="product-gallery-card">
+                {/* Header: SALE badge + DISPATCH pill */}
+                <div className="gallery-card-header">
+                  <span className="pill-badge-sale">SALE</span>
+                  <div className="pill-badge-dispatch">
+                    <FaRegClock className="dispatch-clock-icon" />
+                    <span>DISPATCH IN 0-24 HOURS</span>
+                  </div>
+                </div>
+
+                {/* Main Showcase Image Frame with Navigation Arrows */}
+                <div className="gallery-main-stage">
+                  {product.photos && product.photos.length > 1 && (
+                    <button
+                      type="button"
+                      className="gallery-nav-arrow arrow-left"
+                      onClick={handlePrevPhoto}
+                      aria-label="Previous image"
+                    >
+                      <FaChevronLeft />
+                    </button>
+                  )}
+
                   <img
                     src={
                       product.photos?.[selectedPhotoIndex]?.url
-                        ? transformImage(product.photos[selectedPhotoIndex].url, 600)
-                        : "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=600&auto=format&fit=crop&q=60"
+                        ? transformImage(product.photos[selectedPhotoIndex].url, 700)
+                        : "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=700&auto=format&fit=crop&q=60"
                     }
                     alt={product.name}
-                    className="main-showcase-image"
+                    className="gallery-active-image"
                   />
+
+                  {product.photos && product.photos.length > 1 && (
+                    <button
+                      type="button"
+                      className="gallery-nav-arrow arrow-right"
+                      onClick={handleNextPhoto}
+                      aria-label="Next image"
+                    >
+                      <FaChevronRight />
+                    </button>
+                  )}
                 </div>
 
-                {/* Multiple Thumbnails Strip (if multiple photos available) */}
+                {/* Thumbnails Row with Active Red Border */}
                 {product.photos && product.photos.length > 1 && (
-                  <div className="product-thumbnails-strip">
+                  <div className="gallery-thumbnails-strip">
                     {product.photos.map((photo, idx) => (
                       <button
                         key={photo.public_id || idx}
                         type="button"
-                        className={`thumbnail-btn ${
-                          selectedPhotoIndex === idx ? "active-thumbnail" : ""
+                        className={`gallery-thumb-btn ${
+                          selectedPhotoIndex === idx ? "active-thumb" : ""
                         }`}
                         onClick={() => setSelectedPhotoIndex(idx)}
                       >
                         <img
-                          src={transformImage(photo.url, 100)}
-                          alt={`${product.name} preview ${idx + 1}`}
+                          src={transformImage(photo.url, 120)}
+                          alt={`${product.name} thumb ${idx + 1}`}
                         />
                       </button>
                     ))}
@@ -386,162 +504,135 @@ const ProductDetails = () => {
                 )}
               </div>
 
-              {/* Right Column: Pricing, Specs Brief & Actions (matching User Image 1) */}
-              <div className="product-meta-column">
-                {/* Category & Status Row */}
-                <div className="product-meta-top-strip">
-                  <span className="product-category-chip">
+              {/* Right Card: Details & Purchase Card */}
+              <div className="product-details-card">
+                {/* Category Pill */}
+                <div className="product-category-row">
+                  <span className="product-category-pill">
                     {product.category.toUpperCase()}
                   </span>
-
-                  <div className="product-stock-indicator">
-                    {inStock ? (
-                      <span className="badge-in-stock">
-                        <span className="dot-green" /> IN STOCK ({product.stock} Units)
-                      </span>
-                    ) : (
-                      <span className="badge-out-stock">
-                        <span className="dot-red" /> OUT OF STOCK
-                      </span>
-                    )}
-                  </div>
                 </div>
 
-                {/* Main Product Title */}
-                <h1 className="product-main-heading">{product.name}</h1>
+                {/* Product Title */}
+                <h1 className="product-title-heading">{product.name}</h1>
 
-                {/* Reviews & Star Rating Row */}
-                <div className="product-ratings-summary-row">
-                  <div className="stars-wrapper">
-                    <RatingsComponent value={product.ratings || 5} />
-                  </div>
-                  <span className="reviews-count-text">
-                    ({totalReviews} customer {totalReviews === 1 ? "review" : "reviews"})
-                  </span>
-                  <span className="rating-divider">•</span>
+                {/* SKU Code */}
+                <div className="product-sku-row">
+                  <span className="sku-label">SKU:</span>
+                  <span className="sku-code">{sku}</span>
+                </div>
+
+                {/* Brand Chip & Share Button Row */}
+                <div className="product-brand-share-row">
+                  <span className="product-brand-chip">{detectedBrand}</span>
                   <button
                     type="button"
-                    className="btn-quick-review"
-                    onClick={() => {
-                      setActiveTab("reviews");
-                      const target = document.getElementById("product-tabs-section");
-                      target?.scrollIntoView({ behavior: "smooth" });
-                    }}
+                    className="btn-share-product"
+                    onClick={handleShare}
+                    title="Share this product"
                   >
-                    View Reviews
+                    <FaShareAlt className="share-icon" />
+                    <span>SHARE</span>
                   </button>
                 </div>
 
-                {/* Pricing Box */}
-                <div className="product-pricing-card">
-                  <span className="price-label-small">OFFER PRICE</span>
-                  <div className="price-digits-row">
-                    <span className="main-selling-price">
-                      ₹{product.price.toLocaleString("en-IN")}
-                    </span>
+                <div className="product-card-divider" />
 
+                {/* Live Urgency Activity Box */}
+                <div className="live-urgency-box">
+                  <div className="urgency-item">
+                    <FaCalendarAlt className="urgency-icon" />
+                    <span>
+                      Estimated Delivery: <strong>{deliveryEstimate}</strong>
+                    </span>
+                  </div>
+                  <div className="urgency-item">
+                    <FaEye className="urgency-icon" />
+                    <span>
+                      <strong>425 users</strong> viewing this item right now
+                    </span>
+                  </div>
+                  <div className="urgency-item">
+                    <FaBolt className="urgency-icon" />
+                    <span>
+                      <strong>5 tech enthusiasts</strong> have this in their cart right now
+                    </span>
+                  </div>
+                </div>
+
+                {/* Pricing & Stock Availability Row */}
+                <div className="pricing-availability-row">
+                  <div className="pricing-left-block">
                     {originalPrice > product.price && (
-                      <>
-                        <span className="strikethrough-original-price">
-                          ₹{originalPrice.toLocaleString("en-IN")}
-                        </span>
-                        <span className="discount-savings-badge">
-                          Save ₹{savingsAmount.toLocaleString("en-IN")} ({discountPercent}% OFF)
-                        </span>
-                      </>
+                      <div className="original-strikethrough-price">
+                        ₹{originalPrice.toLocaleString("en-IN")}
+                      </div>
+                    )}
+                    <div className="current-price-row">
+                      <span className="current-selling-price">
+                        ₹{product.price.toLocaleString("en-IN")}
+                      </span>
+                      <span className="save-extra-badge">SAVE EXTRA</span>
+                    </div>
+                  </div>
+
+                  <div className="availability-right-block">
+                    <span className="avail-label">AVAILABILITY</span>
+                    {inStock ? (
+                      <span className="avail-status in-stock">
+                        <span className="status-dot green" /> IN STOCK
+                      </span>
+                    ) : (
+                      <span className="avail-status out-stock">
+                        <span className="status-dot red" /> OUT OF STOCK
+                      </span>
                     )}
                   </div>
-                  <p className="tax-inclusive-note">
-                    Inclusive of all taxes. Free express delivery across India.
-                  </p>
                 </div>
 
-                {/* Quantity & CTA Buttons Row */}
-                <div className="purchase-controls-block">
-                  <div className="quantity-counter-group">
-                    <span className="qty-label">Quantity:</span>
-                    <div className="qty-control-box">
-                      <button
-                        type="button"
-                        className="btn-qty-step"
-                        onClick={decrement}
-                        disabled={quantity <= 1 || !inStock}
-                        aria-label="Decrease quantity"
-                      >
-                        <FaMinus style={{ fontSize: "0.7rem" }} />
-                      </button>
-                      <span className="qty-display-value">{quantity}</span>
-                      <button
-                        type="button"
-                        className="btn-qty-step"
-                        onClick={increment}
-                        disabled={!inStock || (product.stock ? quantity >= product.stock : false)}
-                        aria-label="Increase quantity"
-                      >
-                        <FaPlus style={{ fontSize: "0.7rem" }} />
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="action-buttons-group">
-                    {/* Add to Cart Button (Theme Green #057c56) */}
+                {/* Purchase Controls Row: Quantity + ADD TO CART */}
+                <div className="qty-add-to-cart-row">
+                  <div className="quantity-stepper">
                     <button
                       type="button"
-                      className="btn-cta-add-to-cart"
-                      onClick={() => addToCartHandler()}
-                      disabled={!inStock}
+                      className="btn-step"
+                      onClick={decrement}
+                      disabled={quantity <= 1 || !inStock}
+                      aria-label="Decrease quantity"
                     >
-                      <FaShoppingCart className="cta-icon" />
-                      <span>{inStock ? "Add to Cart" : "Out of Stock"}</span>
+                      <FaMinus />
                     </button>
-
-                    {/* Buy Now Button */}
+                    <span className="qty-num">{quantity}</span>
                     <button
                       type="button"
-                      className="btn-cta-buy-now"
-                      onClick={buyNowHandler}
-                      disabled={!inStock}
+                      className="btn-step"
+                      onClick={increment}
+                      disabled={!inStock || (product.stock ? quantity >= product.stock : false)}
+                      aria-label="Increase quantity"
                     >
-                      <FaBolt className="cta-icon" />
-                      <span>Buy Now</span>
+                      <FaPlus />
                     </button>
                   </div>
+
+                  <button
+                    type="button"
+                    className="btn-add-to-cart-prominent"
+                    onClick={() => addToCartHandler()}
+                    disabled={!inStock}
+                  >
+                    ADD TO CART
+                  </button>
                 </div>
 
-                {/* Service Trust Guarantee Strip */}
-                <div className="product-trust-badges-grid">
-                  <div className="trust-item">
-                    <FaShieldAlt className="trust-icon text-green" />
-                    <div>
-                      <strong>100% Genuine</strong>
-                      <span>Official Manufacturer Warranty</span>
-                    </div>
-                  </div>
-
-                  <div className="trust-item">
-                    <FaTruck className="trust-icon text-blue" />
-                    <div>
-                      <strong>Safe Insured Delivery</strong>
-                      <span>Pan-India Doorstep Dispatch</span>
-                    </div>
-                  </div>
-
-                  <div className="trust-item">
-                    <FaUndo className="trust-icon text-amber" />
-                    <div>
-                      <strong>7-Day Replacement</strong>
-                      <span>Tested &amp; Quality Verified</span>
-                    </div>
-                  </div>
-
-                  <div className="trust-item">
-                    <FaWhatsapp className="trust-icon text-whatsapp" />
-                    <div>
-                      <strong>Expert Support</strong>
-                      <span>+91 86552 08382 for compatibility</span>
-                    </div>
-                  </div>
-                </div>
+                {/* Full-width BUY IT NOW Button */}
+                <button
+                  type="button"
+                  className="btn-buy-it-now-prominent"
+                  onClick={buyNowHandler}
+                  disabled={!inStock}
+                >
+                  BUY IT NOW
+                </button>
               </div>
             </div>
 
