@@ -441,7 +441,16 @@ const ShopByCategory: React.FC = () => {
                   aria-pressed={isActive}
                 >
                   <div className="category-icon-box">
-                    {renderCategoryIcon(cat.iconName)}
+                    {cat.image ? (
+                      <img
+                        src={cat.image}
+                        alt={cat.name}
+                        className="category-real-img"
+                        loading="lazy"
+                      />
+                    ) : (
+                      renderCategoryIcon(cat.iconName)
+                    )}
                   </div>
                   <span className="category-label">{cat.name}</span>
                 </button>
@@ -468,7 +477,15 @@ const ShopByCategory: React.FC = () => {
         subtitle="TOP HANDPICKED PRODUCTS"
         iconBadge={
           <div className="active-cat-badge">
-            {renderCategoryIcon(activeCategoryInfo.iconName)}
+            {activeCategoryInfo.image ? (
+              <img
+                src={activeCategoryInfo.image}
+                alt={activeCategoryInfo.name}
+                className="active-cat-badge-img"
+              />
+            ) : (
+              renderCategoryIcon(activeCategoryInfo.iconName)
+            )}
           </div>
         }
         viewAllSlug={activeCategoryInfo.slug}
