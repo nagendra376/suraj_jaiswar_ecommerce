@@ -281,10 +281,10 @@ const PrebuiltCustomPcSection: React.FC = () => {
   };
 
   return (
-    <section className="prebuilt-custom-pc-section" aria-label="Prebuilt and Custom PC Section">
+    <section className="prebuilt-custom-pc-section" id="prebuilt-pc-section" aria-label="Prebuilt and Custom PC Section">
       <div className="prebuilt-pc-container">
         {/* ================= 1. AUTO-SCROLLING HORIZONTAL PREBUILT PC CAROUSEL ================= */}
-        <div className="prebuilt-sub-wrapper">
+        <div className="prebuilt-sub-wrapper" id="prebuilt-pc">
           {/* Header Bar */}
           <div className="prebuilt-header-strip">
             <div className="header-strip-left">
@@ -397,7 +397,7 @@ const PrebuiltCustomPcSection: React.FC = () => {
         </div>
 
         {/* ================= 2. BUILD YOUR OWN CUSTOMIZED PC & LAPTOP SUB-SECTION ================= */}
-        <div className="custom-build-sub-wrapper">
+        <div className="custom-build-sub-wrapper" id="custom-pc-build">
           {/* Cyan/Blue Ribbon Title Bar */}
           <div className="custom-ribbon-bar">
             <span className="ribbon-title">BUILD YOUR OWN CUSTOMIZED PC &amp; LAPTOP</span>

@@ -16,7 +16,10 @@ import {
   FaShieldAlt,
   FaPhoneAlt,
   FaWhatsapp,
+  FaTools,
+  FaArrowRight,
 } from "react-icons/fa";
+import { BsBoxSeam, BsGift } from "react-icons/bs";
 import { User } from "../types/types";
 import { RootState } from "../redux/store";
 import { signOut } from "firebase/auth";
@@ -43,6 +46,36 @@ const browseCategories = [
   { name: "Power Supply", path: "/search?category=power-supply" },
   { name: "Cabinet", path: "/search?category=cabinet" },
   { name: "View All", path: "/search" },
+];
+
+// Pre Built PC Submenu (matching NCL dropdown structure)
+const prebuiltPcMenu = [
+  {
+    name: "Gaming PC",
+    path: "/search?category=custom-pc-build&tag=gaming",
+    desc: "High-FPS Esports & AAA Gaming Rigs",
+    icon: "🎮",
+    badge: "Hot",
+  },
+  {
+    name: "Editing PC",
+    path: "/search?category=custom-pc-build&tag=editing",
+    desc: "4K/8K Video Editing & 3D Workstations",
+    icon: "🎬",
+    badge: "Creator",
+  },
+  {
+    name: "Trading PC",
+    path: "/search?category=custom-pc-build&tag=trading",
+    desc: "Multi-Monitor High Performance Setups",
+    icon: "📈",
+  },
+  {
+    name: "Home / Office Use",
+    path: "/search?category=custom-pc-build&tag=office",
+    desc: "Fast, Reliable Everyday Multitasking",
+    icon: "🏢",
+  },
 ];
 
 // Repair Services Menu
@@ -150,6 +183,19 @@ const Header = ({ user }: PropsType) => {
       navigate(`/search?search=${encodeURIComponent(searchTerm.trim())}`);
     } else {
       navigate("/search");
+    }
+  };
+
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
+    if (isHomePage) {
+      const target = document.getElementById(sectionId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
     }
   };
 
@@ -371,7 +417,79 @@ const Header = ({ user }: PropsType) => {
               </Link>
             </div>
 
-            {/* 2. Repair Services with Dropdown */}
+            {/* 2. Pre Built PC with Dropdown (matching NCL computer header) */}
+            <div className="nav-link-item has-dropdown prebuilt-nav-item">
+              <Link
+                to="/search?category=custom-pc-build"
+                onClick={(e) => handleNavClick(e, "prebuilt-pc")}
+                className="nav-link-anchor prebuilt-anchor"
+              >
+                <BsBoxSeam className="nav-item-icon" />
+                <span>Pre Built PC</span>
+                <FaChevronDown className="nav-dropdown-chevron" />
+              </Link>
+              <div className="nav-dropdown-popover prebuilt-dropdown-popover">
+                <div className="prebuilt-popover-header">
+                  <span className="header-badge-tag">READY TO SHIP</span>
+                  <span className="header-subtitle">Plug &amp; Play Setup</span>
+                </div>
+                <div className="prebuilt-menu-list">
+                  {prebuiltPcMenu.map((item) => (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      className="prebuilt-menu-card"
+                    >
+                      <span className="card-icon">{item.icon}</span>
+                      <div className="card-info">
+                        <div className="card-title-row">
+                          <span className="card-name">{item.name}</span>
+                          {item.badge && (
+                            <span className="card-badge">{item.badge}</span>
+                          )}
+                        </div>
+                        <span className="card-desc">{item.desc}</span>
+                      </div>
+                      <FaChevronRight className="card-chevron" />
+                    </Link>
+                  ))}
+                </div>
+                <div className="prebuilt-popover-footer">
+                  <Link
+                    to="/search?category=custom-pc-build"
+                    onClick={(e) => handleNavClick(e, "prebuilt-pc")}
+                    className="view-all-prebuilt-link"
+                  >
+                    <span>View All Prebuilt PCs</span>
+                    <FaArrowRight />
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* 3. Sale (Deals & Offers) */}
+            <div className="nav-link-item sale-nav-item">
+              <Link to="/search?search=sale" className="nav-link-anchor sale-anchor">
+                <BsGift className="nav-item-icon sale-icon" />
+                <span>Sale</span>
+                <span className="sale-hot-badge">Hot</span>
+              </Link>
+            </div>
+
+            {/* 4. Custom PC Build with Underline Accent (matching NCL screenshot) */}
+            <div className="nav-link-item custom-pc-nav-item">
+              <Link
+                to="/search?category=custom-pc-build"
+                onClick={(e) => handleNavClick(e, "custom-pc-build")}
+                className="nav-link-anchor custom-pc-anchor"
+                title="Build Your Own Custom PC & Laptop"
+              >
+                <FaTools className="nav-item-icon custom-tools-icon" />
+                <span className="custom-pc-text">Custom PC Build</span>
+              </Link>
+            </div>
+
+            {/* 5. Repair Services with Dropdown */}
             <div className="nav-link-item has-dropdown">
               <Link to="/search?search=repair" className="nav-link-anchor">
                 <span>Repair Services</span>
@@ -561,6 +679,32 @@ const Header = ({ user }: PropsType) => {
                 <FaTimes />
               </button>
             </div>
+
+            <div className="drawer-section-title">Prebuilt &amp; Custom PC</div>
+            <Link
+              to="/search?category=custom-pc-build"
+              className="drawer-link"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span>📦 Pre Built PC</span>
+              <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
+            </Link>
+            <Link
+              to="/search?category=custom-pc-build"
+              className="drawer-link"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span>🛠️ <u>Custom PC Build</u></span>
+              <span style={{ fontSize: "0.65rem", fontWeight: 800, background: "#e0f2fe", color: "#0284c7", padding: "2px 6px", borderRadius: "4px" }}>Build</span>
+            </Link>
+            <Link
+              to="/search?search=sale"
+              className="drawer-link"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span>🎁 Deals &amp; Sale</span>
+              <span style={{ fontSize: "0.65rem", fontWeight: 800, background: "#fee2e2", color: "#ef4444", padding: "2px 6px", borderRadius: "4px" }}>Hot</span>
+            </Link>
 
             <div className="drawer-section-title">Browse Categories</div>
             {browseCategories.map((cat) => (

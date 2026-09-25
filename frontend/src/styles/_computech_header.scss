@@ -649,7 +649,6 @@ $text-muted: #64748b;
         }
       }
 
-      // Horizontal Links matching media_1789671189103.png
       .nav-links-menu {
         display: flex;
         align-items: center;
@@ -657,6 +656,31 @@ $text-muted: #64748b;
         flex: 1;
         padding-left: 1.25rem;
         gap: 0.25rem;
+
+        @media (max-width: 1400px) {
+          padding-left: 0.75rem;
+          gap: 0.15rem;
+
+          .nav-link-item .nav-link-anchor {
+            padding: 0.4rem 0.65rem;
+            font-size: 0.88rem;
+          }
+        }
+
+        @media (max-width: 1200px) {
+          padding-left: 0.5rem;
+          gap: 0.08rem;
+
+          .nav-link-item .nav-link-anchor {
+            padding: 0.35rem 0.45rem;
+            font-size: 0.81rem;
+            gap: 0.2rem;
+
+            .nav-item-icon {
+              font-size: 0.82rem;
+            }
+          }
+        }
 
         .nav-link-item {
           position: relative;
@@ -679,11 +703,251 @@ $text-muted: #64748b;
             cursor: pointer;
             white-space: nowrap;
 
+            .nav-item-icon {
+              font-size: 0.95rem;
+              color: inherit;
+              flex-shrink: 0;
+              transition: transform 0.2s ease, color 0.2s ease;
+            }
+
             .nav-dropdown-chevron {
               font-size: 0.62rem;
               color: #64748b;
               transition: transform 0.2s ease, color 0.2s ease;
               margin-top: 1px;
+            }
+          }
+
+          // 1. Pre Built PC Navigation Item & Popover (matching NCL header style)
+          &.prebuilt-nav-item {
+            .prebuilt-anchor {
+              .nav-item-icon {
+                color: #0284c7;
+              }
+            }
+
+            &:hover {
+              > .prebuilt-anchor {
+                background: #f0f9ff;
+                color: #0284c7;
+
+                .nav-item-icon {
+                  color: #0284c7;
+                  transform: scale(1.1);
+                }
+              }
+
+              .prebuilt-dropdown-popover {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+              }
+            }
+
+            .prebuilt-dropdown-popover {
+              position: absolute;
+              top: 100%;
+              left: 0;
+              width: 330px;
+              background: #ffffff;
+              border: 1.5px solid #bae6fd;
+              border-radius: 14px;
+              box-shadow: 0 16px 36px -6px rgba(2, 132, 199, 0.2);
+              padding: 0.85rem;
+              z-index: 150;
+              opacity: 0;
+              visibility: hidden;
+              transform: translateY(6px);
+              transition: all 0.2s ease;
+
+              .prebuilt-popover-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-bottom: 0.65rem;
+                margin-bottom: 0.65rem;
+                border-bottom: 1px solid #f0f9ff;
+
+                .header-badge-tag {
+                  font-size: 0.72rem;
+                  font-weight: 800;
+                  color: #0284c7;
+                  background: #e0f2fe;
+                  padding: 0.2rem 0.55rem;
+                  border-radius: 6px;
+                  letter-spacing: 0.05em;
+                }
+
+                .header-subtitle {
+                  font-size: 0.76rem;
+                  color: #64748b;
+                  font-weight: 600;
+                }
+              }
+
+              .prebuilt-menu-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0.35rem;
+
+                .prebuilt-menu-card {
+                  display: flex;
+                  align-items: center;
+                  gap: 0.75rem;
+                  padding: 0.6rem 0.75rem;
+                  border-radius: 10px;
+                  text-decoration: none;
+                  transition: all 0.15s ease;
+
+                  .card-icon {
+                    font-size: 1.25rem;
+                    flex-shrink: 0;
+                  }
+
+                  .card-info {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+
+                    .card-title-row {
+                      display: flex;
+                      align-items: center;
+                      gap: 0.45rem;
+
+                      .card-name {
+                        font-size: 0.88rem;
+                        font-weight: 700;
+                        color: #0f172a;
+                      }
+
+                      .card-badge {
+                        font-size: 0.62rem;
+                        font-weight: 800;
+                        padding: 1px 5px;
+                        border-radius: 4px;
+                        background: #fee2e2;
+                        color: #ef4444;
+                        text-transform: uppercase;
+                      }
+                    }
+
+                    .card-desc {
+                      font-size: 0.74rem;
+                      color: #64748b;
+                      font-weight: 500;
+                    }
+                  }
+
+                  .card-chevron {
+                    font-size: 0.75rem;
+                    color: #cbd5e1;
+                    transition: transform 0.15s ease, color 0.15s ease;
+                  }
+
+                  &:hover {
+                    background: #f0f9ff;
+
+                    .card-name {
+                      color: #0284c7;
+                    }
+
+                    .card-chevron {
+                      color: #0284c7;
+                      transform: translateX(3px);
+                    }
+                  }
+                }
+              }
+
+              .prebuilt-popover-footer {
+                margin-top: 0.65rem;
+                padding-top: 0.65rem;
+                border-top: 1px solid #f0f9ff;
+
+                .view-all-prebuilt-link {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 0.45rem;
+                  background: #0284c7;
+                  color: #ffffff;
+                  font-size: 0.82rem;
+                  font-weight: 700;
+                  padding: 0.55rem;
+                  border-radius: 8px;
+                  text-decoration: none;
+                  transition: background 0.2s ease;
+
+                  &:hover {
+                    background: #0369a1;
+                  }
+                }
+              }
+            }
+          }
+
+          // 2. Sale Navigation Item
+          &.sale-nav-item {
+            .sale-anchor {
+              .sale-icon {
+                color: #ef4444;
+              }
+
+              .sale-hot-badge {
+                font-size: 0.62rem;
+                font-weight: 800;
+                background: #ef4444;
+                color: #ffffff;
+                padding: 1px 5px;
+                border-radius: 9999px;
+                text-transform: uppercase;
+                margin-left: 2px;
+                line-height: 1.2;
+              }
+
+              &:hover {
+                background: #fef2f2;
+                color: #ef4444;
+
+                .sale-icon {
+                  color: #dc2626;
+                }
+              }
+            }
+          }
+
+          // 3. Custom PC Build Navigation Item (Underline accent matching NCL screenshot media_1790360252990.png)
+          &.custom-pc-nav-item {
+            .custom-pc-anchor {
+              color: #0f172a;
+              font-weight: 700;
+
+              .custom-tools-icon {
+                color: #0284c7;
+                font-size: 0.95rem;
+                transition: transform 0.2s ease;
+              }
+
+              .custom-pc-text {
+                position: relative;
+                padding-bottom: 2px;
+                border-bottom: 2px solid #0284c7;
+                transition: border-color 0.2s ease, color 0.2s ease;
+              }
+
+              &:hover {
+                background: #f0f9ff;
+                color: #0284c7;
+
+                .custom-tools-icon {
+                  transform: rotate(15deg);
+                }
+
+                .custom-pc-text {
+                  border-color: #0369a1;
+                  color: #0284c7;
+                }
+              }
             }
           }
 
