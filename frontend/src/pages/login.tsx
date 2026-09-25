@@ -416,28 +416,42 @@ const Login = () => {
               <div className="form-dual-row">
                 <div className="form-group-field">
                   <label className="field-label">Gender</label>
-                  <div className="input-icon-wrap">
-                    <FaVenusMars className="lead-icon" />
-                    <select
-                      className="form-select"
-                      value={gender}
-                      onChange={(e) => setGender(e.target.value)}
-                      required
+                  <div
+                    className="gender-btn-group"
+                    role="radiogroup"
+                    aria-label="Gender selection"
+                  >
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={gender === "male"}
+                      className={`btn-gender-chip ${
+                        gender === "male" ? "active" : ""
+                      }`}
+                      onClick={() => setGender("male")}
                     >
-                      <option value="">Select Gender</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
+                      Male
+                    </button>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked={gender === "female"}
+                      className={`btn-gender-chip ${
+                        gender === "female" ? "active" : ""
+                      }`}
+                      onClick={() => setGender("female")}
+                    >
+                      Female
+                    </button>
                   </div>
                 </div>
 
                 <div className="form-group-field">
                   <label className="field-label">Date of Birth</label>
-                  <div className="input-icon-wrap">
-                    <FaCalendarAlt className="lead-icon" />
+                  <div className="input-icon-wrap date-input-wrap">
                     <input
                       type="date"
-                      className="form-input"
+                      className="form-input form-date-input"
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
                       required
