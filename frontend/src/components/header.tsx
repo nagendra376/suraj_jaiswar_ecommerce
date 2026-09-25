@@ -19,7 +19,7 @@ import {
   FaTools,
   FaArrowRight,
 } from "react-icons/fa";
-import { BsBoxSeam, BsGift } from "react-icons/bs";
+import { BsBoxSeam } from "react-icons/bs";
 import { User } from "../types/types";
 import { RootState } from "../redux/store";
 import { signOut } from "firebase/auth";
@@ -467,16 +467,7 @@ const Header = ({ user }: PropsType) => {
               </div>
             </div>
 
-            {/* 3. Sale (Deals & Offers) */}
-            <div className="nav-link-item sale-nav-item">
-              <Link to="/search?search=sale" className="nav-link-anchor sale-anchor">
-                <BsGift className="nav-item-icon sale-icon" />
-                <span>Sale</span>
-                <span className="sale-hot-badge">Hot</span>
-              </Link>
-            </div>
-
-            {/* 4. Custom PC Build with Underline Accent (matching NCL screenshot) */}
+            {/* 3. Custom PC Build with Underline Accent (matching NCL screenshot) */}
             <div className="nav-link-item custom-pc-nav-item">
               <Link
                 to="/search?category=custom-pc-build"
@@ -696,14 +687,6 @@ const Header = ({ user }: PropsType) => {
             >
               <span>🛠️ <u>Custom PC Build</u></span>
               <span style={{ fontSize: "0.65rem", fontWeight: 800, background: "#e0f2fe", color: "#0284c7", padding: "2px 6px", borderRadius: "4px" }}>Build</span>
-            </Link>
-            <Link
-              to="/search?search=sale"
-              className="drawer-link"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span>🎁 Deals &amp; Sale</span>
-              <span style={{ fontSize: "0.65rem", fontWeight: 800, background: "#fee2e2", color: "#ef4444", padding: "2px 6px", borderRadius: "4px" }}>Hot</span>
             </Link>
 
             <div className="drawer-section-title">Browse Categories</div>

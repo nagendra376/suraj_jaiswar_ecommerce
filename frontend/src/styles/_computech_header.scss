@@ -886,37 +886,7 @@ $text-muted: #64748b;
             }
           }
 
-          // 2. Sale Navigation Item
-          &.sale-nav-item {
-            .sale-anchor {
-              .sale-icon {
-                color: #ef4444;
-              }
-
-              .sale-hot-badge {
-                font-size: 0.62rem;
-                font-weight: 800;
-                background: #ef4444;
-                color: #ffffff;
-                padding: 1px 5px;
-                border-radius: 9999px;
-                text-transform: uppercase;
-                margin-left: 2px;
-                line-height: 1.2;
-              }
-
-              &:hover {
-                background: #fef2f2;
-                color: #ef4444;
-
-                .sale-icon {
-                  color: #dc2626;
-                }
-              }
-            }
-          }
-
-          // 3. Custom PC Build Navigation Item (Underline accent matching NCL screenshot media_1790360252990.png)
+          // 2. Custom PC Build Navigation Item (Underline accent matching NCL screenshot media_1790360252990.png)
           &.custom-pc-nav-item {
             .custom-pc-anchor {
               color: #0f172a;
