@@ -282,18 +282,18 @@ const PrebuiltCustomPcSection: React.FC = () => {
           </div>
         </div>
 
-        {/* ================= 2. BUILD YOUR OWN CUSTOMIZED PC SUB-SECTION ================= */}
+        {/* ================= 2. BUILD YOUR OWN CUSTOMIZED PC & LAPTOP SUB-SECTION ================= */}
         <div className="custom-build-sub-wrapper">
           {/* Cyan/Blue Ribbon Title Bar */}
           <div className="custom-ribbon-bar">
-            <span className="ribbon-title">BUILD YOUR OWN CUSTOMIZED PC</span>
+            <span className="ribbon-title">BUILD YOUR OWN CUSTOMIZED PC &amp; LAPTOP</span>
             <div className="ribbon-down-pointer">
               <FaChevronDown />
             </div>
           </div>
 
-          {/* 2 Large Featured AMD & INTEL Banner Cards */}
-          <div className="custom-cards-dual-grid">
+          {/* 3 Featured Custom Build Cards: AMD, INTEL & LAPTOP */}
+          <div className="custom-cards-grid">
             {/* Card 1: AMD Custom PC Build */}
             <div className="custom-pc-hero-card card-amd">
               <Link
@@ -346,7 +346,7 @@ const PrebuiltCustomPcSection: React.FC = () => {
                 aria-label="Build Your Custom Intel PC"
               >
                 <div className="custom-media-overlay">
-                  <span className="hero-top-badge">INTEL CORE ARCHITECTURE</span>
+                  <span className="hero-top-badge">INTEL ARCHITECTURE</span>
                   <h3 className="hero-floating-title">
                     INTEL CUSTOM <br />
                     <span className="text-glow-blue">PC BUILD</span>
@@ -375,6 +375,50 @@ const PrebuiltCustomPcSection: React.FC = () => {
                   <Link
                     to="/search?category=custom-pc-build&brand=intel"
                     className="btn-customize btn-intel"
+                  >
+                    Customize &amp; Buy <FaArrowRight className="action-arrow" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Custom Laptop Build */}
+            <div className="custom-pc-hero-card card-laptop">
+              <Link
+                to="/search?category=laptops"
+                className="custom-hero-media"
+                aria-label="Build Your Custom Laptop"
+              >
+                <div className="custom-media-overlay">
+                  <span className="hero-top-badge">ULTRA PORTABLE POWER</span>
+                  <h3 className="hero-floating-title">
+                    CUSTOM <br />
+                    <span className="text-glow-purple">LAPTOP BUILD</span>
+                  </h3>
+                  <div className="hero-perks">
+                    <span><FaCheckCircle className="perk-icon" /> DDR5 RAM &amp; Gen 5 NVMe Config</span>
+                    <span><FaCheckCircle className="perk-icon" /> OLED / 240Hz Gaming &amp; Creator Displays</span>
+                  </div>
+                </div>
+                <img
+                  src="/custom-laptop-build.jpg"
+                  alt="Build Your Custom Gaming &amp; Creator Laptop"
+                  className="custom-hero-bg-img"
+                  loading="lazy"
+                />
+              </Link>
+
+              <div className="custom-card-footer">
+                <div className="footer-meta">
+                  <h4 className="footer-title">Build Your Custom Laptop</h4>
+                  <span className="footer-price">
+                    From <strong className="price-val">₹24,999.00</strong>
+                  </span>
+                </div>
+                <div className="footer-actions">
+                  <Link
+                    to="/search?category=laptops"
+                    className="btn-customize btn-laptop"
                   >
                     Customize &amp; Buy <FaArrowRight className="action-arrow" />
                   </Link>
