@@ -325,7 +325,7 @@
     .refurb-marquee-wrapper {
       width: 100%;
       overflow-x: auto;
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
       position: relative;
       padding: 0.5rem 0 1.25rem;
 
@@ -334,22 +334,12 @@
       }
       -ms-overflow-style: none;
       scrollbar-width: none;
-
-      &:hover .refurb-marquee-track {
-        animation-play-state: paused;
-      }
     }
 
     .refurb-marquee-track {
       display: flex;
       gap: 1.25rem;
       width: max-content;
-      animation: refurbHorizontalScroll 40s linear infinite;
-      will-change: transform;
-
-      &:hover {
-        animation-play-state: paused;
-      }
     }
 
     .refurb-card {
@@ -889,15 +879,5 @@
         }
       }
     }
-  }
-}
-
-// Continuous Keyframes Animation for Refurbished Horizontal Marquee
-@keyframes refurbHorizontalScroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
   }
 }

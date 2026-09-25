@@ -72,7 +72,7 @@
   .repair-carousel-wrapper {
     position: relative;
     width: 100%;
-    margin-bottom: 3.5rem;
+    margin-bottom: 1.5rem;
     padding: 0.5rem 0;
 
     // Edge Gradient Fades
@@ -89,12 +89,20 @@
 
     &::before {
       left: 0;
-      background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0) 100%
+      );
     }
 
     &::after {
       right: 0;
-      background: linear-gradient(to left, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(
+        to left,
+        rgba(255, 255, 255, 1) 0%,
+        rgba(255, 255, 255, 0) 100%
+      );
     }
 
     .carousel-nav-btn {
@@ -640,7 +648,9 @@
           letter-spacing: 0.05em;
         }
 
-        input, select, textarea {
+        input,
+        select,
+        textarea {
           border: 1.5px solid #e2e8f0;
           border-radius: 0.75rem;
           padding: 0.75rem 1rem;

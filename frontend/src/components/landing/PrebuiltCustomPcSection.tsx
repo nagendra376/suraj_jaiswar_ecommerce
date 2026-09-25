@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Link, useNavigate } from "../../utils/router";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
@@ -135,6 +135,94 @@ const PrebuiltCustomPcSection: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const isHoveredRef = useRef<boolean>(false);
+  const isInteractingRef = useRef<boolean>(false);
+  const interactionTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 4 identical sets so infinite wrapping has huge buffers on both sides
+  const NUM_COPIES = 4;
+  const dealsList = [
+    ...posterDeals,
+    ...posterDeals,
+    ...posterDeals,
+    ...posterDeals,
+  ];
+
+  const pauseAutoScrollTemporarily = () => {
+    isInteractingRef.current = true;
+    if (interactionTimerRef.current) {
+      clearTimeout(interactionTimerRef.current);
+    }
+    interactionTimerRef.current = setTimeout(() => {
+      isInteractingRef.current = false;
+    }, 2500);
+  };
+
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+
+    // Start in the 2nd set (Set index 1) for seamless bidirectional scroll buffer
+    const initScroll = () => {
+      if (el && el.scrollWidth > 0) {
+        const oneSetWidth = el.scrollWidth / NUM_COPIES;
+        if (el.scrollLeft < oneSetWidth * 0.5) {
+          el.scrollLeft = oneSetWidth;
+        }
+      }
+    };
+    initScroll();
+    const timer = setTimeout(initScroll, 150);
+
+    let animationId: number;
+    let lastTime = performance.now();
+    const speed = 0.8; // ~48px per second, silky smooth speed
+
+    const step = (currentTime: number) => {
+      const delta = (currentTime - lastTime) / 16.666;
+      lastTime = currentTime;
+
+      if (el && el.scrollWidth > 0) {
+        const oneSetWidth = el.scrollWidth / NUM_COPIES;
+
+        // Auto-scroll forward when not hovered and not interacting
+        if (!isHoveredRef.current && !isInteractingRef.current) {
+          el.scrollLeft += speed * (delta > 0 && delta < 3 ? delta : 1);
+        }
+
+        // Seamless infinite wrap check runs continuously
+        // When user or auto-scroll reaches deep into set 3, wrap back to set 2
+        if (el.scrollLeft >= oneSetWidth * 2.5) {
+          el.scrollLeft -= oneSetWidth;
+        } else if (el.scrollLeft <= oneSetWidth * 0.5) {
+          el.scrollLeft += oneSetWidth;
+        }
+      }
+
+      animationId = requestAnimationFrame(step);
+    };
+
+    animationId = requestAnimationFrame(step);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      clearTimeout(timer);
+      if (interactionTimerRef.current) {
+        clearTimeout(interactionTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleScroll = () => {
+    const el = scrollContainerRef.current;
+    if (!el || el.scrollWidth === 0) return;
+    const oneSetWidth = el.scrollWidth / NUM_COPIES;
+    if (el.scrollLeft >= oneSetWidth * 2.8) {
+      el.scrollLeft -= oneSetWidth;
+    } else if (el.scrollLeft <= oneSetWidth * 0.3) {
+      el.scrollLeft += oneSetWidth;
+    }
+  };
 
   const handleAddToCart = (item: PosterDeal, e: React.MouseEvent) => {
     e.preventDefault();
@@ -171,15 +259,25 @@ const PrebuiltCustomPcSection: React.FC = () => {
   };
 
   const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -340, behavior: "smooth" });
+    const el = scrollContainerRef.current;
+    if (!el || el.scrollWidth === 0) return;
+    const oneSetWidth = el.scrollWidth / NUM_COPIES;
+    if (el.scrollLeft <= oneSetWidth * 0.7) {
+      el.scrollLeft += oneSetWidth;
     }
+    el.scrollBy({ left: -344, behavior: "smooth" });
+    pauseAutoScrollTemporarily();
   };
 
   const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 340, behavior: "smooth" });
+    const el = scrollContainerRef.current;
+    if (!el || el.scrollWidth === 0) return;
+    const oneSetWidth = el.scrollWidth / NUM_COPIES;
+    if (el.scrollLeft >= oneSetWidth * 2.3) {
+      el.scrollLeft -= oneSetWidth;
     }
+    el.scrollBy({ left: 344, behavior: "smooth" });
+    pauseAutoScrollTemporarily();
   };
 
   return (
@@ -227,10 +325,26 @@ const PrebuiltCustomPcSection: React.FC = () => {
           </div>
 
           {/* Continuous Auto-Scrolling Marquee Track */}
-          <div className="auto-scroll-marquee-wrapper" ref={scrollContainerRef}>
+          <div
+            className="auto-scroll-marquee-wrapper"
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            onMouseEnter={() => {
+              isHoveredRef.current = true;
+            }}
+            onMouseLeave={() => {
+              isHoveredRef.current = false;
+            }}
+            onTouchStart={() => {
+              isHoveredRef.current = true;
+            }}
+            onTouchEnd={() => {
+              isHoveredRef.current = false;
+            }}
+          >
             <div className="auto-scroll-marquee-track">
-              {/* Render items twice for seamless infinite marquee loop */}
-              {[...posterDeals, ...posterDeals].map((item, index) => (
+              {/* Render items seamlessly repeating */}
+              {dealsList.map((item, index) => (
                 <div
                   key={`${item.id}-${index}`}
                   className="poster-card-deal"

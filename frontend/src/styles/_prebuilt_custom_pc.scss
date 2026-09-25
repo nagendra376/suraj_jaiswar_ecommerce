@@ -139,27 +139,18 @@
     scrollbar-width: none;
     position: relative;
     padding: 0.5rem 0 1rem;
+    scroll-behavior: auto;
 
     &::-webkit-scrollbar {
       display: none;
     }
-
-    // Pause on hover
-    &:hover .auto-scroll-marquee-track {
-      animation-play-state: paused;
-    }
+    -ms-overflow-style: none;
   }
 
   .auto-scroll-marquee-track {
     display: flex;
     gap: 1.5rem;
     width: max-content;
-    animation: prebuiltHorizontalScroll 45s linear infinite;
-    will-change: transform;
-
-    &:hover {
-      animation-play-state: paused;
-    }
   }
 
   // Individual Poster Card Deal (Identical to User Reference Image)
@@ -657,15 +648,5 @@
         justify-content: center;
       }
     }
-  }
-}
-
-// Continuous Keyframes Animation for Horizontal Marquee
-@keyframes prebuiltHorizontalScroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
   }
 }

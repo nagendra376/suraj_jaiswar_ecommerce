@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "../../utils/router";
 import toast from "react-hot-toast";
 import {
@@ -132,17 +132,110 @@ const RefurbishedBuySell: React.FC = () => {
   const [userArea, setUserArea] = useState<string>("");
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const isHoveredRef = useRef<boolean>(false);
+  const isInteractingRef = useRef<boolean>(false);
+  const interactionTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -270, behavior: "smooth" });
+  const NUM_COPIES = 4;
+  const refurbList = [
+    ...refurbCategories,
+    ...refurbCategories,
+    ...refurbCategories,
+    ...refurbCategories,
+  ];
+
+  const pauseAutoScrollTemporarily = () => {
+    isInteractingRef.current = true;
+    if (interactionTimerRef.current) {
+      clearTimeout(interactionTimerRef.current);
+    }
+    interactionTimerRef.current = setTimeout(() => {
+      isInteractingRef.current = false;
+    }, 2500);
+  };
+
+  useEffect(() => {
+    const el = scrollContainerRef.current;
+    if (!el) return;
+
+    const initScroll = () => {
+      if (el && el.scrollWidth > 0) {
+        const oneSetWidth = el.scrollWidth / NUM_COPIES;
+        if (el.scrollLeft < oneSetWidth * 0.5) {
+          el.scrollLeft = oneSetWidth;
+        }
+      }
+    };
+    initScroll();
+    const timer = setTimeout(initScroll, 150);
+
+    let animationId: number;
+    let lastTime = performance.now();
+    const speed = 0.75;
+
+    const step = (currentTime: number) => {
+      const delta = (currentTime - lastTime) / 16.666;
+      lastTime = currentTime;
+
+      if (el && el.scrollWidth > 0) {
+        const oneSetWidth = el.scrollWidth / NUM_COPIES;
+
+        if (!isHoveredRef.current && !isInteractingRef.current) {
+          el.scrollLeft += speed * (delta > 0 && delta < 3 ? delta : 1);
+        }
+
+        if (el.scrollLeft >= oneSetWidth * 2.5) {
+          el.scrollLeft -= oneSetWidth;
+        } else if (el.scrollLeft <= oneSetWidth * 0.5) {
+          el.scrollLeft += oneSetWidth;
+        }
+      }
+
+      animationId = requestAnimationFrame(step);
+    };
+
+    animationId = requestAnimationFrame(step);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+      clearTimeout(timer);
+      if (interactionTimerRef.current) {
+        clearTimeout(interactionTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleScroll = () => {
+    const el = scrollContainerRef.current;
+    if (!el || el.scrollWidth === 0) return;
+    const oneSetWidth = el.scrollWidth / NUM_COPIES;
+    if (el.scrollLeft >= oneSetWidth * 2.8) {
+      el.scrollLeft -= oneSetWidth;
+    } else if (el.scrollLeft <= oneSetWidth * 0.3) {
+      el.scrollLeft += oneSetWidth;
     }
   };
 
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 270, behavior: "smooth" });
+  const scrollLeft = () => {
+    const el = scrollContainerRef.current;
+    if (!el || el.scrollWidth === 0) return;
+    const oneSetWidth = el.scrollWidth / NUM_COPIES;
+    if (el.scrollLeft <= oneSetWidth * 0.7) {
+      el.scrollLeft += oneSetWidth;
     }
+    el.scrollBy({ left: -270, behavior: "smooth" });
+    pauseAutoScrollTemporarily();
+  };
+
+  const scrollRight = () => {
+    const el = scrollContainerRef.current;
+    if (!el || el.scrollWidth === 0) return;
+    const oneSetWidth = el.scrollWidth / NUM_COPIES;
+    if (el.scrollLeft >= oneSetWidth * 2.3) {
+      el.scrollLeft -= oneSetWidth;
+    }
+    el.scrollBy({ left: 270, behavior: "smooth" });
+    pauseAutoScrollTemporarily();
   };
 
   const handleOpenModal = (deviceName?: string) => {
@@ -228,10 +321,26 @@ const RefurbishedBuySell: React.FC = () => {
           </div>
 
           {/* Continuous Auto-Scrolling Marquee Track */}
-          <div className="refurb-marquee-wrapper" ref={scrollContainerRef}>
+          <div
+            className="refurb-marquee-wrapper"
+            ref={scrollContainerRef}
+            onScroll={handleScroll}
+            onMouseEnter={() => {
+              isHoveredRef.current = true;
+            }}
+            onMouseLeave={() => {
+              isHoveredRef.current = false;
+            }}
+            onTouchStart={() => {
+              isHoveredRef.current = true;
+            }}
+            onTouchEnd={() => {
+              isHoveredRef.current = false;
+            }}
+          >
             <div className="refurb-marquee-track">
-              {/* Duplicate array for seamless infinite marquee scroll */}
-              {[...refurbCategories, ...refurbCategories].map((cat, index) => (
+              {/* Seamless infinite repeating cards */}
+              {refurbList.map((cat, index) => (
                 <Link
                   key={`${cat.id}-${index}`}
                   to={`/search?search=${encodeURIComponent(cat.searchQuery)}`}
