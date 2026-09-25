@@ -8,7 +8,6 @@ import BrandsWeRepair from "../components/landing/BrandsWeRepair";
 import RefurbishedBuySell from "../components/landing/RefurbishedBuySell";
 import ShopByCategory from "../components/landing/ShopByCategory";
 import WhatCustomersSay from "../components/landing/WhatCustomersSay";
-import CustomerStories from "../components/landing/CustomerStories";
 import FAQSection from "../components/landing/FAQSection";
 import LocationsCoverage from "../components/landing/LocationsCoverage";
 import RepairBookingForm from "../components/landing/RepairBookingForm";
@@ -28,7 +27,6 @@ const Home = () => {
       <WhyChooseUs />
       <RepairProcessBento />
       <WhatCustomersSay />
-      <CustomerStories />
       <FAQSection />
       <LocationsCoverage />
       <RepairBookingForm />
