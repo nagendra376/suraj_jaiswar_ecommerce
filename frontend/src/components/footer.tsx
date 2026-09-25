@@ -456,6 +456,17 @@ const Footer: React.FC = () => {
               &copy; {new Date().getFullYear()} Solution Systems. All rights
               reserved. | GSTIN: 27AAPCS1401H1ZT
             </p>
+            <p className="developer-credit">
+              Developed &amp; maintained by{" "}
+              <a
+                href="https://www.nagendradwivedi.dev/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="developer-link"
+              >
+                Nagendra Dwivedi
+              </a>
+            </p>
             <div className="legal-links">
               <Link to="/search">Privacy Policy</Link>
               <Link to="/search">Terms of Service</Link>

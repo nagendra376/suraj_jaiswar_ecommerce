@@ -569,6 +569,25 @@
         margin: 0;
       }
 
+      .developer-credit {
+        margin: 0;
+        color: #94a3b8;
+        font-size: 0.78rem;
+
+        .developer-link {
+          color: #38bdf8;
+          font-weight: 600;
+          text-decoration: none;
+          border-bottom: 1px dashed rgba(56, 189, 248, 0.4);
+          transition: all 0.2s ease;
+
+          &:hover {
+            color: #7dd3fc;
+            border-bottom-color: #7dd3fc;
+          }
+        }
+      }
+
       .legal-links {
         display: flex;
         gap: 1.25rem;
