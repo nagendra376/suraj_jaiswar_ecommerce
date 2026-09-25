@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "../../utils/router";
 import toast from "react-hot-toast";
 import {
@@ -7,6 +7,8 @@ import {
   BsPcDisplay,
   BsDisplay,
   BsCpu,
+  BsChevronLeft,
+  BsChevronRight,
 } from "react-icons/bs";
 import {
   FaCartShopping,
@@ -32,9 +34,10 @@ interface RefurbCategory {
   title: string;
   subtitle: string;
   price: string;
-  icon: React.ReactNode;
-  theme: "blue" | "green" | "purple" | "amber" | "teal";
+  photo: string;
+  theme: "blue" | "green" | "purple" | "amber" | "teal" | "rose" | "indigo";
   searchQuery: string;
+  badge: string;
 }
 
 const refurbCategories: RefurbCategory[] = [
@@ -43,45 +46,70 @@ const refurbCategories: RefurbCategory[] = [
     title: "Refurbished Laptops",
     subtitle: "Dell, HP, Lenovo, MacBook",
     price: "From ₹8,000",
-    icon: <BsLaptop />,
+    photo: "/refurb-laptop.jpg",
     theme: "blue",
     searchQuery: "laptop",
+    badge: "Most Popular",
   },
   {
     id: "macbooks",
     title: "Refurbished MacBooks",
     subtitle: "MacBook Air, MacBook Pro",
     price: "From ₹18,000",
-    icon: <FaApple />,
+    photo: "/refurb-macbook.jpg",
     theme: "green",
     searchQuery: "apple macbook",
+    badge: "Apple Silicon",
   },
   {
     id: "desktops",
     title: "Desktop Computers",
     subtitle: "All brands & configurations",
     price: "From ₹6,000",
-    icon: <BsPcDisplay />,
+    photo: "/refurb-desktop.jpg",
     theme: "purple",
     searchQuery: "desktop",
+    badge: "Certified Refurb",
   },
   {
     id: "monitors",
     title: "Refurbished Monitors",
     subtitle: "Dell, HP, LG & more",
     price: "From ₹3,000",
-    icon: <BsDisplay />,
+    photo: "/refurb-monitor.jpg",
     theme: "amber",
     searchQuery: "monitor",
+    badge: "IPS & LED",
   },
   {
     id: "all-in-ones",
     title: "All-in-One PCs",
     subtitle: "iMac, Dell AIO, HP AIO",
     price: "From ₹12,000",
-    icon: <BsCpu />,
+    photo: "/refurb-aio.jpg",
     theme: "teal",
     searchQuery: "all in one",
+    badge: "Space Saver",
+  },
+  {
+    id: "gaming-laptops",
+    title: "Refurbished Gaming",
+    subtitle: "Asus ROG, Acer Nitro, HP Omen",
+    price: "From ₹32,000",
+    photo: "/custom-laptop-build.jpg",
+    theme: "rose",
+    searchQuery: "gaming laptop",
+    badge: "RTX Dedicated",
+  },
+  {
+    id: "mini-pcs",
+    title: "Compact Mini PCs",
+    subtitle: "Dell OptiPlex, Lenovo Tiny",
+    price: "From ₹9,500",
+    photo: "/poster-study-pc-tower.jpg",
+    theme: "indigo",
+    searchQuery: "mini pc",
+    badge: "Fast & Tiny",
   },
 ];
 
@@ -102,6 +130,20 @@ const RefurbishedBuySell: React.FC = () => {
   const [userName, setUserName] = useState<string>("");
   const [userPhone, setUserPhone] = useState<string>("");
   const [userArea, setUserArea] = useState<string>("");
+
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -270, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 270, behavior: "smooth" });
+    }
+  };
 
   const handleOpenModal = (deviceName?: string) => {
     if (deviceName) {
@@ -154,36 +196,67 @@ const RefurbishedBuySell: React.FC = () => {
           </p>
         </div>
 
-        {/* Sub-block A: Buy Certified Refurbished */}
+        {/* Sub-block A: Buy Certified Refurbished with Auto Scroll Carousel & Images */}
         <div className="buy-subblock">
           <div className="buy-subblock-header">
             <div className="header-title-wrap">
               <FaCartShopping className="cart-icon" />
               <h3>Buy Certified Refurbished Laptops &amp; Computers</h3>
             </div>
-            <Link to="/search" className="view-all-link">
-              <span>View All</span>
-              <FaArrowRight />
-            </Link>
+            <div className="buy-header-actions">
+              <button
+                type="button"
+                className="scroll-nav-btn prev"
+                onClick={scrollLeft}
+                aria-label="Scroll left"
+              >
+                <BsChevronLeft />
+              </button>
+              <button
+                type="button"
+                className="scroll-nav-btn next"
+                onClick={scrollRight}
+                aria-label="Scroll right"
+              >
+                <BsChevronRight />
+              </button>
+              <Link to="/search" className="view-all-link">
+                <span>View All</span>
+                <FaArrowRight />
+              </Link>
+            </div>
           </div>
 
-          {/* 5 Cards Grid */}
-          <div className="refurbished-cards-grid">
-            {refurbCategories.map((cat) => (
-              <Link
-                key={cat.id}
-                to={`/search?search=${encodeURIComponent(cat.searchQuery)}`}
-                className="refurb-card"
-                title={`Shop ${cat.title}`}
-              >
-                <div className={`refurb-icon-box ${cat.theme}`}>{cat.icon}</div>
-                <h4 className="refurb-card-title">{cat.title}</h4>
-                <p className="refurb-card-subtitle">{cat.subtitle}</p>
-                <span className={`refurb-price-pill ${cat.theme}`}>
-                  {cat.price}
-                </span>
-              </Link>
-            ))}
+          {/* Continuous Auto-Scrolling Marquee Track */}
+          <div className="refurb-marquee-wrapper" ref={scrollContainerRef}>
+            <div className="refurb-marquee-track">
+              {/* Duplicate array for seamless infinite marquee scroll */}
+              {[...refurbCategories, ...refurbCategories].map((cat, index) => (
+                <Link
+                  key={`${cat.id}-${index}`}
+                  to={`/search?search=${encodeURIComponent(cat.searchQuery)}`}
+                  className="refurb-card"
+                  title={`Shop ${cat.title}`}
+                >
+                  <div className={`refurb-media-box ${cat.theme}`}>
+                    <span className="refurb-top-badge">{cat.badge}</span>
+                    <img
+                      src={cat.photo}
+                      alt={cat.title}
+                      className="refurb-card-img"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="refurb-card-info">
+                    <h4 className="refurb-card-title">{cat.title}</h4>
+                    <p className="refurb-card-subtitle">{cat.subtitle}</p>
+                    <span className={`refurb-price-pill ${cat.theme}`}>
+                      {cat.price}
+                    </span>
+                  </div>
+                </Link>
+              ))}
+            </div>
           </div>
 
           {/* Trust Guarantees Ribbon */}
