@@ -21,10 +21,10 @@ const Home = () => {
       <ExpertRepairSection />
       <FestiveDealsBanner />
       <ShopByCategory />
-      <RepairProcessBento />
       <BrandsWeRepair />
       <RefurbishedBuySell />
       <WhyChooseUs />
+      <RepairProcessBento />
       <WhatCustomersSay />
       <CustomerStories />
       <FAQSection />
