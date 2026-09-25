@@ -210,18 +210,31 @@ const ProductDetails = () => {
   const discountPercent =
     originalPrice > 0 ? Math.round((savingsAmount / originalPrice) * 100) : 0;
 
+  // Safe photo array ensuring thumbnails are always available (matching user screenshot)
+  const displayPhotos = useMemo(() => {
+    if (product?.photos && product.photos.length > 0) {
+      return product.photos;
+    }
+    return [
+      {
+        url: "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=700&auto=format&fit=crop&q=60",
+        public_id: "default-product-photo",
+      },
+    ];
+  }, [product?.photos]);
+
   // Gallery Photo Navigation Arrows
   const handlePrevPhoto = () => {
-    if (!product?.photos?.length) return;
+    if (!displayPhotos.length) return;
     setSelectedPhotoIndex((prev) =>
-      prev === 0 ? product.photos.length - 1 : prev - 1
+      prev === 0 ? displayPhotos.length - 1 : prev - 1
     );
   };
 
   const handleNextPhoto = () => {
-    if (!product?.photos?.length) return;
+    if (!displayPhotos.length) return;
     setSelectedPhotoIndex((prev) =>
-      prev === product.photos.length - 1 ? 0 : prev + 1
+      prev === displayPhotos.length - 1 ? 0 : prev + 1
     );
   };
 
@@ -436,72 +449,75 @@ const ProductDetails = () => {
           <>
             {/* 2. Top Two-Column Hero Showcase (matching media_1790370724848.png) */}
             <div className="product-hero-showcase">
-              {/* Left Card: Gallery Card */}
+              {/* Left Card: Gallery Card (matching media_1790371079572.png) */}
               <div className="product-gallery-card">
-                {/* Header: SALE badge + DISPATCH pill */}
-                <div className="gallery-card-header">
-                  <span className="pill-badge-sale">SALE</span>
-                  <div className="pill-badge-dispatch">
-                    <FaRegClock className="dispatch-clock-icon" />
-                    <span>DISPATCH IN 0-24 HOURS</span>
-                  </div>
-                </div>
-
-                {/* Main Showcase Image Frame with Navigation Arrows */}
+                {/* Main Showcase Image Frame with embedded badges, chevrons, and centered image */}
                 <div className="gallery-main-stage">
-                  {product.photos && product.photos.length > 1 && (
-                    <button
-                      type="button"
-                      className="gallery-nav-arrow arrow-left"
-                      onClick={handlePrevPhoto}
-                      aria-label="Previous image"
-                    >
-                      <FaChevronLeft />
-                    </button>
-                  )}
+                  {/* Top-Left: Red SALE badge */}
+                  <span className="pill-badge-sale">SALE</span>
 
+                  {/* Top-Right: DISPATCH IN 0-24 HOURS frosted pill */}
+                  <div className="pill-badge-dispatch">
+                    <div className="dispatch-clock-circle">
+                      <FaRegClock className="dispatch-clock-icon" />
+                    </div>
+                    <div className="dispatch-text-block">
+                      <span className="dispatch-sub">DISPATCH IN</span>
+                      <span className="dispatch-main">0-24 HOURS</span>
+                    </div>
+                  </div>
+
+                  {/* Left Navigation Chevron Button */}
+                  <button
+                    type="button"
+                    className="gallery-nav-arrow arrow-left"
+                    onClick={handlePrevPhoto}
+                    aria-label="Previous image"
+                  >
+                    <FaChevronLeft />
+                  </button>
+
+                  {/* Showcase Active Image */}
                   <img
                     src={
-                      product.photos?.[selectedPhotoIndex]?.url
-                        ? transformImage(product.photos[selectedPhotoIndex].url, 700)
-                        : "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=700&auto=format&fit=crop&q=60"
+                      displayPhotos[selectedPhotoIndex]?.url
+                        ? transformImage(displayPhotos[selectedPhotoIndex].url, 800)
+                        : "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=800&auto=format&fit=crop&q=60"
                     }
                     alt={product.name}
                     className="gallery-active-image"
                   />
 
-                  {product.photos && product.photos.length > 1 && (
-                    <button
-                      type="button"
-                      className="gallery-nav-arrow arrow-right"
-                      onClick={handleNextPhoto}
-                      aria-label="Next image"
-                    >
-                      <FaChevronRight />
-                    </button>
-                  )}
+                  {/* Right Navigation Chevron Button */}
+                  <button
+                    type="button"
+                    className="gallery-nav-arrow arrow-right"
+                    onClick={handleNextPhoto}
+                    aria-label="Next image"
+                  >
+                    <FaChevronRight />
+                  </button>
                 </div>
 
-                {/* Thumbnails Row with Active Red Border */}
-                {product.photos && product.photos.length > 1 && (
-                  <div className="gallery-thumbnails-strip">
-                    {product.photos.map((photo, idx) => (
-                      <button
-                        key={photo.public_id || idx}
-                        type="button"
-                        className={`gallery-thumb-btn ${
-                          selectedPhotoIndex === idx ? "active-thumb" : ""
-                        }`}
-                        onClick={() => setSelectedPhotoIndex(idx)}
-                      >
-                        <img
-                          src={transformImage(photo.url, 120)}
-                          alt={`${product.name} thumb ${idx + 1}`}
-                        />
-                      </button>
-                    ))}
-                  </div>
-                )}
+                {/* Thumbnails Row below the main frame - ALWAYS shown matching user request & screenshot */}
+                <div className="gallery-thumbnails-strip">
+                  {displayPhotos.map((photo, idx) => (
+                    <button
+                      key={photo.public_id || idx}
+                      type="button"
+                      className={`gallery-thumb-btn ${
+                        selectedPhotoIndex === idx ? "active-thumb" : ""
+                      }`}
+                      onClick={() => setSelectedPhotoIndex(idx)}
+                      aria-label={`Select product image ${idx + 1}`}
+                    >
+                      <img
+                        src={transformImage(photo.url, 140)}
+                        alt={`${product.name} thumb ${idx + 1}`}
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
 
               {/* Right Card: Details & Purchase Card */}
