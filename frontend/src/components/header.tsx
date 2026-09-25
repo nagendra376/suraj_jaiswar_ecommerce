@@ -570,7 +570,11 @@ const Header = ({ user }: PropsType) => {
                 <span>Repair Services</span>
                 <FaChevronDown className="nav-dropdown-chevron" />
               </Link>
-              <div className="nav-dropdown-popover services-style-popover">
+              <div
+                className="nav-dropdown-popover services-style-popover"
+                data-lenis-prevent
+                onWheel={(e) => e.stopPropagation()}
+              >
                 <div className="services-list">
                   {repairServicesMenu.map((item) => (
                     <Link
@@ -616,7 +620,11 @@ const Header = ({ user }: PropsType) => {
                 <span>Service Areas</span>
                 <FaChevronDown className="nav-dropdown-chevron" />
               </Link>
-              <div className="service-areas-mega-popover">
+              <div
+                className="service-areas-mega-popover"
+                data-lenis-prevent
+                onWheel={(e) => e.stopPropagation()}
+              >
                 {/* Top Blue Header Banner */}
                 <div className="areas-header-bar">
                   <div className="header-left">
@@ -627,7 +635,11 @@ const Header = ({ user }: PropsType) => {
                 </div>
 
                 {/* 4 Columns Scrollable Body */}
-                <div className="areas-scrollable-body">
+                <div
+                  className="areas-scrollable-body"
+                  data-lenis-prevent
+                  onWheel={(e) => e.stopPropagation()}
+                >
                   <div className="areas-grid">
                     {serviceAreasData.map((col) => (
                       <div key={col.region} className="area-column">

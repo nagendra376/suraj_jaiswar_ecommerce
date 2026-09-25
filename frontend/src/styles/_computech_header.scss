@@ -1082,6 +1082,8 @@ $text-muted: #64748b;
             min-width: 250px;
             max-height: min(480px, calc(100vh - 180px));
             overflow-y: auto;
+            overscroll-behavior: contain;
+            -webkit-overflow-scrolling: touch;
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 12px;
@@ -1185,6 +1187,7 @@ $text-muted: #64748b;
             visibility: hidden;
             transition: all 0.2s ease;
             overflow: hidden;
+            overscroll-behavior: contain;
 
             .areas-header-bar {
               flex-shrink: 0;
@@ -1224,6 +1227,8 @@ $text-muted: #64748b;
               min-height: 0;
               max-height: min(440px, calc(100vh - 275px));
               overflow-y: auto;
+              overscroll-behavior: contain;
+              -webkit-overflow-scrolling: touch;
               padding: 1rem 1.25rem 2.75rem 1.25rem;
 
               &::-webkit-scrollbar {
