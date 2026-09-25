@@ -21,8 +21,8 @@ const Home = () => {
       <ExpertRepairSection />
       <FestiveDealsBanner />
       <ShopByCategory />
-      <BrandsWeRepair />
       <RefurbishedBuySell />
+      <BrandsWeRepair />
       <WhyChooseUs />
       <RepairProcessBento />
       <WhatCustomersSay />
