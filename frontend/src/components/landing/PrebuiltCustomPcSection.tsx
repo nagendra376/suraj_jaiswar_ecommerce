@@ -276,16 +276,6 @@ const PrebuiltCustomPcSection: React.FC = () => {
                       <FaShoppingCart className="btn-cart-icon" /> SHOP NOW
                     </button>
                   </div>
-
-                  {/* Bottom Features Icons Strip */}
-                  <div className="poster-features-strip">
-                    {item.features.map((feat, fIdx) => (
-                      <div key={fIdx} className="feature-icon-pill" title={feat.label}>
-                        <span className="feat-emoji">{feat.icon}</span>
-                        <span className="feat-text">{feat.label}</span>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               ))}
             </div>
