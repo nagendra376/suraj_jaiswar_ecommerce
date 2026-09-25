@@ -1002,6 +1002,77 @@ $bg-light: #f8fafc;
           }
         }
 
+        .qa-login-required-notice {
+          background: #ffffff;
+          border: 1.5px dashed #cbd5e1;
+          border-radius: 12px;
+          padding: 1.5rem 1.75rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 1.25rem;
+          margin-bottom: 2rem;
+
+          .login-notice-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 650px;
+
+            .notice-lock-icon {
+              font-size: 1rem;
+              color: #cc1a1a;
+              background: #fee2e2;
+              padding: 0.65rem;
+              width: 42px;
+              height: 42px;
+              border-radius: 10px;
+              flex-shrink: 0;
+            }
+
+            .notice-text-group {
+              display: flex;
+              flex-direction: column;
+              gap: 0.25rem;
+
+              .notice-heading {
+                font-size: 0.95rem;
+                font-weight: 800;
+                color: $theme-dark;
+              }
+
+              .notice-subtext {
+                font-size: 0.82rem;
+                color: #64748b;
+                line-height: 1.4;
+              }
+            }
+          }
+
+          .btn-qa-login {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #0f172a;
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+
+            &:hover {
+              background: #1e293b;
+              transform: translateY(-1px);
+            }
+          }
+        }
+
         .qa-submitted-list {
           display: flex;
           flex-direction: column;

@@ -21,6 +21,7 @@ import {
   FaCalendarAlt,
   FaEye,
   FaRegClock,
+  FaLock,
 } from "react-icons/fa";
 import { BsArrowRight } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
@@ -391,6 +392,11 @@ const ProductDetails = () => {
   // Q&A Submit Handler
   const handleQuestionSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) {
+      toast.error("Please log in to ask a question");
+      navigate("/login");
+      return;
+    }
     if (!questionInput.trim()) {
       toast.error("Please enter your question before submitting");
       return;
@@ -827,18 +833,36 @@ const ProductDetails = () => {
                 <div className="tab-content-panel tab-qa-panel">
                   <div className="qa-card-container">
                     <h3 className="qa-card-title">Have a question about this product?</h3>
-                    <form onSubmit={handleQuestionSubmit} className="qa-form">
-                      <textarea
-                        className="qa-textarea-input"
-                        placeholder="Ask your question here..."
-                        rows={3}
-                        value={questionInput}
-                        onChange={(e) => setQuestionInput(e.target.value)}
-                      />
-                      <button type="submit" className="btn-submit-question">
-                        SUBMIT QUESTION
-                      </button>
-                    </form>
+
+                    {user ? (
+                      <form onSubmit={handleQuestionSubmit} className="qa-form">
+                        <textarea
+                          className="qa-textarea-input"
+                          placeholder="Ask your question here..."
+                          rows={3}
+                          value={questionInput}
+                          onChange={(e) => setQuestionInput(e.target.value)}
+                        />
+                        <button type="submit" className="btn-submit-question">
+                          SUBMIT QUESTION
+                        </button>
+                      </form>
+                    ) : (
+                      <div className="qa-login-required-notice">
+                        <div className="login-notice-content">
+                          <FaLock className="notice-lock-icon" />
+                          <div className="notice-text-group">
+                            <span className="notice-heading">Login Required to Ask Questions</span>
+                            <span className="notice-subtext">
+                              Only logged in users can ask questions about this product. Please log in to submit your inquiry.
+                            </span>
+                          </div>
+                        </div>
+                        <Link to="/login" className="btn-qa-login">
+                          Log In to Ask
+                        </Link>
+                      </div>
+                    )}
 
                     {/* Question list or empty notice */}
                     {questionsList.length > 0 ? (
