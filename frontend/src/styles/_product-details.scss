@@ -107,12 +107,12 @@ $bg-light: #f8fafc;
           padding: 1.5rem 1rem;
         }
 
-        // Top-Left SALE Badge
+        // Top-Left SALE Badge (Website Theme Green)
         .pill-badge-sale {
           position: absolute;
           top: 1.25rem;
           left: 1.25rem;
-          background: #cc1a1a;
+          background: $theme-green;
           color: #ffffff;
           font-size: 0.72rem;
           font-weight: 900;
@@ -120,7 +120,7 @@ $bg-light: #f8fafc;
           text-transform: uppercase;
           padding: 0.35rem 0.95rem;
           border-radius: 9999px;
-          box-shadow: 0 2px 8px rgba(204, 26, 26, 0.3);
+          box-shadow: 0 2px 8px rgba(5, 124, 86, 0.35);
           z-index: 3;
         }
 
@@ -145,14 +145,14 @@ $bg-light: #f8fafc;
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background: #fca5a5;
+            background: #dcfce7;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
 
             .dispatch-clock-icon {
-              color: #b91c1c;
+              color: $theme-green;
               font-size: 0.85rem;
             }
           }
@@ -267,9 +267,9 @@ $bg-light: #f8fafc;
           }
 
           &.active-thumb {
-            border: 2px solid #cc1a1a;
+            border: 2px solid $theme-green;
             background: #ffffff;
-            box-shadow: 0 2px 6px rgba(204, 26, 26, 0.2);
+            box-shadow: 0 0 0 1px $theme-green, 0 2px 8px rgba(5, 124, 86, 0.25);
           }
         }
       }
@@ -289,13 +289,13 @@ $bg-light: #f8fafc;
         padding: 1.5rem 1.25rem;
       }
 
-      // Category Pill
+      // Category Pill (Website Theme Green)
       .product-category-row {
         margin-bottom: 0.5rem;
 
         .product-category-pill {
-          background: #fee2e2;
-          color: #dc2626;
+          background: #dcfce7;
+          color: #047857;
           font-size: 0.72rem;
           font-weight: 800;
           letter-spacing: 0.05em;
@@ -404,7 +404,7 @@ $bg-light: #f8fafc;
           font-weight: 500;
 
           .urgency-icon {
-            color: #cc1a1a;
+            color: $theme-green;
             font-size: 0.9rem;
             flex-shrink: 0;
           }
@@ -588,11 +588,11 @@ $bg-light: #f8fafc;
         }
       }
 
-      // Full-width Red BUY IT NOW Button
+      // Full-width Green BUY IT NOW Button (Website Theme Green)
       .btn-buy-it-now-prominent {
         width: 100%;
         height: 50px;
-        background: #cc1a1a;
+        background: $theme-green;
         color: #ffffff;
         border: none;
         border-radius: 8px;
@@ -605,12 +605,12 @@ $bg-light: #f8fafc;
         align-items: center;
         justify-content: center;
         transition: background 0.2s ease, transform 0.1s ease;
-        box-shadow: 0 4px 12px rgba(204, 26, 26, 0.25);
+        box-shadow: 0 4px 14px rgba(5, 124, 86, 0.3);
 
         &:hover:not(:disabled) {
-          background: #b91c1c;
+          background: $theme-green-hover;
           transform: translateY(-1px);
-          box-shadow: 0 6px 16px rgba(204, 26, 26, 0.35);
+          box-shadow: 0 6px 18px rgba(5, 124, 86, 0.4);
         }
 
         &:active:not(:disabled) {
@@ -682,12 +682,12 @@ $bg-light: #f8fafc;
         }
 
         &.active-tab {
-          color: #e11d48; // Accent active color matching user screenshots
-          border-bottom-color: #e11d48;
+          color: $theme-green;
+          border-bottom-color: $theme-green;
 
           .tab-pill-count {
-            background: #ffe4e6;
-            color: #e11d48;
+            background: #dcfce7;
+            color: #15803d;
           }
         }
       }
@@ -1022,8 +1022,8 @@ $bg-light: #f8fafc;
 
             .notice-lock-icon {
               font-size: 1rem;
-              color: #cc1a1a;
-              background: #fee2e2;
+              color: $theme-green;
+              background: #dcfce7;
               padding: 0.65rem;
               width: 42px;
               height: 42px;
@@ -1054,7 +1054,7 @@ $bg-light: #f8fafc;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: #0f172a;
+            background: $theme-green;
             color: #ffffff;
             font-size: 0.82rem;
             font-weight: 800;
@@ -1067,7 +1067,7 @@ $bg-light: #f8fafc;
             white-space: nowrap;
 
             &:hover {
-              background: #1e293b;
+              background: $theme-green-hover;
               transform: translateY(-1px);
             }
           }
