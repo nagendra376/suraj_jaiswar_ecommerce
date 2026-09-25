@@ -45,15 +45,24 @@ const CartDrawer: React.FC = () => {
     };
   }, [dispatch, router.events]);
 
-  // Lock body scroll when drawer is open
+  // Lock body scroll and pause Lenis when drawer is open
   useEffect(() => {
     if (isCartOpen) {
       document.body.style.overflow = "hidden";
+      if (typeof window !== "undefined" && (window as any).__lenis) {
+        (window as any).__lenis.stop();
+      }
     } else {
       document.body.style.overflow = "";
+      if (typeof window !== "undefined" && (window as any).__lenis) {
+        (window as any).__lenis.start();
+      }
     }
     return () => {
       document.body.style.overflow = "";
+      if (typeof window !== "undefined" && (window as any).__lenis) {
+        (window as any).__lenis.start();
+      }
     };
   }, [isCartOpen]);
 
@@ -103,7 +112,12 @@ const CartDrawer: React.FC = () => {
       />
 
       {/* Slide-over panel */}
-      <aside className="cart-drawer-panel" role="dialog" aria-modal="true">
+      <aside
+        className="cart-drawer-panel"
+        role="dialog"
+        aria-modal="true"
+        data-lenis-prevent
+      >
         {/* 1. Header */}
         <div className="cart-drawer-header">
           <div className="cart-drawer-header-left">

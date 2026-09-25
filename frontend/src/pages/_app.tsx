@@ -12,6 +12,8 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import Loader from "../components/loader";
 import CartDrawer from "../components/CartDrawer";
+import SmoothScroll from "../components/SmoothScroll";
+import "lenis/dist/lenis.css";
 import "../styles/app.scss";
 
 const AppContent = ({ Component, pageProps, router }: AppProps) => {
@@ -40,7 +42,7 @@ const AppContent = ({ Component, pageProps, router }: AppProps) => {
   }, [dispatch]);
 
   return (
-    <>
+    <SmoothScroll>
       <Head>
         <title>Solution Systems - Laptop &amp; Computer Repair | Mumbai • MMR</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -57,7 +59,7 @@ const AppContent = ({ Component, pageProps, router }: AppProps) => {
       <CartDrawer />
       <Footer />
       <Toaster position="bottom-center" />
-    </>
+    </SmoothScroll>
   );
 };
 
