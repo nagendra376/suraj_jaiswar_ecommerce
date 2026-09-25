@@ -78,6 +78,37 @@ const prebuiltPcMenu = [
   },
 ];
 
+// Custom PC Build Submenu
+const customPcBuildMenu = [
+  {
+    name: "AMD Custom PC",
+    path: "/search?category=custom-pc-build&brand=amd",
+    desc: "Ryzen 7000/9000 • Radeon RX / RTX",
+    icon: "🔴",
+    badge: "AMD",
+  },
+  {
+    name: "Intel Custom PC",
+    path: "/search?category=custom-pc-build&brand=intel",
+    desc: "Core i5 / i7 / i9 • DDR5 & Gen4 NVMe",
+    icon: "🔵",
+    badge: "Intel",
+  },
+  {
+    name: "Custom Laptop Build",
+    path: "/search?category=laptops",
+    desc: "Configured Gaming & Creation Laptops",
+    icon: "💻",
+    badge: "Laptop",
+  },
+  {
+    name: "Custom PC Configurator",
+    path: "/search?category=custom-pc-build",
+    desc: "Build Component by Component to Budget",
+    icon: "⚙️",
+  },
+];
+
 // Repair Services Menu
 const repairServicesMenu = [
   { name: "Laptop Repair", path: "/search?search=laptop", icon: "💻" },
@@ -417,67 +448,120 @@ const Header = ({ user }: PropsType) => {
               </Link>
             </div>
 
-            {/* 2. Pre Built PC with Dropdown (matching NCL computer header) */}
-            <div className="nav-link-item has-dropdown prebuilt-nav-item">
+            {/* 2. Merged Prebuilt & Custom PC with Mega Dropdown */}
+            <div className="nav-link-item has-dropdown prebuilt-custom-merged-item">
               <Link
                 to="/search?category=custom-pc-build"
-                onClick={(e) => handleNavClick(e, "prebuilt-pc")}
-                className="nav-link-anchor prebuilt-anchor"
+                onClick={(e) => handleNavClick(e, "prebuilt-pc-section")}
+                className="nav-link-anchor merged-pc-anchor"
+                title="Prebuilt PCs &amp; Custom PC Builder"
               >
                 <BsBoxSeam className="nav-item-icon" />
-                <span>Pre Built PC</span>
+                <span>Prebuilt &amp; Custom PC</span>
                 <FaChevronDown className="nav-dropdown-chevron" />
               </Link>
-              <div className="nav-dropdown-popover prebuilt-dropdown-popover">
-                <div className="prebuilt-popover-header">
-                  <span className="header-badge-tag">READY TO SHIP</span>
-                  <span className="header-subtitle">Plug &amp; Play Setup</span>
-                </div>
-                <div className="prebuilt-menu-list">
-                  {prebuiltPcMenu.map((item) => (
-                    <Link
-                      key={item.name}
-                      to={item.path}
-                      className="prebuilt-menu-card"
-                    >
-                      <span className="card-icon">{item.icon}</span>
-                      <div className="card-info">
-                        <div className="card-title-row">
-                          <span className="card-name">{item.name}</span>
-                          {item.badge && (
-                            <span className="card-badge">{item.badge}</span>
-                          )}
+
+              {/* Dual-Column Mega Popover Menu */}
+              <div className="nav-dropdown-popover pc-mega-popover">
+                <div className="pc-mega-grid">
+                  {/* Left Column: Pre Built PCs */}
+                  <div className="pc-mega-col col-prebuilt">
+                    <div className="col-header-strip">
+                      <div className="col-header-left">
+                        <BsBoxSeam className="strip-col-icon text-sky" />
+                        <div>
+                          <h4 className="col-main-title">Pre Built PCs</h4>
+                          <span className="col-sub-title">Ready to Ship • Plug &amp; Play</span>
                         </div>
-                        <span className="card-desc">{item.desc}</span>
                       </div>
-                      <FaChevronRight className="card-chevron" />
-                    </Link>
-                  ))}
-                </div>
-                <div className="prebuilt-popover-footer">
-                  <Link
-                    to="/search?category=custom-pc-build"
-                    onClick={(e) => handleNavClick(e, "prebuilt-pc")}
-                    className="view-all-prebuilt-link"
-                  >
-                    <span>View All Prebuilt PCs</span>
-                    <FaArrowRight />
-                  </Link>
+                      <span className="col-pill-badge badge-blue">Ready</span>
+                    </div>
+
+                    <div className="pc-cards-list">
+                      {prebuiltPcMenu.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className="pc-menu-row"
+                        >
+                          <span className="row-icon">{item.icon}</span>
+                          <div className="row-content">
+                            <div className="row-title-bar">
+                              <span className="row-name">{item.name}</span>
+                              {item.badge && (
+                                <span className="row-badge badge-red">{item.badge}</span>
+                              )}
+                            </div>
+                            <span className="row-desc">{item.desc}</span>
+                          </div>
+                          <FaChevronRight className="row-chevron" />
+                        </Link>
+                      ))}
+                    </div>
+
+                    <div className="col-footer-action">
+                      <Link
+                        to="/search?category=custom-pc-build"
+                        onClick={(e) => handleNavClick(e, "prebuilt-pc")}
+                        className="btn-col-action btn-sky"
+                      >
+                        <span>Explore All Prebuilt Rigs</span>
+                        <FaArrowRight />
+                      </Link>
+                    </div>
+                  </div>
+
+                  {/* Vertical Divider */}
+                  <div className="pc-mega-divider" />
+
+                  {/* Right Column: Custom PC Build */}
+                  <div className="pc-mega-col col-custom">
+                    <div className="col-header-strip">
+                      <div className="col-header-left">
+                        <FaTools className="strip-col-icon text-indigo" />
+                        <div>
+                          <h4 className="col-main-title">Custom PC Build</h4>
+                          <span className="col-sub-title">Tailored to Your Exact Specs</span>
+                        </div>
+                      </div>
+                      <span className="col-pill-badge badge-indigo">Custom</span>
+                    </div>
+
+                    <div className="pc-cards-list">
+                      {customPcBuildMenu.map((item) => (
+                        <Link
+                          key={item.name}
+                          to={item.path}
+                          className="pc-menu-row"
+                        >
+                          <span className="row-icon">{item.icon}</span>
+                          <div className="row-content">
+                            <div className="row-title-bar">
+                              <span className="row-name">{item.name}</span>
+                              {item.badge && (
+                                <span className="row-badge badge-indigo-sub">{item.badge}</span>
+                              )}
+                            </div>
+                            <span className="row-desc">{item.desc}</span>
+                          </div>
+                          <FaChevronRight className="row-chevron" />
+                        </Link>
+                      ))}
+                    </div>
+
+                    <div className="col-footer-action">
+                      <Link
+                        to="/search?category=custom-pc-build"
+                        onClick={(e) => handleNavClick(e, "custom-pc-build")}
+                        className="btn-col-action btn-indigo"
+                      >
+                        <span>Start Custom PC Builder</span>
+                        <FaArrowRight />
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* 3. Custom PC Build with Underline Accent (matching NCL screenshot) */}
-            <div className="nav-link-item custom-pc-nav-item">
-              <Link
-                to="/search?category=custom-pc-build"
-                onClick={(e) => handleNavClick(e, "custom-pc-build")}
-                className="nav-link-anchor custom-pc-anchor"
-                title="Build Your Own Custom PC & Laptop"
-              >
-                <FaTools className="nav-item-icon custom-tools-icon" />
-                <span className="custom-pc-text">Custom PC Build</span>
-              </Link>
             </div>
 
             {/* 5. Repair Services with Dropdown */}
@@ -677,7 +761,7 @@ const Header = ({ user }: PropsType) => {
               className="drawer-link"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <span>📦 Pre Built PC</span>
+              <span>📦 Pre Built PCs (Ready to Ship)</span>
               <FaChevronRight style={{ fontSize: "0.75rem", color: "#cbd5e1" }} />
             </Link>
             <Link
@@ -685,7 +769,7 @@ const Header = ({ user }: PropsType) => {
               className="drawer-link"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <span>🛠️ <u>Custom PC Build</u></span>
+              <span>🛠️ Custom PC &amp; Laptop Build</span>
               <span style={{ fontSize: "0.65rem", fontWeight: 800, background: "#e0f2fe", color: "#0284c7", padding: "2px 6px", borderRadius: "4px" }}>Build</span>
             </Link>
 
